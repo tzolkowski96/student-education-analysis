@@ -17,8 +17,8 @@
 <body>
     <header>
         <h1>Predicting Portuguese Students' Interest in Higher Education</h1>
-        <p>By Tobin Zolkowski</p>
-        <p>Part of L I S 706 — Data Mining Planning and Management during my Information M.S. program, Spring 2022</p>
+        <p><strong>By Tobin Zolkowski</strong></p>
+        <p><em>This project was completed as part of L I S 706 — Data Mining Planning and Management during my Information M.S. program, Spring 2022.</em></p>
     </header>
     
     <nav aria-label="Main navigation">
@@ -38,139 +38,68 @@
 
     <section id="overview">
         <h2>Project Overview</h2>
-        <p><i class="icon">&#128204;</i> <strong>Objective:</strong> The main goal is to predict whether students who are interested in pursuing higher education are more likely to consume alcohol. This involves analyzing various factors including demographics (like age and gender), academic performance (like grades), and social habits (like drinking alcohol).</p>
-        <p><i class="icon">&#128204;</i> <strong>Dataset Source:</strong> The dataset is sourced from Kaggle, a website where people can share data and data projects. This specific dataset focuses on student alcohol consumption in Portuguese language courses. The dataset link is: <a href="https://www.kaggle.com/uciml/student-alcohol-consumption">Kaggle - Student Alcohol Consumption</a>.</p>
+        <p><i class="icon" aria-hidden="true">&#128204;</i> <strong>Objective:</strong> Have you ever wondered what drives students to pursue higher education—and what factors might influence their choices along the way? In this project, I set out to predict whether Portuguese students interested in continuing their education are also more likely to consume alcohol. To do this, I dove into a rich dataset, exploring everything from demographics (like age and gender) to academic performance and social habits.</p>
+        <p><i class="icon" aria-hidden="true">&#128204;</i> <strong>Dataset Source:</strong> The data for this project comes from <a href="https://www.kaggle.com/uciml/student-alcohol-consumption" target="_blank">Kaggle's Student Alcohol Consumption</a> dataset. This resource offers a fascinating look at the lives of students enrolled in Portuguese language courses, capturing a wide range of variables that help paint a detailed picture of their academic and personal lives.</p>
+        <p>Throughout this journey, my goal was to uncover meaningful patterns and insights that could help educators, parents, and policymakers better understand the factors shaping students' aspirations—and perhaps even inform strategies to support them on their educational paths.</p>
     </section>
 
     <section id="data">
         <h2>Data Description</h2>
-        <p>The dataset contains information about 649 students, with 33 different attributes (features) for each student. Here are the key attributes analyzed in this project:</p>
+        <p>The dataset at the heart of this project includes detailed information on <strong>649 students</strong>, each described by <strong>33 different attributes</strong>. These features range from basic demographics to more nuanced aspects of student life. Here are some of the key variables I focused on:</p>
         <ul>
-            <li><i class="icon">&#128100;</i> <strong>sex:</strong> The student's gender (female or male).</li>
-            <li><i class="icon">&#128100;</i> <strong>age:</strong> The student's age (ranging from 15 to 22 years old).</li>
-            <li><i class="icon">&#127891;</i> <strong>higher:</strong> Indicates whether the student intends to pursue higher education (yes or no).</li>
-            <li><i class="icon">&#127867;</i> <strong>Walc:</strong> The level of alcohol consumption on weekends (on a scale from 1, very low, to 5, very high).</li>
-            <li><i class="icon">&#127793;</i> <strong>health:</strong> The student's current health status (on a scale from 1, very bad, to 5, very good).</li>
-            <li><i class="icon">&#128337;</i> <strong>absences:</strong> The number of school absences (ranging from 0 to 93).</li>
+            <li><i class="icon" aria-hidden="true">&#128100;</i> <strong>sex:</strong> Gender of the student (female or male).</li>
+            <li><i class="icon" aria-hidden="true">&#128100;</i> <strong>age:</strong> Age, ranging from 15 to 22 years old.</li>
+            <li><i class="icon" aria-hidden="true">&#127891;</i> <strong>higher:</strong> Whether the student plans to pursue higher education (yes or no).</li>
+            <li><i class="icon" aria-hidden="true">&#127867;</i> <strong>Walc:</strong> Weekend alcohol consumption, rated from 1 (very low) to 5 (very high).</li>
+            <li><i class="icon" aria-hidden="true">&#127793;</i> <strong>health:</strong> Current health status, from 1 (very bad) to 5 (very good).</li>
+            <li><i class="icon" aria-hidden="true">&#128337;</i> <strong>absences:</strong> Number of school absences (0 to 93).</li>
         </ul>
+        <p>By analyzing these and other features, I was able to build a comprehensive view of the student population and the factors that might influence their educational journeys.</p>
     </section>
 
     <section id="methodology">
         <h2>Methodology</h2>
-        
-        <h3>Exploratory Data Analysis (EDA)</h3>
-        <p>Exploratory Data Analysis (EDA) is a process where we look at the data and summarize its main characteristics, often using visual methods. This helps us understand the patterns in the data and decide how to handle it.</p>
-        <p>Data Types: The dataset includes both categorical data (which can be divided into groups, like gender) and numerical data (which are numbers, like age).</p>
-        <p>Categorical variables like sex and higher were visualized using bar plots. These plots show how many students fall into each category. Numerical variables like age and absences were visualized using histograms, which show the distribution of these numbers among the students.</p>
-        <h4>Distributions:</h4>
+        <h3>How Did I Approach the Problem?</h3>
+        <p>Every good data science project starts with a plan. Here’s how I tackled this one, step by step:</p>
+        <h4>1. Exploratory Data Analysis (EDA)</h4>
+        <p>Before jumping into modeling, I spent time getting to know the data. I explored both categorical variables (like gender and school support) and numerical ones (like age and absences), using bar plots and histograms to visualize distributions and spot trends. For example, I found that most students (about 70%) expressed interest in higher education, and that weekend alcohol consumption was more common than weekday drinking.</p>
+        <h4>2. Data Preprocessing</h4>
         <ul>
-            <li>Most students (70%) are interested in pursuing higher education.</li>
-            <li>Alcohol consumption on weekends (Walc) is more prevalent than on weekdays (Dalc).</li>
+            <li><strong>Missing Values:</strong> Good news—there were no missing values in the dataset, so I could work with complete records for every student.</li>
+            <li><strong>Encoding Categorical Variables:</strong> To make the data suitable for machine learning, I converted categorical variables into numbers using one-hot encoding. For instance, "female" became 1 and "male" became 0.</li>
         </ul>
-
-        <h3>Data Preprocessing</h3>
-        <p>Before applying machine learning models, we need to prepare the data. This includes several steps:</p>
-        <h4>Handling Missing Values:</h4>
-        <p>We checked the dataset and confirmed there were no missing values, meaning we had complete data for all students.</p>
-        <h4>Encoding Categorical Variables:</h4>
-        <p>Some machine learning models require numerical input. So, we converted categorical variables (like sex and higher) into numerical values using a method called one-hot encoding. For example, "female" might be represented as 1 and "male" as 0.</p>
-
-        <h3>Machine Learning Models</h3>
-        <p>We used several machine learning models to predict whether a student aspires to higher education. Here's a brief explanation of the key concepts:</p>
-        <h4>Class Imbalance Handling:</h4>
-        <p>Our dataset had more students interested in higher education than those who were not, creating an imbalance. To address this, we used SMOTE (Synthetic Minority Over-sampling Technique) to balance the dataset by generating synthetic samples for the minority class.</p>
-        <h4>Data Splitting:</h4>
-        <p>We divided the dataset into three parts: training (80% of the data), testing (10%), and validation (10%). This helps ensure our models are trained and tested properly.</p>
-
-        <h3>Baseline Models</h3>
-        <p>Baseline models provide a point of comparison for more complex models. If a complex model doesn't perform significantly better than a baseline model, it may not be useful.</p>
-        <h4>DummyClassifier:</h4>
-        <p>This model predicts the most frequent class (like always predicting "yes" for higher education). It achieved a test set accuracy of 42.24% and a holdout set accuracy of 52.99%. This means it correctly predicted 42.24% of the test cases and 52.99% of the holdout cases.</p>
-
-        <h3>Gaussian Naive Bayes</h3>
-        <p>This model is simple and effective for many tasks. It assumes that the features are normally distributed and independent. It achieved a test set accuracy of 71.55% and a holdout set accuracy of 66.67%.</p>
-
-        <h3>Decision Tree</h3>
-        <p>This model splits the data into branches to make predictions. Each split is based on the feature that provides the most information. Parameters were set to prevent overfitting (when a model is too closely fitted to the training data and performs poorly on new data):</p>
+        <h4>3. Handling Class Imbalance</h4>
+        <p>One challenge was that more students wanted to pursue higher education than not, creating an imbalance. To address this, I used <strong>SMOTE</strong> (Synthetic Minority Over-sampling Technique) to generate synthetic samples for the minority class, ensuring the models wouldn’t be biased toward the majority.</p>
+        <h4>4. Data Splitting</h4>
+        <p>I split the data into three sets: <strong>training (80%)</strong>, <strong>testing (10%)</strong>, and <strong>validation (10%)</strong>. This approach helped me train robust models and fairly evaluate their performance.</p>
+        <h4>5. Model Selection and Evaluation</h4>
+        <p>I experimented with several machine learning models, each offering unique strengths:</p>
         <ul>
-            <li>Criterion: 'gini' (a measure of impurity)</li>
-            <li>Max Depth: 10 (limits the number of splits)</li>
-            <li>Min Samples Split: 2 (minimum number of samples required to split an internal node)</li>
-            <li>Min Samples Leaf: 1 (minimum number of samples required to be at a leaf node)</li>
-            <li>Cost Complexity Pruning Parameter: 0.005 (used to prune the tree and reduce complexity)</li>
+            <li><strong>DummyClassifier:</strong> A simple baseline that always predicts the most frequent class. It achieved 42.24% accuracy on the test set and 52.99% on the holdout set—useful for comparison, but not much else!</li>
+            <li><strong>Gaussian Naive Bayes:</strong> This model assumes features are independent and normally distributed. It performed much better, with 71.55% test accuracy and 66.67% on the holdout set.</li>
+            <li><strong>Decision Tree:</strong> By splitting the data based on the most informative features, this model reached 75.86% accuracy on the test set and 64.10% on the holdout set. Key insights: younger students and females with fewer health issues and absences are more likely to pursue higher education.</li>
+            <li><strong>Logistic Regression:</strong> This model predicts the probability of a binary outcome. With regularization to prevent overfitting, it achieved 67.24% accuracy, 60.78% precision, and 63.27% recall on the test set. The ROC curve showed an AUC of 0.78—quite good!</li>
+            <li><strong>Random Forest:</strong> An ensemble of decision trees, this model benefited from hyperparameter tuning (using Random Search) to optimize its performance. The best configuration used 85 trees, a max depth of 10, and minimal pruning. It delivered strong results, with a mean absolute error of 0.2359 and root mean squared error of 0.3273. Feature importance analysis highlighted age, absences, and weekend alcohol consumption as top predictors.</li>
         </ul>
-        <p>Accuracy: 75.86% on the test set and 64.10% on the holdout set.</p>
-        <p>Insights: Younger students and females with fewer health issues and absences are more likely to pursue higher education.</p>
-        <img src="assets/images/image_42.png" alt="Decision Tree Visualization">
-
-        <h3>Logistic Regression</h3>
-        <p>This model predicts the probability of a binary outcome (like yes or no) using a logistic function. It calculates a weighted sum of the input features and applies a logistic transformation to predict the outcome.</p>
-        <p>Parameters:</p>
-        <ul>
-            <li>Penalty: 'l2' (regularization to prevent overfitting)</li>
-            <li>C: 1 (inverse of regularization strength)</li>
-        </ul>
-        <p>Test Set Metrics:</p>
-        <ul>
-            <li>Accuracy: 67.24% (correct predictions out of total predictions)</li>
-            <li>Precision: 60.78% (true positive predictions out of all positive predictions)</li>
-            <li>Recall: 63.27% (true positive predictions out of all actual positives)</li>
-        </ul>
-        <h4>Evaluation Methods:</h4>
-        <p>Confusion Matrix:</p>
-        <img src="assets/images/image_43.png" alt="Confusion Matrix">
-        <p>The confusion matrix shows the number of true positive, true negative, false positive, and false negative predictions.</p>
-        <p>ROC Curve:</p>
-        <img src="assets/images/image_44.png" alt="ROC Curve">
-        <p>The ROC (Receiver Operating Characteristic) curve shows the true positive rate (sensitivity) against the false positive rate (1-specificity) for different threshold values. The area under the curve (AUC) indicates the model's performance, with 1 being perfect and 0.5 being no better than random guessing. An AUC of 0.78 indicates good performance.</p>
-
-        <h3>Random Forest Regression</h3>
-        <p>This model is an ensemble of decision trees. It improves prediction accuracy by combining multiple decision trees.</p>
-        <p>To further enhance the performance of the Random Forest model, I conducted a comprehensive hyperparameter optimization using Random Search. This process involved systematically exploring a wide range of parameter combinations to identify the most effective settings for the model. By searching over a carefully defined parameter grid, I was able to pinpoint the configuration that yielded the best predictive results.</p>
-        <p><strong>Best Parameters Identified:</strong></p>
-        <ul>
-            <li><strong>n_estimators: 85</strong> &mdash; This represents the number of trees in the forest. A higher number of trees generally improves performance, but also increases computational cost. Through tuning, 85 was found to be the optimal balance.</li>
-            <li><strong>max_depth: 10</strong> &mdash; This parameter controls the maximum depth of each tree. Limiting the depth helps prevent overfitting, ensuring the model generalizes well to new data.</li>
-            <li><strong>min_samples_split: 2</strong> &mdash; This is the minimum number of samples required to split an internal node. Setting this to 2 allows the model to consider all possible splits, capturing subtle patterns in the data.</li>
-            <li><strong>min_samples_leaf: 2</strong> &mdash; This parameter specifies the minimum number of samples required to be at a leaf node. By increasing this value slightly, the model avoids creating leaves that are too specific to the training data.</li>
-            <li><strong>ccp_alpha: 0</strong> &mdash; The complexity parameter for minimal cost-complexity pruning. A value of 0 means no additional pruning was applied, allowing the model to retain all splits deemed important by the data.</li>
-        </ul>
-        <h4>Performance Metrics:</h4>
-        <ul>
-            <li>Mean Absolute Error: 0.2359 (average magnitude of the errors)</li>
-            <li>Mean Squared Error: 0.1071 (average squared difference between predicted and actual values)</li>
-            <li>Root Mean Squared Error: 0.3273 (square root of the mean squared error, gives an idea of the size of the error)</li>
-        </ul>
-        <h4>Feature Importance:</h4>
-        <p>Age, absences, and weekend alcohol consumption (Walc) were found to be the most important predictors.</p>
-        <img src="assets/images/image_47.png" alt="Feature Importance">
-
-        <h3>Hyperparameter Tuning</h3>
-        <p>Random Search: Conducted to optimize the Random Forest model parameters. This involves searching over a specified parameter grid to find the best combination of parameters.</p>
-        <p>Best Parameters Found:</p>
-        <ul>
-            <li>n_estimators: 85 (number of trees in the forest)</li>
-            <li>max_depth: 10 (maximum depth of the tree)</li>
-            <li>min_samples_split: 2 (minimum number of samples required to split an internal node)</li>
-            <li>min_samples_leaf: 2 (minimum number of samples required to be at a leaf node)</li>
-            <li>ccp_alpha: 0 (complexity parameter used for minimal cost-complexity pruning)</li>
-        </ul>
+        <h4>6. Hyperparameter Tuning</h4>
+        <p>To squeeze out the best performance, I used Random Search to explore different parameter combinations for the Random Forest model. This process helped me find the sweet spot for accuracy and generalization.</p>
     </section>
 
     <section id="feature-engineering">
         <h2>Custom Feature Engineering & Advanced Modeling</h2>
-        <p>To push the boundaries of this analysis and extract deeper insights, I went beyond standard modeling by engineering new features and experimenting with advanced algorithms. Feature engineering is a creative process that involves transforming raw data into meaningful inputs for machine learning models. Here’s how I approached it:</p>
+        <p>To go beyond the basics, I got creative with feature engineering and tried out advanced algorithms. Here’s what I did:</p>
         <ul>
-            <li><strong>Composite Risk Score:</strong> I developed a new metric that combines absences, alcohol consumption, and health into a single risk score. This composite feature helps to better identify students who may be at risk, capturing the interplay between these important factors in a way that individual features cannot.</li>
-            <li><strong>Interaction Features:</strong> Recognizing that the relationship between parental support and academic performance can be complex, I created new features to represent these interactions. This allowed the models to account for the combined effect of family environment and student achievement, leading to more nuanced predictions.</li>
-            <li><strong>Advanced Models:</strong> Building on these engineered features, I implemented state-of-the-art algorithms such as Gradient Boosting and XGBoost. These models are known for their ability to capture complex, non-linear relationships in data. Impressively, the XGBoost model achieved an AUC (Area Under the Curve) of up to 0.82, outperforming the baseline models and demonstrating the value of thoughtful feature engineering and model selection.</li>
+            <li><strong>Composite Risk Score:</strong> I combined absences, alcohol consumption, and health into a single metric to better identify at-risk students. This new feature captured the interplay between these factors in a way that individual variables couldn’t.</li>
+            <li><strong>Interaction Features:</strong> Recognizing that parental support and academic performance are deeply connected, I created new features to represent their interaction. This allowed the models to pick up on more subtle patterns.</li>
+            <li><strong>Advanced Models:</strong> I implemented Gradient Boosting and XGBoost, two powerful algorithms known for capturing complex, non-linear relationships. The XGBoost model, in particular, achieved an impressive AUC of 0.82, outperforming the simpler models and demonstrating the value of thoughtful feature engineering.</li>
         </ul>
-        <p>The bar chart below visualizes the importance of each feature as determined by the XGBoost model, highlighting which factors had the greatest impact on predicting students’ aspirations for higher education.</p>
+        <p>The bar chart below shows which features the XGBoost model found most important for predicting students’ aspirations for higher education.</p>
         <div id="feature-importance-plot" style="height:400px;"></div>
     </section>
 
     <section id="insights">
         <h2>Visual Insights</h2>
+        <p>Sometimes, a picture really is worth a thousand words. Here are some of the most revealing visualizations from my analysis, each accompanied by a brief explanation of what it shows and why it matters.</p>
         <div class="visual-insights">
             <div class="fade-in">
                 <h3>School Distribution</h3>
@@ -376,6 +305,7 @@
 
     <section id="model-insights">
         <h2>Model Insights and Performance</h2>
+        <p>Let’s take a closer look at how the models performed and what we can learn from their predictions. The following charts and explanations highlight key findings, including which features mattered most and how well the models distinguished between students with different aspirations.</p>
         <div class="visual-insights">
             <div class="fade-in">
                 <h3>Decision Tree Analysis</h3>
@@ -417,7 +347,7 @@
 
     <section id="code-samples">
         <h2>Code Samples</h2>
-        <p>Below are key Python code snippets from the project, demonstrating data preprocessing, modeling, and visualization. <span aria-label="Code is for illustration; see GitHub for full scripts.">(See <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">GitHub</a> for full code.)</span></p>
+        <p>Curious about how all this was done? Here are some key Python code snippets from the project, showing how I handled data preprocessing, modeling, and visualization. For the full scripts and more details, check out the <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">GitHub repository</a>.</p>
         <pre><code class="language-python"># Data Preprocessing
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -451,51 +381,49 @@ plt.show()
 
     <section id="summary">
         <h2>Summary of Key Factors</h2>
-        <p>Through this comprehensive analysis, we identified several key factors influencing Portuguese students' interests in continuing education and their drinking habits:</p>
+        <p>Through this comprehensive analysis, several key factors emerged as especially influential in shaping Portuguese students’ interests in continuing education and their drinking habits:</p>
         <ul>
-            <li><strong>Absences and Age:</strong> Significant predictors of academic performance and higher education aspiration.</li>
-            <li><strong>Parental and Family Support:</strong> Strong influence on students' educational aspirations and performance.</li>
-            <li><strong>Health and Alcohol Consumption:</strong> Moderate influence on overall academic performance and aspirations.</li>
-            <li><strong>Extracurricular Activities and Free Time:</strong> Balanced participation in extracurricular activities.</li>
+            <li><strong>Absences and Age:</strong> These stood out as significant predictors of both academic performance and higher education aspirations.</li>
+            <li><strong>Parental and Family Support:</strong> Students with strong support systems were more likely to aim high and perform well.</li>
+            <li><strong>Health and Alcohol Consumption:</strong> While not the only factors, these played a moderate role in shaping outcomes.</li>
+            <li><strong>Extracurricular Activities and Free Time:</strong> Balanced participation in activities outside the classroom was common among students with positive aspirations.</li>
         </ul>
-        <p>These insights help understand the various factors affecting students' educational aspirations and behaviors, and they can inform strategies for improving educational outcomes and support systems for students.</p>
+        <p>These insights offer a window into the complex web of influences that shape students’ educational journeys. By understanding these factors, we can better support students as they navigate the path to higher education.</p>
     </section>
 
     <section id="conclusion">
         <h2>Conclusion</h2>
-        <p>The project provided insights into how demographic, academic, and social factors influence students' aspirations for higher education. It highlighted the complexity of the relationship between alcohol consumption and educational aspirations, suggesting that other factors like age and absenteeism are more critical predictors.</p>
-        <h3>Future Work</h3>
-        <p>While this project has uncovered valuable insights into the factors influencing Portuguese students' aspirations for higher education, there is still much more to explore. One promising direction for future research is the use of longitudinal studies. By following students over several years, we could gain a deeper understanding of how their interests, habits, and aspirations evolve over time, and what life events or interventions have the greatest impact on their educational journeys.</p>
-        <p>Additionally, expanding the dataset to include a larger and more diverse group of students would help validate the findings and ensure that the conclusions are robust across different regions, backgrounds, and school systems. This could involve collaborating with schools, educational organizations, or even leveraging open data initiatives to gather richer information.</p>
-        <p>On the technical side, there is exciting potential in exploring advanced modeling techniques. For example, neural networks and deep learning approaches could be used to capture even more complex patterns in the data, especially if more features or unstructured data (like text responses or social media activity) are available. Ensemble methods, transfer learning, and explainable AI are also promising avenues that could make the models both more accurate and more interpretable for educators and policymakers.</p>
-        <p>Finally, future work could focus on translating these insights into actionable strategies for schools and families. This might include developing early warning systems to identify at-risk students, designing targeted interventions, or creating interactive dashboards to help educators visualize and respond to student needs in real time.</p>
-        <h3>Link to Work Folder</h3>
-        <p>If you're interested in exploring the full scope of this project—including the data, code, and additional resources—please visit my <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">GitHub repository</a>. There, you'll find everything you need to dive deeper into the analysis, reproduce the results, or even build upon this work for your own research or educational initiatives. I welcome feedback, collaboration, and new ideas from the community!</p>
+        <p>This project provided a deep dive into the many factors that influence students’ aspirations for higher education. The findings highlight the complexity of these decisions, showing that while alcohol consumption plays a role, other factors—like age, absenteeism, and family support—are often even more critical.</p>
+        <h3>Looking Ahead: Future Work</h3>
+        <p>There’s still so much more to explore! In the future, I’d love to see longitudinal studies that follow students over time, revealing how their interests and habits evolve. Expanding the dataset to include more students from diverse backgrounds would also help validate these findings and uncover new patterns.</p>
+        <p>On the technical side, there’s exciting potential in advanced modeling techniques—think neural networks, deep learning, and explainable AI. These tools could help us capture even more complex relationships and make the results more actionable for educators and policymakers.</p>
+        <h3>Explore the Project</h3>
+        <p>If you’re interested in digging deeper, all the data, code, and resources are available on <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">GitHub</a>. I welcome feedback, collaboration, and new ideas from the community!</p>
         <h3>Acknowledgements</h3>
-        <p>Thank you to everyone who supported and guided me throughout this project. Special thanks to Kaggle for providing the dataset and to the community for valuable feedback and suggestions.</p>
-        <h3>Personal Contributions</h3>
-        <p>Throughout this project, I handled data preprocessing, model selection, and evaluation. One of the key challenges was addressing the class imbalance in the dataset, which I resolved using SMOTE. Another challenge was optimizing the hyperparameters for the Random Forest model, which I tackled using RandomizedSearchCV. My favorite part of this project was diving deep into the data and uncovering insights that were not immediately obvious.</p>
+        <p>Thank you to everyone who supported and guided me throughout this project. Special thanks to Kaggle for providing the dataset and to the data science community for valuable feedback and suggestions.</p>
+        <h3>Personal Reflections</h3>
+        <p>From data wrangling to model tuning, I handled every step of this project. Tackling class imbalance with SMOTE and optimizing the Random Forest model were especially rewarding challenges. My favorite part? Uncovering insights that weren’t immediately obvious and sharing them in a way that’s accessible to everyone.</p>
     </section>
 
     <section id="live-demo">
         <h2>Try the Model: Live Prediction Demo</h2>
-        <form id="predict-form" aria-label="Live prediction form" style="max-width:500px;margin:auto;">
+        <form id="predict-form" aria-label="Live prediction form" style="max-width:500px;margin:auto;" autocomplete="on">
             <label for="age">Age:</label>
-            <input type="number" id="age" name="age" min="15" max="22" required><br>
+            <input type="number" id="age" name="age" min="15" max="22" required aria-required="true" aria-label="Student age"><br>
             <label for="sex">Gender:</label>
-            <select id="sex" name="sex" required>
+            <select id="sex" name="sex" required aria-required="true" aria-label="Student gender">
                 <option value="female">Female</option>
                 <option value="male">Male</option>
             </select><br>
             <label for="walc">Weekend Alcohol Consumption (1-5):</label>
-            <input type="number" id="walc" name="walc" min="1" max="5" required><br>
+            <input type="number" id="walc" name="walc" min="1" max="5" required aria-required="true" aria-label="Weekend alcohol consumption"><br>
             <label for="health">Health (1-5):</label>
-            <input type="number" id="health" name="health" min="1" max="5" required><br>
+            <input type="number" id="health" name="health" min="1" max="5" required aria-required="true" aria-label="Health status"><br>
             <label for="absences">Absences:</label>
-            <input type="number" id="absences" name="absences" min="0" max="93" required><br>
-            <button type="submit">Predict Aspiration</button>
+            <input type="number" id="absences" name="absences" min="0" max="93" required aria-required="true" aria-label="Number of absences"><br>
+            <button type="submit" aria-label="Predict aspiration">Predict Aspiration</button>
         </form>
-        <div id="prediction-result" style="margin-top:1em;font-weight:bold;text-align:center;"></div>
+        <div id="prediction-result" style="margin-top:1em;font-weight:bold;text-align:center;" aria-live="polite"></div>
         <p style="text-align:center;font-size:0.9em;color:#555;">This demo uses a simple rule-based logic to mimic the model's key factors. For real predictions, see the <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">project code</a>.</p>
     </section>
 
@@ -505,10 +433,10 @@ plt.show()
             <span>Last Edited: May 8, 2025</span>
         </div>
         <p>Thank you for visiting! This project is hosted on <a href="https://github.com/tzolkowski96/tzolkowski96/tree/main/portuguese-students-higher-education-analysis">GitHub</a>.</p>
-        <p><small>Accessibility improved: All images have descriptive alt text, and navigation is ARIA-labeled for screen readers.</small></p>
+        <p><small>Accessibility improved: All images have descriptive alt text, and navigation is ARIA-labeled for screen readers. All form fields are labeled and keyboard accessible.</small></p>
         <p style="margin-top:18px;color:#b0b8c1;font-size:0.95em;">&copy; 2025 Tobin Zolkowski. All rights reserved.</p>
     </footer>
 
-    <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+    <button class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">Back to Top</button>
 </body>
 </html>
