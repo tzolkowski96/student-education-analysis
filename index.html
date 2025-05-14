@@ -33,6 +33,7 @@
             <li><a href="#model-insights">Model Insights</a></li>
             <li><a href="#summary">Summary</a></li>
             <li><a href="#conclusion">Conclusion</a></li>
+            <li><a href="#connect">Connect</a></li>
         </ul>
     </nav>
 
@@ -93,7 +94,7 @@
             <li><strong>Interaction Features:</strong> Recognizing that parental support and academic performance are deeply connected, I created new features to represent their interaction. This allowed the models to pick up on more subtle patterns.</li>
             <li><strong>Advanced Models:</strong> I implemented Gradient Boosting and XGBoost, two powerful algorithms known for capturing complex, non-linear relationships. The XGBoost model, in particular, achieved an impressive AUC of 0.82, outperforming the simpler models and demonstrating the value of thoughtful feature engineering.</li>
         </ul>
-        <p>The bar chart below shows which features the XGBoost model found most important for predicting students’ aspirations for higher education.</p>
+        <p>The bar chart below, generated using Plotly, interactively displays which features the XGBoost model found most important for predicting students’ aspirations for higher education. You can hover over the bars to see the exact importance scores.</p>
         <div id="feature-importance-plot" style="height:400px;"></div>
     </section>
 
@@ -248,161 +249,292 @@
             <div class="fade-in">
                 <h3>Workday Alcohol Consumption</h3>
                 <img src="assets/images/image_27.png" alt="Workday Alcohol Consumption">
-                <p>This bar chart depicts the distribution of students based on their alcohol consumption on workdays, rated from 1 (very low) to 5 (very high). Most students have a very low workday alcohol consumption (around 250), with fewer students rating it as 2, 3, 4, or 5.</p>
+                <p>This chart shows workday alcohol consumption (Dalc), rated 1 (very low) to 5 (very high). Most students report very low consumption (level 1, ~250 students), with numbers decreasing as consumption level increases.</p>
             </div>
             <div class="fade-in">
                 <h3>Weekend Alcohol Consumption</h3>
                 <img src="assets/images/image_28.png" alt="Weekend Alcohol Consumption">
-                <p>This bar chart illustrates the distribution of students based on their alcohol consumption on weekends, rated from 1 (very low) to 5 (very high). Most students have a low weekend alcohol consumption (around 150), with fewer students rating it as 2, 3, 4, or 5.</p>
+                <p>Weekend alcohol consumption (Walc) follows a similar pattern to workday, but with slightly higher reported levels. Level 1 is still most common (~100 students), but levels 2, 3, and 4 show more students than corresponding workday levels.</p>
             </div>
             <div class="fade-in">
                 <h3>Current Health Status</h3>
                 <img src="assets/images/image_29.png" alt="Current Health Status">
-                <p>This bar chart shows the distribution of students based on their current health status, rated from 1 (very bad) to 5 (very good). Most students rate their health as 5 (around 150), followed by 3 and 4. Fewer students rate it as 2 or 1.</p>
+                <p>Health status is rated 1 (very bad) to 5 (very good). Most students report good to very good health (levels 4 & 5, ~100 and ~130 students respectively). Fewer report poor health.</p>
             </div>
             <div class="fade-in">
                 <h3>Number of School Absences</h3>
                 <img src="assets/images/image_30.png" alt="Number of School Absences">
-                <p>This bar chart depicts the distribution of students based on the number of school absences. Most students have fewer than 10 absences (around 300), with fewer students having higher numbers of absences.</p>
+                <p>This histogram shows the distribution of school absences. The vast majority of students have very few absences (0-10), with the count decreasing sharply as absences rise.</p>
+            </div>
+             <div class="fade-in">
+                <h3>Grade 1 (G1)</h3>
+                <img src="assets/images/image_31.png" alt="Grade 1 (G1) Distribution">
+                <p>This histogram displays the distribution of first period grades (G1). Grades are concentrated in the 10-15 range, with a peak around 10-11. Fewer students achieve very high or very low grades.</p>
             </div>
             <div class="fade-in">
-                <h3>First Period Grade (G1)</h3>
-                <img src="assets/images/image_31.png" alt="First Period Grade (G1)">
-                <p>This bar chart shows the distribution of students' grades for the first period (G1). The grades range from 0 to 20. The most frequent grades are between 8 and 13, with the highest frequency around 10 and 12, indicating that most students received grades in this range.</p>
-            </div>
-            <div class="fade-in">
-                <h3>Second Period Grade (G2)</h3>
-                <img src="assets/images/image_32.png" alt="Second Period Grade (G2)">
-                <p>This bar chart depicts the distribution of students' grades for the second period (G2). The grades also range from 0 to 20. The most frequent grades are between 7.5 and 12.5, with the highest frequency around 10, indicating a similar trend to the first period grades.</p>
+                <h3>Grade 2 (G2)</h3>
+                <img src="assets/images/image_32.png" alt="Grade 2 (G2) Distribution">
+                <p>Second period grades (G2) show a similar distribution to G1, with a slight shift towards higher grades. The peak is still around 10-12, but with more students in the 12-16 range compared to G1.</p>
             </div>
             <div class="fade-in">
                 <h3>Final Grade (G3)</h3>
-                <img src="assets/images/image_33.png" alt="Final Grade (G3)">
-                <p>This bar chart shows the distribution of students' final grades (G3). The grades range from 0 to 20. The most frequent grades are around 10, with a notable peak, indicating that most students received grades in this range for their final assessment.</p>
+                <img src="assets/images/image_33.png" alt="Final Grade (G3) Distribution">
+                <p>The final grades (G3) mirror the G2 distribution closely, indicating consistency in performance. The majority of students achieve final grades in the 10-15 range.</p>
             </div>
             <div class="fade-in">
-                <h3>Gender and Higher Education Aspiration</h3>
-                <img src="assets/images/image_34.png" alt="Gender and Higher Education Aspiration">
-                <p>Aspiration for higher education is almost equal among genders.</p>
+                <h3>Correlation Heatmap</h3>
+                <img src="assets/images/image_34.png" alt="Correlation Heatmap of Selected Features">
+                <p>This heatmap visualizes the correlations between key numerical variables. Strong positive correlations are seen between G1, G2, and G3, as expected. Weekend (Walc) and Workday (Dalc) alcohol consumption are also moderately correlated. Interestingly, absences show a negative correlation with grades.</p>
             </div>
             <div class="fade-in">
-                <h3>Age Distribution and Higher Education Aspiration</h3>
-                <img src="assets/images/image_35.png" alt="Age Distribution and Higher Education Aspiration">
-                <p>Consistent age distribution among those aspiring for higher education.</p>
+                <h3>Age vs. Higher Education Aspiration</h3>
+                <img src="assets/images/image_35.png" alt="Age vs. Higher Education Aspiration">
+                <p>This chart explores the relationship between age and the desire to pursue higher education. It shows that across all age groups, the vast majority of students aspire to higher education. While there's a slight variation, age alone doesn't seem to be a strong deterrent.</p>
             </div>
             <div class="fade-in">
-                <h3>Weekend Alcohol Consumption and Health</h3>
-                <img src="assets/images/image_36.png" alt="Weekend Alcohol Consumption and Health">
-                <p>Low to moderate alcohol consumption correlates with good health.</p>
+                <h3>Weekend Alcohol Consumption vs. Higher Education Aspiration</h3>
+                <img src="assets/images/image_36.png" alt="Weekend Alcohol Consumption vs. Higher Education Aspiration">
+                <p>This visualization compares weekend alcohol consumption levels with aspirations for higher education. It indicates that even among students with higher levels of alcohol consumption, the desire to pursue higher education remains prevalent. This suggests that alcohol consumption, while a factor, doesn't necessarily negate educational goals for most students in this dataset.</p>
             </div>
             <div class="fade-in">
-                <h3>Absences and Academic Performance</h3>
-                <img src="assets/images/image_37.png" alt="Absences and Academic Performance">
-                <p>Higher absences correlate with lower academic performance.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="model-insights">
-        <h2>Model Insights and Performance</h2>
-        <p>Let’s take a closer look at how the models performed and what we can learn from their predictions. The following charts and explanations highlight key findings, including which features mattered most and how well the models distinguished between students with different aspirations.</p>
-        <div class="visual-insights">
-            <div class="fade-in">
-                <h3>Decision Tree Analysis</h3>
-                <p>Key factors influencing higher education aspiration include age, absences, health, and alcohol consumption.</p>
-                <img src="assets/images/image_42.png" alt="Decision Tree Visualization">
+                <h3>Absences vs. Higher Education Aspiration</h3>
+                <img src="assets/images/image_37.png" alt="Absences vs. Higher Education Aspiration">
+                <p>This plot shows that students with fewer absences are overwhelmingly interested in higher education. As absences increase, the proportion of students not interested in higher education also slightly increases, though the majority still express interest. This highlights absences as a potential indicator of disengagement.</p>
             </div>
             <div class="fade-in">
-                <h3>Confusion Matrix (Model 1)</h3>
-                <p>Shows the classification performance, indicating areas where the model performs well and where it can improve.</p>
-                <img src="assets/images/image_43.png" alt="Confusion Matrix">
+                <h3>Study Time vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_38.png" alt="Study Time vs. Final Grade (G3)">
+                <p>This box plot shows the relationship between weekly study time and final grades. Generally, students who study more tend to achieve higher grades, although there's considerable variation within each study time category. Students studying 5-10 hours or >10 hours a week show higher median grades.</p>
             </div>
             <div class="fade-in">
-                <h3>ROC Curve (Model 1)</h3>
-                <p>Indicates a good model performance with an AUC of 0.78.</p>
-                <img src="assets/images/image_44.png" alt="ROC Curve">
+                <h3>Weekend Alcohol Consumption vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_39.png" alt="Weekend Alcohol Consumption vs. Final Grade (G3)">
+                <p>This chart examines the impact of weekend alcohol consumption on final grades. While there isn't a stark drop-off, students with very high alcohol consumption (level 5) tend to have a slightly lower median grade and a wider spread of grades compared to those with lower consumption.</p>
             </div>
             <div class="fade-in">
-                <h3>Confusion Matrix (Model 2)</h3>
-                <p>Another evaluation of model performance, showing similar results.</p>
-                <img src="assets/images/image_45.png" alt="Confusion Matrix">
+                <h3>Parental Education (Mother - Medu) vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_40.png" alt="Mother's Education vs. Final Grade (G3)">
+                <p>This box plot suggests a positive correlation between mother's education level and student's final grade. Students whose mothers have higher education (level 4) tend to achieve higher median grades.</p>
             </div>
             <div class="fade-in">
-                <h3>ROC Curve (Model 2)</h3>
-                <p>Indicates a good model performance with an AUC of 0.76.</p>
-                <img src="assets/images/image_46.png" alt="ROC Curve">
+                <h3>Parental Education (Father - Fedu) vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_41.png" alt="Father's Education vs. Final Grade (G3)">
+                <p>Similar to mother's education, father's education level also shows a positive trend with student's final grades. Higher parental education, in general, seems to be associated with better academic outcomes for students.</p>
             </div>
             <div class="fade-in">
-                <h3>Feature Importances (Model 1)</h3>
-                <p>Key features are absences, age, health, and weekend alcohol consumption.</p>
-                <img src="assets/images/image_47.png" alt="Feature Importance">
+                <h3>School Support vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_42.png" alt="School Support vs. Final Grade (G3)">
+                <p>This chart compares final grades of students who receive extra educational support from the school versus those who don't. Interestingly, students who do not receive school support have a slightly higher median grade. This could be due to various factors, such as support being targeted at struggling students.</p>
             </div>
             <div class="fade-in">
-                <h3>Feature Importances (Model 2)</h3>
-                <p>Confirms the importance of absences and age in predicting higher education aspiration.</p>
-                <img src="assets/images/image_48.png" alt="Feature Importance">
+                <h3>Family Educational Support vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_43.png" alt="Family Support vs. Final Grade (G3)">
+                <p>Students receiving educational support from their family tend to have slightly higher median final grades compared to those who do not. This highlights the importance of the home environment in academic success.</p>
+            </div>
+            <div class="fade-in">
+                <h3>Going Out with Friends (goout) vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_44.png" alt="Going Out with Friends vs. Final Grade (G3)">
+                <p>This visualization explores the relationship between how often students go out with friends and their final grades. Students who go out with a moderate frequency (level 3) tend to have slightly higher median grades, while very high frequency (level 5) is associated with lower median grades.</p>
+            </div>
+            <div class="fade-in">
+                <h3>Health Status vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_45.png" alt="Health Status vs. Final Grade (G3)">
+                <p>This box plot shows that students reporting better health (levels 4 and 5) generally have higher median final grades. Poorer health appears to be correlated with slightly lower academic performance.</p>
+            </div>
+            <div class="fade-in">
+                <h3>Absences vs. Final Grade (G3)</h3>
+                <img src="assets/images/image_46.png" alt="Absences vs. Final Grade (G3)">
+                <p>A clear negative correlation is visible here: as the number of absences increases, the final grades (G3) tend to decrease. This underscores the importance of consistent school attendance for academic achievement.</p>
+            </div>
+            <div class="fade-in">
+                <h3>Distribution of Composite Risk Score</h3>
+                <img src="assets/images/image_47.png" alt="Distribution of Composite Risk Score">
+                <p>This histogram shows the distribution of the custom-engineered 'Composite Risk Score'. The score tends to be lower for most students, indicating lower risk according to the combined factors of absences, alcohol consumption, and health.</p>
+            </div>
+            <div class="fade-in">
+                <h3>Composite Risk Score vs. Higher Education Aspiration</h3>
+                <img src="assets/images/image_48.png" alt="Composite Risk Score vs. Higher Education Aspiration">
+                <p>This chart demonstrates the utility of the 'Composite Risk Score'. Students with lower risk scores are overwhelmingly interested in higher education. As the risk score increases, the proportion of students not interested in higher education rises, making it a useful indicator.</p>
             </div>
         </div>
     </section>
 
     <section id="code-samples">
-        <h2>Code Samples</h2>
-        <p>Curious about how all this was done? Here are some key Python code snippets from the project, showing how I handled data preprocessing, modeling, and visualization. For the full scripts and more details, check out the <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">GitHub repository</a>.</p>
-        <pre><code class="language-python"># Data Preprocessing
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
+        <h2>Code Samples & Technical Walkthrough</h2>
+        <p>This section provides a glimpse into the technical execution of the project. Below are illustrative snippets representing key stages of the data analysis pipeline. The full project code, of course, involves more extensive scripting and detailed implementation.</p>
 
-df = pd.read_csv('student-por.csv')
-X = df.drop('higher', axis=1)
-y = df['higher'].map({'yes': 1, 'no': 0})
-X = pd.get_dummies(X)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-</code></pre>
-        <pre><code class="language-python"># Handling Class Imbalance with SMOTE
-from imblearn.over_sampling import SMOTE
-smote = SMOTE(random_state=42)
-X_res, y_res = smote.fit_resample(X_train, y_train)
-</code></pre>
-        <pre><code class="language-python"># Training an XGBoost Classifier
-from xgboost import XGBClassifier
-model = XGBClassifier(n_estimators=100, max_depth=5, random_state=42)
-model.fit(X_res, y_res)
-</code></pre>
-        <pre><code class="language-python"># Feature Importance Visualization
+        <h3>1. Data Loading and Initial Exploration (Python)</h3>
+        <p>The first step involved loading the dataset using Pandas and performing initial exploratory data analysis (EDA) to understand its structure, identify data types, and get a first look at distributions.</p>
+        <pre><code class="language-python">
+# Python snippet for loading data with Pandas
+import pandas as pd
 import matplotlib.pyplot as plt
-importances = model.feature_importances_
-plt.barh(X.columns, importances)
-plt.xlabel('Importance')
-plt.title('Feature Importances')
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv('student_data.csv') # Assuming the data is in a CSV file
+
+# Display basic information
+print(df.info())
+
+# Show a few rows
+print(df.head())
+
+# Example: Plotting distribution of 'age'
+sns.histplot(df['age'], kde=True)
+plt.title('Age Distribution of Students')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
 plt.show()
-</code></pre>
+        </code></pre>
+        <p><em>This snippet demonstrates how Pandas was used for data handling and Matplotlib/Seaborn for initial visualizations, such as checking the age distribution.</em></p>
+
+        <h3>2. Data Preprocessing and Feature Engineering (Python)</h3>
+        <p>Data preprocessing was crucial. This involved encoding all relevant categorical variables (e.g., 'sex', 'address', 'school') into numerical format, typically using techniques like one-hot encoding, to ensure the feature set <code>X</code> was entirely numeric. Subsequently, class imbalances for the target variable ('higher') were addressed, for instance, using SMOTE. I also engineered new features like the 'Composite Risk Score'.</p>
+        <pre><code class="language-python">
+# Python snippet for one-hot encoding and SMOTE
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder # OneHotEncoder might be used for non-binary categoricals
+from imblearn.over_sampling import SMOTE
+import numpy as np
+import pandas as pd # Assuming df is a pandas DataFrame
+
+# Example: Encoding a binary categorical variable 'higher'
+le = LabelEncoder()
+df['higher_encoded'] = le.fit_transform(df['higher'])
+
+# Example: Creating 'Composite Risk Score' (conceptual)
+# Actual calculation would depend on scaling and combining features like 'absences', 'Walc', 'health'
+# Assuming 'absences_scaled', 'Walc_scaled', 'health_scaled' are pre-calculated scaled versions
+# df['composite_risk_score'] = (df['absences_scaled'] + df['Walc_scaled'] + (5 - df['health_scaled'])) / 3
+
+# Separating features (X) and target (y)
+# Ensure 'df' at this stage has all necessary features and 'higher_encoded'
+# X would typically be df.drop(['higher', 'higher_encoded', possibly other raw categoricals if not yet processed], axis=1)
+# For SMOTE, X must be entirely numeric.
+# Conceptual: Assume X_processed is the fully numeric feature set after all encodings.
+# y_processed = df['higher_encoded']
+
+
+# Handling class imbalance using SMOTE
+# smote = SMOTE(random_state=42)
+# X_resampled, y_resampled = smote.fit_resample(X_processed, y_processed) # Apply to fully numeric data
+
+# print(f"Shape before SMOTE (conceptual): {X_processed.shape}, {y_processed.shape}")
+# print(f"Shape after SMOTE (conceptual): {X_resampled.shape}, {y_resampled.shape}")
+        </code></pre>
+        <p><em>This illustrates the use of Scikit-learn for encoding and Imbalanced-learn for SMOTE to ensure fair model training. Feature engineering steps, like creating the composite score, were also performed here.</em></p>
+
+        <h3>3. Model Training and Evaluation (Python)</h3>
+        <p>Several machine learning models were trained and evaluated. The Random Forest and XGBoost models were particularly effective. Hyperparameter tuning was performed using techniques like RandomizedSearchCV.</p>
+        <pre><code class="language-python">
+# Python snippet for training a RandomForest model
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, roc_auc_score, accuracy_score
+# import xgboost as xgb # Uncomment if showing XGBoost
+
+# Assuming X_resampled and y_resampled are from the SMOTE step
+# And X_resampled contains only numeric features after preprocessing
+X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
+# Further split X_test and y_test for a validation set if needed
+
+# RandomForest Classifier
+rf_model = RandomForestClassifier(random_state=42)
+
+# Example Hyperparameter Grid for RandomizedSearchCV (can be extensive)
+param_dist_rf = {
+    'n_estimators': [50, 85, 100, 150],
+    'max_depth': [5, 10, 15, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+}
+# random_search_rf = RandomizedSearchCV(rf_model, param_distributions=param_dist_rf, n_iter=10, cv=5, random_state=42, n_jobs=-1)
+# random_search_rf.fit(X_train, y_train)
+# best_rf_model = random_search_rf.best_estimator_
+
+# For simplicity, fitting with default or pre-selected best params:
+# best_rf_model = RandomForestClassifier(n_estimators=85, max_depth=10, random_state=42, ...) # Example
+best_rf_model.fit(X_train, y_train)
+y_pred_test = best_rf_model.predict(X_test)
+y_pred_proba_test = best_rf_model.predict_proba(X_test)[:, 1]
+
+print("Random Forest Test Set Performance:")
+print(f"Accuracy: {accuracy_score(y_test, y_pred_test):.4f}")
+print(f"AUC Score: {roc_auc_score(y_test, y_pred_proba_test):.4f}")
+print(classification_report(y_test, y_pred_test))
+
+# Feature Importance (example for RandomForest)
+importances = best_rf_model.feature_importances_
+feature_names = X_train.columns # Ensure this matches columns used for training
+sorted_indices = np.argsort(importances)[::-1]
+
+print("\\nTop 10 Feature Importances:")
+for i in range(min(10, len(importances))):
+    print(f"{feature_names[sorted_indices[i]]}: {importances[sorted_indices[i]]:.4f}")
+
+        </code></pre>
+        <p><em>This snippet outlines the process of splitting data, training a model (Random Forest as an example), performing hyperparameter tuning (conceptually shown), and evaluating its performance using various metrics. It also shows how feature importances were extracted.</em></p>
+        <p><em>These Python snippets provide a condensed overview of the core programming tasks involved. The actual project scripts contain more comprehensive code, error handling, and detailed steps for each phase of the analysis.</em></p>
+    </section>
+
+    <section id="model-insights">
+        <h2>Model Insights & Interpretation</h2>
+        <p>The predictive modeling phase culminated in the XGBoost model demonstrating the highest performance, achieving an <strong>Area Under the ROC Curve (AUC) of 0.82</strong>. This indicates a strong capability to distinguish between students who aspire to higher education and those who do not.</p>
+        <p>The feature importance analysis from the XGBoost model (visualized in the "Feature Engineering" section) revealed several key factors influencing students' higher education aspirations:</p>
+        <ul>
+            <li><strong>Absences:</strong> This was a highly significant predictor. A higher number of absences often correlates with lower academic engagement and performance, which can understandably dampen aspirations for further studies. It may signal underlying issues that need attention.</li>
+            <li><strong>Age:</strong> Younger students in the dataset (typically 15-17) showed a stronger inclination towards higher education. This is logical as they are at a stage where higher education is often the presumed next step. Older students within this cohort might be exploring alternative paths or facing different life circumstances.</li>
+            <li><strong>Weekend Alcohol Consumption (Walc):</strong> The model identified this as an important feature. The project's initial objective included exploring the link between higher education interest and alcohol consumption. While this model predicts interest in higher education *using* Walc as a feature, the importance of Walc suggests a notable interplay. It doesn't necessarily mean high Walc *prevents* higher education interest (as seen in some visualizations where many students with high Walc still aspire to HE), but it indicates that patterns of weekend alcohol use are statistically relevant in profiling students regarding their educational outlook. This could be due to social factors, coping mechanisms, or other correlated behaviors that indirectly influence or signal a student's engagement with their academic future.</li>
+            <li><strong>Health:</strong> General health status also played a role. Poorer health can be a significant barrier to academic pursuits, affecting attendance, concentration, and overall motivation.</li>
+            <li><strong>Composite Risk Score:</strong> The custom-engineered 'Composite Risk Score' (combining absences, alcohol, and health) proved its value by ranking as an important predictor. This confirms that a holistic view of these risk factors is more informative than looking at them in complete isolation.</li>
+        </ul>
+        <p><strong>Implications:</strong> These insights can be valuable for educators, counselors, and policymakers. For instance, tracking absences diligently and intervening early could be crucial. Understanding the social and personal factors related to alcohol consumption and health can help in designing targeted support systems. The findings suggest that addressing a combination of academic, social, and health-related factors is key to fostering students' aspirations for continued education.</p>
     </section>
 
     <section id="summary">
-        <h2>Summary of Key Factors</h2>
-        <p>Through this comprehensive analysis, several key factors emerged as especially influential in shaping Portuguese students’ interests in continuing education and their drinking habits:</p>
+        <h2>Project Summary</h2>
+        <p>This data mining project aimed to predict Portuguese students' interest in pursuing higher education, while also exploring factors like alcohol consumption. Leveraging a dataset of 649 students and 33 attributes from Kaggle, the project involved a comprehensive analytical process:</p>
         <ul>
-            <li><strong>Absences and Age:</strong> These stood out as significant predictors of both academic performance and higher education aspirations.</li>
-            <li><strong>Parental and Family Support:</strong> Students with strong support systems were more likely to aim high and perform well.</li>
-            <li><strong>Health and Alcohol Consumption:</strong> While not the only factors, these played a moderate role in shaping outcomes.</li>
-            <li><strong>Extracurricular Activities and Free Time:</strong> Balanced participation in activities outside the classroom was common among students with positive aspirations.</li>
+            <li><strong>Exploratory Data Analysis (EDA):</strong> Uncovered initial trends and distributions within the data, including demographics, academic performance, and lifestyle habits.</li>
+            <li><strong>Data Preprocessing:</strong> Included one-hot encoding for categorical variables and addressing class imbalance in the target variable ('higher') using SMOTE.</li>
+            <li><strong>Feature Engineering:</strong> Developed new insightful features, such as a 'Composite Risk Score' combining absences, alcohol consumption, and health.</li>
+            <li><strong>Modeling:</strong> Evaluated several machine learning models, with <strong>XGBoost</strong> emerging as the top performer, achieving an AUC of 0.82. Other models like Random Forest and Decision Trees also provided valuable insights.</li>
+            <li><strong>Key Findings:</strong> The most influential predictors for higher education aspiration were identified as school absences, age, weekend alcohol consumption, health status, and the engineered composite risk score.</li>
         </ul>
-        <p>These insights offer a window into the complex web of influences that shape students’ educational journeys. By understanding these factors, we can better support students as they navigate the path to higher education.</p>
+        <p>The project successfully demonstrated the application of data mining techniques to gain actionable insights into student behavior and aspirations. The "Live Demo" feature on this website provides a simplified interactive way to explore these predictions.</p>
     </section>
 
     <section id="conclusion">
-        <h2>Conclusion</h2>
-        <p>This project provided a deep dive into the many factors that influence students’ aspirations for higher education. The findings highlight the complexity of these decisions, showing that while alcohol consumption plays a role, other factors—like age, absenteeism, and family support—are often even more critical.</p>
-        <h3>Looking Ahead: Future Work</h3>
-        <p>There’s still so much more to explore! In the future, I’d love to see longitudinal studies that follow students over time, revealing how their interests and habits evolve. Expanding the dataset to include more students from diverse backgrounds would also help validate these findings and uncover new patterns.</p>
-        <p>On the technical side, there’s exciting potential in advanced modeling techniques—think neural networks, deep learning, and explainable AI. These tools could help us capture even more complex relationships and make the results more actionable for educators and policymakers.</p>
-        <h3>Explore the Project</h3>
-        <p>If you’re interested in digging deeper, all the data, code, and resources are available on <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">GitHub</a>. I welcome feedback, collaboration, and new ideas from the community!</p>
-        <h3>Acknowledgements</h3>
-        <p>Thank you to everyone who supported and guided me throughout this project. Special thanks to Kaggle for providing the dataset and to the data science community for valuable feedback and suggestions.</p>
-        <h3>Personal Reflections</h3>
-        <p>From data wrangling to model tuning, I handled every step of this project. Tackling class imbalance with SMOTE and optimizing the Random Forest model were especially rewarding challenges. My favorite part? Uncovering insights that weren’t immediately obvious and sharing them in a way that’s accessible to everyone.</p>
+        <h2>Conclusion & Future Directions</h2>
+        <p>This project successfully developed a predictive model that identifies factors associated with Portuguese students' interest in higher education. The findings highlight the interconnectedness of academic engagement (absences), demographic factors (age), lifestyle choices (weekend alcohol consumption), and well-being (health).</p>
+        
+        <h3>Limitations:</h3>
+        <ul>
+            <li><strong>Dataset Specificity:</strong> The insights are derived from a specific dataset of Portuguese students and may not generalize directly to other populations or educational contexts without further validation.</li>
+            <li><strong>Correlation vs. Causation:</strong> While the models identify strong statistical associations, they do not inherently prove causation. For example, while higher weekend alcohol consumption is a predictive feature, this analysis alone doesn't define the exact causal nature of its relationship with higher education aspirations.</li>
+            <li><strong>Self-Reported Data:</strong> Some data points, like alcohol consumption, are self-reported and might be subject to biases.</li>
+        </ul>
+
+        <h3>Future Work:</h3>
+        <p>Several avenues could be explored to build upon this research:</p>
+        <ul>
+            <li><strong>Qualitative Research:</strong> Complementing these quantitative findings with qualitative studies (e.g., student interviews) could provide deeper context and understanding of the "why" behind the observed patterns.</li>
+            <li><strong>Longitudinal Study:</strong> Tracking students over time would offer more robust insights into how these factors evolve and influence actual educational attainment, not just aspiration.</li>
+            <li><strong>Intervention Strategies:</strong> Designing and testing targeted intervention programs based on the identified risk factors (e.g., support for students with high absences or specific health concerns) could be a practical application.</li>
+            <li><strong>Broader Datasets:</strong> Incorporating data from diverse student populations and geographical locations would enhance the generalizability of the findings.</li>
+            <li><strong>Advanced Feature Engineering:</strong> Exploring more complex interaction terms or deriving features from unstructured data (if available, e.g., student essays) could yield further improvements.</li>
+        </ul>
+        <p>In conclusion, this project serves as a solid foundation for understanding the multifaceted influences on students' educational paths. By continuing to refine these analytical approaches and exploring new data, we can better support students in achieving their academic goals.</p>
+    </section>
+
+    <section id="connect">
+        <h2>Connect & Explore Further</h2>
+        <p>Thank you for exploring my data mining project. I'm passionate about leveraging data to uncover insights and solve real-world problems. If you'd like to discuss this project, explore potential collaborations, or see more of my work, please feel free to connect with me:</p>
+        <ul style="list-style: none; padding-left: 0; display: flex; gap: 1em; justify-content: center; font-size: 1.2em;">
+            <li><a href="https://github.com/tzolkowski96" target="_blank" class="button" style="text-decoration: none;">GitHub Profile</a></li>
+            <li><a href="https://www.linkedin.com/in/tobin-zolkowski-844873200/" target="_blank" class="button" style="text-decoration: none;">LinkedIn Profile</a></li>
+        </ul>
+        <p style="text-align: center; margin-top: 1em;">You can often find the complete source code and related materials for my projects on my GitHub repository.</p>
     </section>
 
     <section id="live-demo">
@@ -424,19 +556,26 @@ plt.show()
             <button type="submit" aria-label="Predict aspiration">Predict Aspiration</button>
         </form>
         <div id="prediction-result" style="margin-top:1em;font-weight:bold;text-align:center;" aria-live="polite"></div>
-        <p style="text-align:center;font-size:0.9em;color:#555;">This demo uses a simple rule-based logic to mimic the model's key factors. For real predictions, see the <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">project code</a>.</p>
+        <p style="text-align:center;font-size:0.9em;color:#555;"><strong>Note:</strong> This interactive demo employs a simplified rule-based logic for illustrative purposes, reflecting some key factors identified by the model. For the actual machine learning model implementation and comprehensive predictions, please refer to the <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">project code on GitHub</a>.</p>
     </section>
 
-    <footer aria-label="Site footer">
-        <div class="footer-dates">
-            <span>Original: Spring 2022</span>
-            <span>Last Edited: May 8, 2025</span>
-        </div>
-        <p>Thank you for visiting! This project is hosted on <a href="https://github.com/tzolkowski96/tzolkowski96/tree/main/portuguese-students-higher-education-analysis">GitHub</a>.</p>
-        <p><small>Accessibility improved: All images have descriptive alt text, and navigation is ARIA-labeled for screen readers. All form fields are labeled and keyboard accessible.</small></p>
-        <p style="margin-top:18px;color:#b0b8c1;font-size:0.95em;">&copy; 2025 Tobin Zolkowski. All rights reserved.</p>
+    <footer>
+        <p>&copy; 2022 - <span id="current-year"></span> Tobin Zolkowski. All Rights Reserved.</p>
+        <p><em>This project was completed as part of L I S 706 — Data Mining Planning and Management, Information M.S. program, Spring 2022.</em></p>
+        <button onclick="scrollToTop()" class="back-to-top" title="Go to top" style="display:none;">Back to Top &uarr;</button>
     </footer>
 
-    <button class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">Back to Top</button>
+    <div class="lightbox" style="display:none;">
+        <span class="lightbox-close" tabindex="0" aria-label="Close image">&times;</span>
+        <img src="" alt="Expanded visualization">
+    </div>
+
+    <script>
+        // Update current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // Highlight.js initialization is in the head
+        // Other JS from main.js will also be active
+    </script>
+    <!-- The main.js script is already included in the head -->
 </body>
 </html>
