@@ -400,11 +400,74 @@ pre code {
     background: #fff;
     transition: border 0.2s;
 }
+
+/* Enhancements for interactive demo */
+.factor-name {
+    font-weight: 600;
+    display: inline-block;
+    width: 140px;
+    color: #1a237e;
+}
+
+.factor-impact {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+}
+
+.positive-impact {
+    background-color: rgba(40, 167, 69, 0.12);
+    color: #155724;
+}
+
+.neutral-impact {
+    background-color: rgba(108, 117, 125, 0.12);
+    color: #5a6268;
+}
+
+.negative-impact {
+    background-color: rgba(220, 53, 69, 0.12);
+    color: #721c24;
+}
+
+#factor-list li {
+    margin-bottom: 12px;
+    padding: 4px 0;
+    border-bottom: 1px dotted #e3e8ee;
+}
+
+#score-breakdown {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.explanation-panel h3, .explanation-panel h4 {
+    margin-top: 0;
+    color: #1a237e;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .demo-container {
+        flex-direction: column;
+    }
+    
+    .factor-name {
+        width: 100px;
+    }
+}
+
 #live-demo input:focus, #live-demo select:focus {
     border: 2px solid #007BFF;
     outline: none;
     background: #e9f0fa;
 }
+
 #live-demo button[type=submit] {
     background: linear-gradient(90deg,#007BFF 0%,#00c6ff 100%);
     color: #fff;
@@ -468,3 +531,194 @@ pre code {
     transition: color 0.2s;
 }
 .lightbox-close:hover { color: #00c6ff; }
+
+/* Enhanced styles for cross-browser compatibility */
+.demo-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    align-items: flex-start;
+    margin-bottom: 2em;
+}
+
+.predict-form-container {
+    flex: 1;
+    min-width: 300px;
+}
+
+.explanation-panel {
+    flex: 1;
+    min-width: 300px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+#factor-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+legend {
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.form-actions {
+    margin-top: 20px;
+}
+
+.disclaimer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #555;
+    max-width: 800px;
+    margin: 2em auto 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure lightbox is accessible */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.85);
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-caption {
+    color: white;
+    text-align: center;
+    margin-top: 1em;
+    font-size: 1em;
+    max-width: 90%;
+}
+
+.lightbox-close {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 2.5em;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    cursor: pointer;
+    padding: 10px;
+    line-height: 0.5;
+    box-shadow: none;
+}
+
+.lightbox-close:hover, .lightbox-close:focus {
+    color: #00c6ff;
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.focused {
+    outline: 3px solid rgba(0, 123, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* Show score breakdown by default to avoid FOUC */
+#score-breakdown {
+    display: block;
+}
+
+/* Better touch support for mobile */
+@media (pointer: coarse) {
+    button, 
+    input[type="button"], 
+    input[type="reset"], 
+    input[type="submit"],
+    select,
+    .lightbox-close {
+        min-height: 44px;
+    }
+    
+    nav ul li a {
+        padding: 10px 15px;
+    }
+}
+
+/* Form validation and hints */
+.form-hint {
+    display: block;
+    color: #6c757d;
+    font-size: 0.8em;
+    margin-top: 0.25rem;
+}
+
+/* Validation states */
+input:invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+input:valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* Reset button styling */
+button[type="reset"] {
+    background-color: #6c757d;
+    margin-left: 0.5rem;
+}
+
+button[type="reset"]:hover {
+    background-color: #5a6268;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+    .demo-container {
+        flex-direction: column;
+    }
+    
+    .form-panel,
+    .explanation-panel {
+        width: 100%;
+        margin: 0 0 1.5rem 0;
+    }
+    
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .form-actions button {
+        flex: 1;
+        margin: 0 0.25rem;
+    }
+    
+    /* Improve touch targets */
+    input[type="number"],
+    select,
+    button {
+        min-height: 44px;
+    }
+}

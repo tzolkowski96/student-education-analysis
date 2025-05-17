@@ -9,20 +9,26 @@ This project explores the factors influencing Portuguese students' aspirations f
 - [Methodology](#methodology)
 - [Key Results & Insights](#key-results--insights)
 - [Live Demo](#live-demo)
+- [Jupyter Notebooks](#jupyter-notebooks)
 - [How to Use](#how-to-use)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 
 ## Dataset
-- **Source:** [Kaggle: Student Alcohol Consumption](https://www.kaggle.com/uciml/student-alcohol-consumption)
+- **Primary Source:** [Kaggle: Student Alcohol Consumption](https://www.kaggle.com/uciml/student-alcohol-consumption)
+- **Original Source:** [UCI Machine Learning Repository: Student Performance](https://archive.ics.uci.edu/dataset/320/student+performance)
 - **Size:** 649 students, 33 attributes
+- **Data Collection Period:** 2005-2006
+- **Target Variable:** `higher` (yes/no) - Student's aspiration to pursue higher education
 - **Key Features:**
-  - `sex`: Gender
+  - `sex`: Gender (female/male)
   - `age`: 15–22 years
-  - `higher`: Aspiration for higher education
-  - `Walc`: Weekend alcohol consumption (1–5)
-  - `health`: Health status (1–5)
-  - `absences`: Number of school absences
+  - `Walc`: Weekend alcohol consumption (1–5 scale)
+  - `Dalc`: Workday alcohol consumption (1–5 scale)
+  - `health`: Health status (1–5 scale)
+  - `absences`: Number of school absences (0-93)
+  - `famrel`: Quality of family relationships (1-5 scale)
+  - `G1`, `G2`, `G3`: First, second, and final period grades
 
 ## Methodology
 1. **Exploratory Data Analysis (EDA):**
@@ -59,23 +65,42 @@ This project explores the factors influencing Portuguese students' aspirations f
 ## Live Demo
 An interactive demonstration of the model's predictions (using simplified logic for illustrative purposes) is available in the `index.html` file. Open this file in your web browser to try it out. You can also view the full project website by opening `index.html`.
 
+## Jupyter Notebooks
+To ensure transparency and reproducibility, this project includes detailed Jupyter notebooks that document the entire analysis process:
+
+- **[Data Exploration](notebooks/data_exploration.ipynb)**: Initial exploratory data analysis, visualizations, and statistical summaries.
+- **[Feature Engineering](notebooks/feature_engineering.ipynb)**: Creation of the Composite Risk Score and other derived features.
+- **[Model Training](notebooks/model_training.ipynb)**: Implementation and tuning of various machine learning models.
+- **[Model Evaluation](notebooks/model_evaluation.ipynb)**: Detailed evaluation metrics and performance analysis.
+- **[Data Insights](notebooks/data_insights.ipynb)**: Additional analysis of key relationships and findings.
+
+These notebooks provide a step-by-step walkthrough of the methodology and can be used to reproduce the analysis or explore alternative approaches.
+
 ## How to Use
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/tzolkowski96/student-education-analysis.git
-    cd student-education-analysis
+    git clone https://github.com/tzolkowski96/tzolkowski96.git
+    cd tzolkowski96/portuguese-students-higher-education-analysis
     ```
 2.  **View the Project Website & Demo:**
     Open `index.html` in your preferred web browser. This file contains the complete project report, visualizations, and the interactive demo.
-3.  **Explore the Code:**
+3.  **Explore the Notebooks:**
+    The Jupyter notebooks in the `notebooks` directory provide detailed documentation of the analysis process. To run them, you'll need Python with the following packages installed:
+    ```sh
+    pip install jupyter pandas numpy matplotlib seaborn scikit-learn xgboost imblearn plotly
+    ```
+4.  **Examine the Code:**
     -   Key Python code snippets demonstrating data loading, preprocessing, feature engineering, and model training are embedded within the `index.html` file in the "Code Samples" section.
     -   The JavaScript for the website interactivity (including the demo logic and visualizations) can be found in `assets/js/main.js`.
-    -   CSS styling is in `assets/css/style.css`.
+    -   CSS styling is in `assets/css/style.css`, with cross-browser compatibility enhancements in `assets/css/compatibility.css` and footer styling in `assets/css/footer-resources.css`.
+    -   Cross-browser compatibility tests can be found in `browser-test.html` and `cross-browser-compatibility.md`.
 
 ## Acknowledgements
-- Dataset: Kaggle
-- Project completed for L I S 706 — Data Mining Planning and Management, Spring 2022.
-- Thanks to the data science community for feedback and support.
+- **Original Dataset**: P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7.
+- **Kaggle Dataset Provider**: [UCI ML](https://www.kaggle.com/uciml) for making the data accessible on Kaggle
+- **Project Framework**: Completed for L I S 706 — Data Mining Planning and Management, Information M.S. program, Spring 2022.
+- **Libraries & Tools**: Thanks to the maintainers of pandas, scikit-learn, XGBoost, Matplotlib, Seaborn, and other open-source tools that made this analysis possible.
+- **Data Science Community**: For feedback, suggestions, and support throughout the development of this project.
 
 ## License
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.

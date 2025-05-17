@@ -1,120 +1,414 @@
 // Highlight.js initialization
-hljs.highlightAll();
+document.addEventListener('DOMContentLoaded', function() {
+    hljs.highlightAll();
 
-// Improved form validation and feedback for live demo
-window.addEventListener('DOMContentLoaded', function() {
-    const predictForm = document.getElementById('predict-form');
-    if (predictForm) {
-        predictForm.onsubmit = function(e) {
-            e.preventDefault();
-            const age = Number(document.getElementById('age').value);
-            const sex = document.getElementById('sex').value;
-            const walc = Number(document.getElementById('walc').value);
-            const health = Number(document.getElementById('health').value);
-            const absences = Number(document.getElementById('absences').value);
-            const resultDiv = document.getElementById('prediction-result');
-            // Validation
-            if (isNaN(age) || age < 15 || age > 22) {
-                resultDiv.textContent = 'Please enter a valid age (15-22).';
-                resultDiv.className = 'negative';
-                return;
-            }
-            if (isNaN(walc) || walc < 1 || walc > 5) {
-                resultDiv.textContent = 'Weekend alcohol consumption must be between 1 and 5.';
-                resultDiv.className = 'negative';
-                return;
-            }
-            if (isNaN(health) || health < 1 || health > 5) {
-                resultDiv.textContent = 'Health must be between 1 and 5.';
-                resultDiv.className = 'negative';
-                return;
-            }
-            if (isNaN(absences) || absences < 0 || absences > 93) {
-                resultDiv.textContent = 'Absences must be between 0 and 93.';
-                resultDiv.className = 'negative';
-                return;
-            }
-            let score = 0;
-            if (age <= 17) score += 2; else if (age <= 19) score += 1;
-            if (sex === 'female') score += 1;
-            if (walc <= 2) score += 1;
-            if (health >= 4) score += 1;
-            if (absences < 10) score += 2; else if (absences < 20) score += 1;
-            let result = score >= 5 ?
-                'Likely to Aspire to Higher Education' :
-                'Less Likely to Aspire to Higher Education';
-            resultDiv.textContent = result;
-            resultDiv.classList.remove('positive', 'negative');
-            setTimeout(() => {
-                resultDiv.classList.add(score >= 5 ? 'positive' : 'negative');
-            }, 50);
-        };
+    // Define updateFactorImpacts function first to avoid potential issues
+    function updateFactorImpacts() {
+        const age = Number(document.getElementById('age').value);
+        const sex = document.getElementById('sex').value;
+        const walc = Number(document.getElementById('walc').value);
+        const health = Number(document.getElementById('health').value);
+        const absences = Number(document.getElementById('absences').value);
+        
+        // Update age impact
+        const ageImpact = document.getElementById('age-impact');
+        if (age <= 17) {
+            ageImpact.textContent = 'Ages 15-17 have the strongest positive impact (+2 points)';
+            ageImpact.className = 'factor-impact positive-impact';
+        } else if (age <= 19) {
+            ageImpact.textContent = 'Ages 18-19 have a moderate positive impact (+1 point)';
+            ageImpact.className = 'factor-impact neutral-impact';
+        } else {
+            ageImpact.textContent = 'Ages 20+ have no positive impact (0 points)';
+            ageImpact.className = 'factor-impact negative-impact';
+        }
+        
+        // Update gender impact
+        const genderImpact = document.getElementById('gender-impact');
+        if (sex === 'female') {
+            genderImpact.textContent = 'Female students show slightly higher aspiration (+1 point)';
+            genderImpact.className = 'factor-impact positive-impact';
+        } else {
+            genderImpact.textContent = 'Male students have no additional impact (0 points)';
+            genderImpact.className = 'factor-impact neutral-impact';
+        }
+        
+        // Update alcohol impact
+        const walcImpact = document.getElementById('walc-impact');
+        if (walc <= 2) {
+            walcImpact.textContent = 'Lower consumption (1-2) correlates with higher aspiration (+1 point)';
+            walcImpact.className = 'factor-impact positive-impact';
+        } else {
+            walcImpact.textContent = 'Higher consumption (3-5) has no positive impact (0 points)';
+            walcImpact.className = 'factor-impact negative-impact';
+        }
+        
+        // Update health impact
+        const healthImpact = document.getElementById('health-impact');
+        if (health >= 4) {
+            healthImpact.textContent = 'Better health (4-5) positively influences aspiration (+1 point)';
+            healthImpact.className = 'factor-impact positive-impact';
+        } else {
+            healthImpact.textContent = 'Lower health scores (1-3) have no positive impact (0 points)';
+            healthImpact.className = 'factor-impact negative-impact';
+        }
+        
+        // Update absences impact
+        const absencesImpact = document.getElementById('absences-impact');
+        if (absences < 10) {
+            absencesImpact.textContent = 'Few absences (<10) strongly predict higher aspiration (+2 points)';
+            absencesImpact.className = 'factor-impact positive-impact';
+        } else if (absences < 20) {
+            absencesImpact.textContent = 'Moderate absences (10-19) have slight positive impact (+1 point)';
+            absencesImpact.className = 'factor-impact neutral-impact';
+        } else {
+            absencesImpact.textContent = 'High absences (20+) have no positive impact (0 points)';
+            absencesImpact.className = 'factor-impact negative-impact';
+        }
     }
 
-    // Lightbox functionality (single, accessible version)
+    // Enhanced form validation and feedback for live demo with visual explanations
+    const predictForm = document.getElementById('predict-form');
+    if (predictForm) {
+        // Initialize with default values
+        updateFactorImpacts();
+        
+        // Add form submission handler
+        predictForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values with input validation
+            const age = Math.max(15, Math.min(22, Number(document.getElementById('age').value) || 15));
+            const sex = document.getElementById('sex').value;
+            const walc = Math.max(1, Math.min(5, Number(document.getElementById('walc').value) || 1));
+            const health = Math.max(1, Math.min(5, Number(document.getElementById('health').value) || 1));
+            const absences = Math.max(0, Math.min(93, Number(document.getElementById('absences').value) || 0));
+            
+            // Get result div
+            const resultDiv = document.getElementById('prediction-result');
+            
+            // Calculate factors and their individual contributions
+            const scores = {
+                age: age <= 17 ? 2 : (age <= 19 ? 1 : 0),
+                sex: sex === 'female' ? 1 : 0,
+                walc: walc <= 2 ? 1 : 0,
+                health: health >= 4 ? 1 : 0,
+                absences: absences < 10 ? 2 : (absences < 20 ? 1 : 0)
+            };
+            
+            const totalScore = Object.values(scores).reduce((sum, val) => sum + val, 0);
+            const result = totalScore >= 5 ?
+                'Likely to Aspire to Higher Education' :
+                'Less Likely to Aspire to Higher Education';
+                
+            // Update the result display
+            resultDiv.textContent = result;
+            resultDiv.className = '';
+            resultDiv.style.backgroundColor = totalScore >= 5 ? 'rgba(40, 167, 69, 0.15)' : 'rgba(220, 53, 69, 0.15)';
+            resultDiv.style.color = totalScore >= 5 ? '#155724' : '#721c24';
+            resultDiv.style.border = totalScore >= 5 ? '1px solid rgba(40, 167, 69, 0.4)' : '1px solid rgba(220, 53, 69, 0.4)';
+            
+            // Update factor impacts based on input
+            updateFactorImpacts();
+            
+            // Show and update score breakdown
+            const scoreBreakdown = document.getElementById('score-breakdown');
+            scoreBreakdown.style.display = 'block';
+            
+            // Update total score display
+            document.getElementById('total-score').textContent = totalScore;
+            
+            // Generate score bars visualization
+            const scoreBarsDiv = document.getElementById('score-bars');
+            scoreBarsDiv.innerHTML = '';
+            
+            const factors = {
+                age: 'Age',
+                sex: 'Gender', 
+                walc: 'Weekend Alcohol',
+                health: 'Health',
+                absences: 'Absences'
+            };
+            
+            // Calculate max possible score for factor
+            const maxScores = {
+                age: 2,
+                sex: 1,
+                walc: 1,
+                health: 1,
+                absences: 2
+            };
+            
+            // Create score bars for each factor
+            for (const [key, label] of Object.entries(factors)) {
+                const barContainer = document.createElement('div');
+                barContainer.style.display = 'flex';
+                barContainer.style.alignItems = 'center';
+                barContainer.style.marginBottom = '8px';
+                
+                const labelSpan = document.createElement('span');
+                labelSpan.textContent = label + ':';
+                labelSpan.style.width = '120px';
+                labelSpan.style.fontSize = '0.85em';
+                
+                const barOuter = document.createElement('div');
+                barOuter.style.flex = '1';
+                barOuter.style.height = '12px';
+                barOuter.style.backgroundColor = '#e9ecef';
+                barOuter.style.borderRadius = '6px';
+                barOuter.style.overflow = 'hidden';
+                
+                const barInner = document.createElement('div');
+                barInner.style.width = `${(scores[key] / maxScores[key]) * 100}%`;
+                barInner.style.height = '100%';
+                barInner.style.backgroundColor = scores[key] > 0 ? '#007bff' : '#e9ecef';
+                barInner.style.transition = 'width 0.3s ease-in-out';
+                
+                const scoreText = document.createElement('span');
+                scoreText.textContent = `${scores[key]}/${maxScores[key]}`;
+                scoreText.style.marginLeft = '8px';
+                scoreText.style.fontSize = '0.85em';
+                
+                barOuter.appendChild(barInner);
+                barContainer.appendChild(labelSpan);
+                barContainer.appendChild(barOuter);
+                barContainer.appendChild(scoreText);
+                scoreBarsDiv.appendChild(barContainer);
+            }
+        });
+        
+        // Add input event listeners to update explanations in real-time
+        document.getElementById('age').addEventListener('input', updateFactorImpacts);
+        document.getElementById('sex').addEventListener('change', updateFactorImpacts);
+        document.getElementById('walc').addEventListener('input', updateFactorImpacts);
+        document.getElementById('health').addEventListener('input', updateFactorImpacts);
+        document.getElementById('absences').addEventListener('input', updateFactorImpacts);
+        
+        // Simulate a form submission with default values to show initial prediction
+        document.querySelector('#predict-form button[type="submit"]').click();
+
+        // Add enhanced input validation for all numeric fields
+        document.querySelectorAll('#predict-form input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                // Get min and max values from attributes
+                const min = parseInt(this.getAttribute('min') || 0, 10);
+                const max = parseInt(this.getAttribute('max') || 100, 10);
+                let value = parseInt(this.value, 10);
+                
+                // Validate and correct input
+                if (isNaN(value)) {
+                    this.value = min;
+                } else if (value < min) {
+                    this.value = min;
+                } else if (value > max) {
+                    this.value = max;
+                }
+            });
+        });
+        
+        // Add form reset functionality
+        const resetButton = document.querySelector('#predict-form button[type="reset"]');
+        if (resetButton) {
+            resetButton.addEventListener('click', function() {
+                // Wait for form to reset with default values
+                setTimeout(() => {
+                    updateFactorImpacts();
+                    document.querySelector('#predict-form button[type="submit"]').click();
+                }, 10);
+            });
+        }
+        
+        // Hide prediction result initially until form is submitted
+        const initialResult = document.getElementById('prediction-result');
+        if (initialResult) {
+            initialResult.style.display = 'none';
+        }
+    }
+    
+    // Show the prediction result after form submission
+    document.addEventListener('submit', function(e) {
+        if (e.target.id === 'predict-form') {
+            const resultDiv = document.getElementById('prediction-result');
+            if (resultDiv) {
+                resultDiv.style.display = 'block';
+                
+                // Add animation for better user experience
+                resultDiv.classList.add('fade-in');
+                
+                // Scroll to the result if not visible
+                setTimeout(() => {
+                    if (!isElementInViewport(resultDiv)) {
+                        resultDiv.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 300);
+            }
+        }
+    });
+
+    // Lightbox functionality (enhanced, accessible version)
     (function() {
-        const lightbox = document.createElement('div');
-        lightbox.className = 'lightbox';
-        lightbox.innerHTML = '<span class="lightbox-close" tabindex="0" aria-label="Close image">&times;</span><img src="" alt="Expanded visualization">';
-        document.body.appendChild(lightbox);
+        const lightbox = document.querySelector('.lightbox');
+        if (!lightbox) return; // Skip if lightbox doesn't exist
+        
         const lightboxImg = lightbox.querySelector('img');
         const closeBtn = lightbox.querySelector('.lightbox-close');
-        function closeLightbox() { lightbox.style.display = 'none'; lightboxImg.src = ''; }
-        closeBtn.onclick = closeLightbox;
-        closeBtn.onkeydown = function(e) { if (e.key === 'Enter' || e.key === ' ') closeLightbox(); };
-        lightbox.onclick = function(e) { if (e.target === lightbox) closeLightbox(); };
-        document.querySelectorAll('.visual-insights img, .visual-insights .fade-in img').forEach(img => {
+        const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+        
+        function closeLightbox() { 
+            lightbox.style.display = 'none'; 
+            lightboxImg.src = ''; 
+            if (lightboxCaption) lightboxCaption.textContent = '';
+            
+            // Return focus to the element that triggered the lightbox
+            if (window.lastFocusedElement) {
+                window.lastFocusedElement.focus();
+                window.lastFocusedElement = null;
+            }
+        }
+        
+        // Close button handler
+        if (closeBtn) {
+            closeBtn.onclick = closeLightbox;
+            closeBtn.onkeydown = function(e) { 
+                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+                    e.preventDefault();
+                    closeLightbox(); 
+                }
+            };
+        }
+        
+        // Background click handler
+        lightbox.onclick = function(e) { 
+            if (e.target === lightbox) closeLightbox(); 
+        };
+        
+        // Escape key handler
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+                closeLightbox();
+            }
+        });
+        
+        // Make all images in visualization sections lightbox-enabled
+        const allImages = document.querySelectorAll('.visual-insights img, .visual-insights .fade-in img');
+        allImages.forEach(img => {
             img.style.cursor = 'zoom-in';
             img.tabIndex = 0;
-            img.setAttribute('aria-label', 'Expand image');
+            img.setAttribute('aria-label', img.alt + '. Click to expand image');
+            
             img.onclick = function() {
+                window.lastFocusedElement = this;
                 lightboxImg.src = this.src;
                 lightboxImg.alt = this.alt;
+                if (lightboxCaption) lightboxCaption.textContent = this.alt;
                 lightbox.style.display = 'flex';
                 closeBtn.focus();
             };
+            
             img.onkeydown = function(e) {
-                if (e.key === 'Enter' || e.key === ' ') this.onclick();
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.onclick();
+                }
             };
         });
     })();
 
-    // Accessibility: Add alt text to all images and lazy loading
+    // Accessibility and cross-browser enhancements
+    
+    // Enhanced alt text for all images and lazy loading
     document.querySelectorAll('img').forEach(function(img) {
         if (!img.alt || img.alt.trim() === '') {
             img.alt = 'Data visualization related to student education analysis';
         }
-        img.setAttribute('loading', 'lazy');
+        
+        // Only add lazy loading to images below the fold
+        if (!isElementInViewport(img)) {
+            img.setAttribute('loading', 'lazy');
+        }
+        
+        // Add onerror handler to deal with broken images
+        img.onerror = function() {
+            this.style.display = 'none'; // Hide broken images
+            
+            // Create a fallback element to show in place of broken image
+            const fallback = document.createElement('div');
+            fallback.className = 'image-fallback';
+            fallback.textContent = 'Image unavailable';
+            this.parentNode.insertBefore(fallback, this.nextSibling);
+        };
     });
 
-    // Smooth scroll for navigation links
+    // Improved smooth scroll for navigation links with fallback
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                // Check for scroll behavior support
+                if ('scrollBehavior' in document.documentElement.style) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth', 
+                        block: 'start'
+                    });
+                } else {
+                    // Fallback for browsers that don't support smooth scrolling
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo(0, targetPosition);
+                }
+                
+                // Set focus to the target for better accessibility
+                targetElement.setAttribute('tabindex', '-1');
+                targetElement.focus();
+                
+                // Update URL hash without jumping
+                history.pushState(null, null, targetId);
+            }
         });
     });
 
-    // Show "Back to Top" button when scrolling down
-    window.onscroll = function() {
-        const backToTopButton = document.querySelector('.back-to-top');
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            backToTopButton.style.display = 'block';
+    // Enhanced "Back to Top" button with visibility toggle
+    const backToTopButton = document.querySelector('.back-to-top');
+    if (backToTopButton) {
+        // Initially hide the button
+        backToTopButton.style.display = 'none';
+        
+        // Performance-optimized scroll listener with throttling
+        let lastScrollTime = 0;
+        window.addEventListener('scroll', function() {
+            const now = Date.now();
+            
+            // Only run every 100ms for better performance
+            if (now - lastScrollTime > 100) {
+                lastScrollTime = now;
+                
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    // Scroll to the top function with smooth animation
+    window.scrollToTop = function() {
+        if ('scrollBehavior' in document.documentElement.style) {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         } else {
-            backToTopButton.style.display = 'none';
+            // Fallback for browsers without smooth scrolling
+            window.scrollTo(0, 0);
         }
     };
-
-    // Scroll to the top of the document
-    window.scrollToTop = function() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    };
-
-    // Plotly Feature Importance Bar Chart
-    if (document.getElementById('feature-importance-plot')) {
+    
+    // Plotly Feature Importance Bar Chart with responsive settings
+    const featureImportancePlot = document.getElementById('feature-importance-plot');
+    if (featureImportancePlot) {
         Plotly.newPlot('feature-importance-plot', [{
             x: ['Absences', 'Age', 'Walc', 'Health', 'Composite Risk Score'],
             y: [0.28, 0.22, 0.18, 0.15, 0.17],
@@ -127,6 +421,30 @@ window.addEventListener('DOMContentLoaded', function() {
             margin: { t: 60, l: 60, r: 30, b: 60 },
             plot_bgcolor: '#fff',
             paper_bgcolor: '#fff',
-        }, {displayModeBar: false, responsive: true});
+            autosize: true,
+            font: {
+                family: "'Inter', 'Segoe UI', Arial, sans-serif"
+            }
+        }, {
+            displayModeBar: false, 
+            responsive: true,
+            useResizeHandler: true
+        });
+        
+        // Make the plot responsive to container changes
+        window.addEventListener('resize', function() {
+            Plotly.Plots.resize(featureImportancePlot);
+        });
+    }
+    
+    // Helper function to check if element is in viewport
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
     }
 });

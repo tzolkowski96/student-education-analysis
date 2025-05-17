@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-Browser Compatibility Test</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/compatibility.css">
+    <script src="assets/js/compatibility.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        button {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .device-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .device {
+            padding: 5px 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cross-Browser Compatibility Test</h1>
+    
+    <div class="test-section">
+        <h2>Browser Detection</h2>
+        <p>Current browser: <span id="current-browser">Detecting...</span></p>
+        <p>Platform: <span id="current-platform">Detecting...</span></p>
+        <p>Viewport: <span id="viewport-size">Detecting...</span></p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Flexbox Test</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <div style="flex: 1; min-width: 200px; padding: 10px; background: #e9f0fa;">Flex Item 1</div>
+            <div style="flex: 1; min-width: 200px; padding: 10px; background: #e9f0fa;">Flex Item 2</div>
+            <div style="flex: 1; min-width: 200px; padding: 10px; background: #e9f0fa;">Flex Item 3</div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Form Elements Test</h2>
+        <form>
+            <div style="margin-bottom: 10px;">
+                <label for="test-input">Number Input:</label>
+                <input type="number" id="test-input" min="1" max="10" value="5">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label for="test-select">Select Input:</label>
+                <select id="test-select">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
+            </div>
+            <button type="button">Test Button</button>
+        </form>
+    </div>
+    
+    <div class="test-section">
+        <h2>CSS Features Test</h2>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <div style="flex: 1; padding: 10px; background: rgba(0,123,255,0.1); backdrop-filter: blur(5px);">
+                Backdrop Filter
+            </div>
+            <div style="flex: 1; padding: 10px; background: linear-gradient(90deg, #007bff, #00c6ff);">
+                Gradient
+            </div>
+            <div style="flex: 1; padding: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                Box Shadow
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Supported Devices</h2>
+        <p>This site has been tested on the following devices:</p>
+        <div class="device-list">
+            <span class="device">Desktop Chrome</span>
+            <span class="device">Desktop Firefox</span>
+            <span class="device">Desktop Safari</span>
+            <span class="device">Desktop Edge</span>
+            <span class="device">Mobile Chrome (Android)</span>
+            <span class="device">Mobile Safari (iOS)</span>
+            <span class="device">Tablet Chrome</span>
+            <span class="device">Tablet Safari</span>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Start Testing</h2>
+        <p>Click the button below to enable the cross-browser testing utilities:</p>
+        <button onclick="loadTestingTools()">Start Testing Tool</button>
+    </div>
+    
+    <script>
+        // Update browser detection
+        function updateBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browserName = "Unknown";
+            let platform = "Unknown";
+            
+            // Browser detection
+            if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edg') === -1 && ua.indexOf('OPR') === -1) {
+                browserName = 'Chrome';
+            } else if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1) {
+                browserName = 'Safari';
+            } else if (ua.indexOf('Firefox') > -1) {
+                browserName = 'Firefox';
+            } else if (ua.indexOf('Edg') > -1) {
+                browserName = 'Edge';
+            } else if (ua.indexOf('OPR') > -1 || ua.indexOf('Opera') > -1) {
+                browserName = 'Opera';
+            } else if (ua.indexOf('Trident') > -1) {
+                browserName = 'Internet Explorer';
+            }
+            
+            // Platform detection
+            if (/Mobi|Android/i.test(ua)) {
+                if (/iPad|iPhone|iPod/.test(ua)) {
+                    platform = 'iOS Mobile';
+                } else if (/Android/.test(ua)) {
+                    platform = 'Android Mobile';
+                } else {
+                    platform = 'Mobile';
+                }
+            } else {
+                if (/Win/.test(ua)) {
+                    platform = 'Windows Desktop';
+                } else if (/Mac/.test(ua)) {
+                    platform = 'macOS Desktop';
+                } else if (/Linux/.test(ua)) {
+                    platform = 'Linux Desktop';
+                } else {
+                    platform = 'Desktop';
+                }
+            }
+            
+            document.getElementById('current-browser').textContent = browserName;
+            document.getElementById('current-platform').textContent = platform;
+            document.getElementById('viewport-size').textContent = `${window.innerWidth}px × ${window.innerHeight}px`;
+        }
+        
+        // Load testing tools
+        function loadTestingTools() {
+            const script = document.createElement('script');
+            script.src = 'assets/js/cross-browser-testing.js';
+            document.body.appendChild(script);
+        }
+        
+        // Update info on load and resize
+        window.addEventListener('DOMContentLoaded', updateBrowserInfo);
+        window.addEventListener('resize', function() {
+            document.getElementById('viewport-size').textContent = `${window.innerWidth}px × ${window.innerHeight}px`;
+        });
+    </script>
+</body>
+</html>

@@ -2,17 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Data Mining Project: Continuing Education Interests</title>
+    <meta name="description" content="Analysis of factors influencing Portuguese students' higher education aspirations">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23007BFF'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='white' font-family='Georgia'>D</text></svg>">
-    <!-- Add Google Fonts for a modern, professional look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Add Google Fonts for a modern, professional look with font-display:swap for better loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Mono:wght@400;500&display=swap&font-display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="assets/css/compatibility.css">
+    <link rel="stylesheet" href="assets/css/footer-resources.css">
+    <link rel="stylesheet" href="assets/css/additional-fixes.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-    <script src="assets/js/main.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { hljs.highlightAll(); });</script>
+    <script src="assets/js/compatibility.js"></script>
+    <script src="assets/js/main.js" defer></script>
 </head>
 <body>
     <header>
@@ -40,7 +46,31 @@
     <section id="overview">
         <h2>Project Overview</h2>
         <p><i class="icon" aria-hidden="true">&#128204;</i> <strong>Objective:</strong> Have you ever wondered what drives students to pursue higher education—and what factors might influence their choices along the way? In this project, I set out to predict whether Portuguese students interested in continuing their education are also more likely to consume alcohol. To do this, I dove into a rich dataset, exploring everything from demographics (like age and gender) to academic performance and social habits.</p>
-        <p><i class="icon" aria-hidden="true">&#128204;</i> <strong>Dataset Source:</strong> The data for this project comes from <a href="https://www.kaggle.com/uciml/student-alcohol-consumption" target="_blank">Kaggle's Student Alcohol Consumption</a> dataset. This resource offers a fascinating look at the lives of students enrolled in Portuguese language courses, capturing a wide range of variables that help paint a detailed picture of their academic and personal lives.</p>
+        
+        <div class="data-source-meta">
+            <i class="icon" aria-hidden="true">&#128193;</i>
+            <div class="source-details">
+                <div class="source-title">Dataset: Student Alcohol Consumption</div>
+                <div class="source-description">This dataset contains social, demographic and school-related features about students with a focus on alcohol consumption habits.</div>
+                <p>
+                    <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption" target="_blank" rel="noopener">Kaggle Dataset<span class="data-badge">649 students</span></a> | 
+                    <a href="https://archive.ics.uci.edu/dataset/320/student+performance" target="_blank" rel="noopener">UCI ML Repository<span class="data-badge">Original Source</span></a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="data-source-meta">
+            <i class="icon" aria-hidden="true">&#128187;</i>
+            <div class="source-details">
+                <div class="source-title">Source Code & Analysis</div>
+                <div class="source-description">Complete project codebase with detailed Jupyter notebook showing the entire analysis process.</div>
+                <p>
+                    <a href="https://github.com/tzolkowski96/tzolkowski96/tree/main/portuguese-students-higher-education-analysis" target="_blank" rel="noopener">GitHub Repository<span class="data-badge">Source Code</span></a> |
+                    <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/Machine%20learning%20project_%20Portuguese%20students'%20interests%20in%20continuing%20education%20and%20their%20drinking%20habits.ipynb" target="_blank" rel="noopener">Jupyter Notebook<span class="data-badge">Data Analysis</span></a>
+                </p>
+            </div>
+        </div>
+        
         <p>Throughout this journey, my goal was to uncover meaningful patterns and insights that could help educators, parents, and policymakers better understand the factors shaping students' aspirations—and perhaps even inform strategies to support them on their educational paths.</p>
     </section>
 
@@ -349,12 +379,12 @@
             <div class="fade-in">
                 <h3>Distribution of Composite Risk Score</h3>
                 <img src="assets/images/image_47.png" alt="Distribution of Composite Risk Score">
-                <p>This histogram shows the distribution of the custom-engineered 'Composite Risk Score'. The score tends to be lower for most students, indicating lower risk according to the combined factors of absences, alcohol consumption, and health.</p>
+                <p>This histogram shows the distribution of the custom-engineered 'Composite Risk Score'. The score tends to be lower for most students, indicating lower risk according to the combined factors of absences, alcohol consumption, and health. <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/Machine%20learning%20project_%20Portuguese%20students'%20interests%20in%20continuing%20education%20and%20their%20drinking%20habits.ipynb" target="_blank" rel="noopener"><span class="data-badge">View Analysis</span></a></p>
             </div>
             <div class="fade-in">
                 <h3>Composite Risk Score vs. Higher Education Aspiration</h3>
                 <img src="assets/images/image_48.png" alt="Composite Risk Score vs. Higher Education Aspiration">
-                <p>This chart demonstrates the utility of the 'Composite Risk Score'. Students with lower risk scores are overwhelmingly interested in higher education. As the risk score increases, the proportion of students not interested in higher education rises, making it a useful indicator.</p>
+                <p>This chart demonstrates the utility of the 'Composite Risk Score'. Students with lower risk scores are overwhelmingly interested in higher education. As the risk score increases, the proportion of students not interested in higher education rises, making it a useful indicator. <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/Machine%20learning%20project_%20Portuguese%20students'%20interests%20in%20continuing%20education%20and%20their%20drinking%20habits.ipynb" target="_blank" rel="noopener"><span class="data-badge">View Analysis</span></a></p>
             </div>
         </div>
     </section>
@@ -362,6 +392,17 @@
     <section id="code-samples">
         <h2>Code Samples & Technical Walkthrough</h2>
         <p>This section provides a glimpse into the technical execution of the project. Below are illustrative snippets representing key stages of the data analysis pipeline. The full project code, of course, involves more extensive scripting and detailed implementation.</p>
+        
+        <div class="data-source-meta">
+            <i class="icon" aria-hidden="true">&#128218;</i>
+            <div class="source-details">
+                <div class="source-title">Complete Code & Notebook</div>
+                <div class="source-description">For a deeper understanding, you can explore the full implementation in the project repository:</div>
+                <p>
+                    <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/Machine%20learning%20project_%20Portuguese%20students'%20interests%20in%20continuing%20education%20and%20their%20drinking%20habits.ipynb" target="_blank" rel="noopener">Complete Jupyter Notebook<span class="data-badge">EDA</span><span class="data-badge">Processing</span><span class="data-badge">ML</span></a>
+                </p>
+            </div>
+        </div>
 
         <h3>1. Data Loading and Initial Exploration (Python)</h3>
         <p>The first step involved loading the dataset using Pandas and performing initial exploratory data analysis (EDA) to understand its structure, identify data types, and get a first look at distributions.</p>
@@ -393,34 +434,54 @@ plt.show()
         <p>Data preprocessing was crucial. This involved encoding all relevant categorical variables (e.g., 'sex', 'address', 'school') into numerical format, typically using techniques like one-hot encoding, to ensure the feature set <code>X</code> was entirely numeric. Subsequently, class imbalances for the target variable ('higher') were addressed, for instance, using SMOTE. I also engineered new features like the 'Composite Risk Score'.</p>
         <pre><code class="language-python">
 # Python snippet for one-hot encoding and SMOTE
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder # OneHotEncoder might be used for non-binary categoricals
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, MinMaxScaler
 from imblearn.over_sampling import SMOTE
 import numpy as np
-import pandas as pd # Assuming df is a pandas DataFrame
+import pandas as pd
 
-# Example: Encoding a binary categorical variable 'higher'
+# Load preprocessed data
+df = pd.read_csv('student_data.csv')
+
+# Encode binary target variable 'higher'
 le = LabelEncoder()
 df['higher_encoded'] = le.fit_transform(df['higher'])
 
-# Example: Creating 'Composite Risk Score' (conceptual)
-# Actual calculation would depend on scaling and combining features like 'absences', 'Walc', 'health'
-# Assuming 'absences_scaled', 'Walc_scaled', 'health_scaled' are pre-calculated scaled versions
-# df['composite_risk_score'] = (df['absences_scaled'] + df['Walc_scaled'] + (5 - df['health_scaled'])) / 3
+# Create Composite Risk Score by scaling and combining key risk factors
+# First scale the relevant features to a common range (0-1)
+scaler = MinMaxScaler()
+risk_features = df[['absences', 'Walc', 'health']]
+scaled_features = scaler.fit_transform(risk_features)
 
-# Separating features (X) and target (y)
-# Ensure 'df' at this stage has all necessary features and 'higher_encoded'
-# X would typically be df.drop(['higher', 'higher_encoded', possibly other raw categoricals if not yet processed], axis=1)
-# For SMOTE, X must be entirely numeric.
-# Conceptual: Assume X_processed is the fully numeric feature set after all encodings.
-# y_processed = df['higher_encoded']
+# Create a DataFrame with scaled values for better readability
+scaled_df = pd.DataFrame(
+    scaled_features, 
+    columns=['absences_scaled', 'Walc_scaled', 'health_scaled']
+)
 
+# Higher score = higher risk (note we invert health since higher health = lower risk)
+df['composite_risk_score'] = (
+    scaled_df['absences_scaled'] + 
+    scaled_df['Walc_scaled'] + 
+    (1 - scaled_df['health_scaled'])
+) / 3
 
-# Handling class imbalance using SMOTE
-# smote = SMOTE(random_state=42)
-# X_resampled, y_resampled = smote.fit_resample(X_processed, y_processed) # Apply to fully numeric data
+# Prepare features (X) and target (y) for modeling
+X = df.drop(['higher', 'higher_encoded'], axis=1)
+y = df['higher_encoded']
 
-# print(f"Shape before SMOTE (conceptual): {X_processed.shape}, {y_processed.shape}")
-# print(f"Shape after SMOTE (conceptual): {X_resampled.shape}, {y_resampled.shape}")
+# One-hot encode categorical variables
+categorical_cols = ['sex', 'address', 'famsize', 'Pstatus', 'Mjob', 
+                    'Fjob', 'reason', 'guardian', 'schoolsup', 'famsup']
+X = pd.get_dummies(X, columns=categorical_cols, drop_first=True)
+
+print(f"Shape before SMOTE: {X.shape}, {y.shape}")
+
+# Apply SMOTE to handle class imbalance
+smote = SMOTE(random_state=42)
+X_resampled, y_resampled = smote.fit_resample(X, y)
+
+print(f"Shape after SMOTE: {X_resampled.shape}, {y_resampled.shape}")
+print(f"Class distribution after SMOTE: {np.bincount(y_resampled)}")
         </code></pre>
         <p><em>This illustrates the use of Scikit-learn for encoding and Imbalanced-learn for SMOTE to ensure fair model training. Feature engineering steps, like creating the composite score, were also performed here.</em></p>
 
@@ -431,44 +492,60 @@ df['higher_encoded'] = le.fit_transform(df['higher'])
 from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, roc_auc_score, accuracy_score
-# import xgboost as xgb # Uncomment if showing XGBoost
+import xgboost as xgb
+import matplotlib.pyplot as plt
 
-# Assuming X_resampled and y_resampled are from the SMOTE step
-# And X_resampled contains only numeric features after preprocessing
-X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
-# Further split X_test and y_test for a validation set if needed
+# Split data into training and testing sets (80-20 split)
+X_train, X_test, y_train, y_test = train_test_split(
+    X_resampled, y_resampled, test_size=0.2, random_state=42
+)
 
-# RandomForest Classifier
+# Initialize the Random Forest Classifier
 rf_model = RandomForestClassifier(random_state=42)
 
-# Example Hyperparameter Grid for RandomizedSearchCV (can be extensive)
+# Define hyperparameter search space
 param_dist_rf = {
     'n_estimators': [50, 85, 100, 150],
     'max_depth': [5, 10, 15, None],
     'min_samples_split': [2, 5, 10],
     'min_samples_leaf': [1, 2, 4]
 }
-# random_search_rf = RandomizedSearchCV(rf_model, param_distributions=param_dist_rf, n_iter=10, cv=5, random_state=42, n_jobs=-1)
-# random_search_rf.fit(X_train, y_train)
-# best_rf_model = random_search_rf.best_estimator_
 
-# For simplicity, fitting with default or pre-selected best params:
-# best_rf_model = RandomForestClassifier(n_estimators=85, max_depth=10, random_state=42, ...) # Example
-best_rf_model.fit(X_train, y_train)
+# Perform hyperparameter tuning using RandomizedSearchCV
+random_search_rf = RandomizedSearchCV(
+    rf_model, 
+    param_distributions=param_dist_rf,
+    n_iter=10,
+    cv=5,
+    scoring='roc_auc',
+    random_state=42,
+    n_jobs=-1
+)
+
+# Fit the RandomizedSearchCV object to find the best parameters
+random_search_rf.fit(X_train, y_train)
+best_rf_model = random_search_rf.best_estimator_
+
+print(f"Best parameters found: {random_search_rf.best_params_}")
+
+# Make predictions with the tuned model
 y_pred_test = best_rf_model.predict(X_test)
 y_pred_proba_test = best_rf_model.predict_proba(X_test)[:, 1]
 
+# Evaluate the model performance
 print("Random Forest Test Set Performance:")
 print(f"Accuracy: {accuracy_score(y_test, y_pred_test):.4f}")
 print(f"AUC Score: {roc_auc_score(y_test, y_pred_proba_test):.4f}")
 print(classification_report(y_test, y_pred_test))
 
-# Feature Importance (example for RandomForest)
+# Extract and visualize feature importances
 importances = best_rf_model.feature_importances_
-feature_names = X_train.columns # Ensure this matches columns used for training
+feature_names = X_train.columns
 sorted_indices = np.argsort(importances)[::-1]
 
-print("\\nTop 10 Feature Importances:")
+print("\nTop 10 Feature Importances:")
+for i in range(min(10, len(importances))):
+    print(f"{feature_names[sorted_indices[i]]}: {importances[sorted_indices[i]]:.4f}")
 for i in range(min(10, len(importances))):
     print(f"{feature_names[sorted_indices[i]]}: {importances[sorted_indices[i]]:.4f}")
 
@@ -479,7 +556,7 @@ for i in range(min(10, len(importances))):
 
     <section id="model-insights">
         <h2>Model Insights & Interpretation</h2>
-        <p>The predictive modeling phase culminated in the XGBoost model demonstrating the highest performance, achieving an <strong>Area Under the ROC Curve (AUC) of 0.82</strong>. This indicates a strong capability to distinguish between students who aspire to higher education and those who do not.</p>
+        <p>The predictive modeling phase culminated in the XGBoost model demonstrating the highest performance, achieving an <strong>Area Under the ROC Curve (AUC) of 0.82</strong>. This indicates a strong capability to distinguish between students who aspire to higher education and those who do not. The full model evaluation metrics, including precision, recall, and F1-score, are available in the <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/Machine%20learning%20project_%20Portuguese%20students'%20interests%20in%20continuing%20education%20and%20their%20drinking%20habits.ipynb" target="_blank" rel="noopener">complete notebook</a>.</p>
         <p>The feature importance analysis from the XGBoost model (visualized in the "Feature Engineering" section) revealed several key factors influencing students' higher education aspirations:</p>
         <ul>
             <li><strong>Absences:</strong> This was a highly significant predictor. A higher number of absences often correlates with lower academic engagement and performance, which can understandably dampen aspirations for further studies. It may signal underlying issues that need attention.</li>
@@ -523,6 +600,7 @@ for i in range(min(10, len(importances))):
             <li><strong>Intervention Strategies:</strong> Designing and testing targeted intervention programs based on the identified risk factors (e.g., support for students with high absences or specific health concerns) could be a practical application.</li>
             <li><strong>Broader Datasets:</strong> Incorporating data from diverse student populations and geographical locations would enhance the generalizability of the findings.</li>
             <li><strong>Advanced Feature Engineering:</strong> Exploring more complex interaction terms or deriving features from unstructured data (if available, e.g., student essays) could yield further improvements.</li>
+            <li><strong>Open Collaboration:</strong> I welcome collaborations and contributions to this project. Feel free to <a href="https://github.com/tzolkowski96/tzolkowski96/issues" target="_blank" rel="noopener">open an issue</a> or submit a pull request on GitHub with suggestions or improvements.</li>
         </ul>
         <p>In conclusion, this project serves as a solid foundation for understanding the multifaceted influences on students' educational paths. By continuing to refine these analytical approaches and exploring new data, we can better support students in achieving their academic goals.</p>
     </section>
@@ -539,43 +617,106 @@ for i in range(min(10, len(importances))):
 
     <section id="live-demo">
         <h2>Try the Model: Live Prediction Demo</h2>
-        <form id="predict-form" aria-label="Live prediction form" style="max-width:500px;margin:auto;" autocomplete="on">
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" min="15" max="22" required aria-required="true" aria-label="Student age"><br>
-            <label for="sex">Gender:</label>
-            <select id="sex" name="sex" required aria-required="true" aria-label="Student gender">
-                <option value="female">Female</option>
-                <option value="male">Male</option>
-            </select><br>
-            <label for="walc">Weekend Alcohol Consumption (1-5):</label>
-            <input type="number" id="walc" name="walc" min="1" max="5" required aria-required="true" aria-label="Weekend alcohol consumption"><br>
-            <label for="health">Health (1-5):</label>
-            <input type="number" id="health" name="health" min="1" max="5" required aria-required="true" aria-label="Health status"><br>
-            <label for="absences">Absences:</label>
-            <input type="number" id="absences" name="absences" min="0" max="93" required aria-required="true" aria-label="Number of absences"><br>
-            <button type="submit" aria-label="Predict aspiration">Predict Aspiration</button>
-        </form>
-        <div id="prediction-result" style="margin-top:1em;font-weight:bold;text-align:center;" aria-live="polite"></div>
-        <p style="text-align:center;font-size:0.9em;color:#555;"><strong>Note:</strong> This interactive demo employs a simplified rule-based logic for illustrative purposes, reflecting some key factors identified by the model. For the actual machine learning model implementation and comprehensive predictions, please refer to the <a href="https://github.com/tzolkowski96/student-education-analysis" target="_blank">project code on GitHub</a>.</p>
+        <p>This interactive demo allows you to test how our model's key factors influence the prediction of a student's aspiration for higher education. Enter values for each parameter below to see the results.</p>
+        
+        <div class="data-source-meta">
+            <i class="icon" aria-hidden="true">&#9989;</i>
+            <div class="source-details">
+                <div class="source-title">Model Methodology</div>
+                <div class="source-description">This interactive demo is based on insights from the full machine learning analysis, simplified for educational purposes. The actual model uses more sophisticated techniques including XGBoost with hyperparameter tuning.</div>
+                <p>
+                    <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/Machine%20learning%20project_%20Portuguese%20students'%20interests%20in%20continuing%20education%20and%20their%20drinking%20habits.ipynb" target="_blank" rel="noopener">View Complete Notebook<span class="data-badge">Full Analysis</span></a> | 
+                    <a href="https://github.com/tzolkowski96/student-education-analysis/tree/main/assets/js/main.js" target="_blank" rel="noopener">View Demo Implementation<span class="data-badge">JavaScript</span></a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="demo-container">
+            <form id="predict-form" aria-label="Live prediction form" class="predict-form-container" autocomplete="on">
+                <fieldset>
+                    <legend>Enter Student Data</legend>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="15" max="22" required aria-required="true" aria-label="Student age" value="16">
+                    </div>
+                    <div class="form-group">
+                        <label for="sex">Gender:</label>
+                        <select id="sex" name="sex" required aria-required="true" aria-label="Student gender">
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="walc">Weekend Alcohol Consumption (1-5):</label>
+                        <input type="number" id="walc" name="walc" min="1" max="5" required aria-required="true" aria-label="Weekend alcohol consumption" value="2" aria-describedby="walc-hint">
+                        <small id="walc-hint" class="form-hint">1=very low to 5=very high</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="health">Health (1-5):</label>
+                        <input type="number" id="health" name="health" min="1" max="5" required aria-required="true" aria-label="Health status" value="4" aria-describedby="health-hint">
+                        <small id="health-hint" class="form-hint">1=very bad to 5=very good</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="absences">Absences:</label>
+                        <input type="number" id="absences" name="absences" min="0" max="93" required aria-required="true" aria-label="Number of absences" value="5" aria-describedby="absences-hint">
+                        <small id="absences-hint" class="form-hint">0-93 (school year total)</small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" aria-label="Predict aspiration">Predict Aspiration</button>
+                        <button type="reset" aria-label="Reset form to defaults">Reset</button>
+                    </div>
+                </fieldset>
+            </form>
+            
+            <div class="explanation-panel">
+                <h3>How the Prediction Works</h3>
+                <p>Our model assesses the likelihood of higher education aspiration based on five key factors:</p>
+                <ul id="factor-list">
+                    <li><span class="factor-name">Age:</span> <span class="factor-impact" id="age-impact">Ages 15-17 have the strongest positive impact</span></li>
+                    <li><span class="factor-name">Gender:</span> <span class="factor-impact" id="gender-impact">Female students show slightly higher aspiration in the dataset</span></li>
+                    <li><span class="factor-name">Weekend Alcohol:</span> <span class="factor-impact" id="walc-impact">Lower consumption (1-2) correlates with higher aspiration</span></li>
+                    <li><span class="factor-name">Health Status:</span> <span class="factor-impact" id="health-impact">Better health (4-5) positively influences aspiration</span></li>
+                    <li><span class="factor-name">Absences:</span> <span class="factor-impact" id="absences-impact">Fewer absences (&lt;10) strongly predict higher aspiration</span></li>
+                </ul>
+                <div id="score-breakdown">
+                    <h4>Prediction Score Breakdown:</h4>
+                    <div id="score-bars"></div>
+                    <p>Total Score: <span id="total-score">0</span>/6 (≥5 predicts higher education aspiration)</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="prediction-result" aria-live="polite"></div>
+        
+        <p class="disclaimer"><strong>Note:</strong> This interactive demo employs a simplified rule-based logic for illustrative purposes, reflecting key factors identified by the full machine learning model. For the comprehensive implementation, detailed notebook, and source code, please refer to the <a href="https://github.com/tzolkowski96/tzolkowski96/tree/main/portuguese-students-higher-education-analysis" target="_blank" rel="noopener">project repository on GitHub</a>.</p>
     </section>
 
     <footer>
-        <p>&copy; 2022 - <span id="current-year"></span> Tobin Zolkowski. All Rights Reserved.</p>
-        <p><em>This project was completed as part of L I S 706 — Data Mining Planning and Management, Information M.S. program, Spring 2022.</em></p>
-        <button onclick="scrollToTop()" class="back-to-top" title="Go to top" style="display:none;">Back to Top &uarr;</button>
+        <div class="footer-content">
+            <p>&copy; 2022 - <span id="current-year"></span> Tobin Zolkowski. All Rights Reserved.</p>
+            <p><em>This project was completed as part of L I S 706 — Data Mining Planning and Management, Information M.S. program, Spring 2022.</em></p>
+            <p><small>Last Updated: May 17, 2025</small></p>
+            <div class="footer-resources">
+                <p><strong>Data & Code:</strong> 
+                <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption" target="_blank" rel="noopener">Dataset on Kaggle</a> | 
+                <a href="https://archive.ics.uci.edu/dataset/320/student+performance" target="_blank" rel="noopener">UCI Repository</a> | 
+                <a href="https://github.com/tzolkowski96/tzolkowski96/tree/main/portuguese-students-higher-education-analysis" target="_blank" rel="noopener">GitHub Repository</a> | 
+                <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/Machine%20learning%20project_%20Portuguese%20students'%20interests%20in%20continuing%20education%20and%20their%20drinking%20habits.ipynb" target="_blank" rel="noopener">Jupyter Notebook</a>
+                </p>
+            </div>
+        </div>
+        <button onclick="scrollToTop()" class="back-to-top" title="Go to top" aria-label="Go back to top">Back to Top &uarr;</button>
     </footer>
 
-    <div class="lightbox" style="display:none;">
-        <span class="lightbox-close" tabindex="0" aria-label="Close image">&times;</span>
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview" tabindex="-1">
+        <button class="lightbox-close" aria-label="Close image">&times;</button>
         <img src="" alt="Expanded visualization">
+        <div class="lightbox-caption"></div>
     </div>
 
     <script>
         // Update current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
-        // Highlight.js initialization is in the head
-        // Other JS from main.js will also be active
     </script>
-    <!-- The main.js script is already included in the head -->
 </body>
 </html>
