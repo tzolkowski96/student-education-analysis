@@ -6,7 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Data Mining Project: Continuing Education Interests</title>
     <meta name="description" content="Analysis of factors influencing Portuguese students' higher education aspirations">
+    
+    <!-- Enhanced SEO and Social Media Meta Tags -->
+    <meta name="keywords" content="data science, machine learning, education analysis, XGBoost, student behavior, higher education, Portuguese students, predictive modeling, ethical AI">
+    <meta name="author" content="Tobin Zolkowski">
+    <meta property="og:title" content="Predicting Portuguese Students' Interest in Higher Education - Data Science Portfolio">
+    <meta property="og:description" content="Comprehensive machine learning analysis using XGBoost to predict student educational aspirations. Features statistical validation, ethical AI considerations, and interactive demo.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzolkowski96.github.io/student-education-analysis/">
+    <meta property="og:image" content="assets/images/project-preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Student Education Analysis - ML Portfolio Project">
+    <meta name="twitter:description" content="Advanced data science project analyzing factors influencing Portuguese students' higher education aspirations using XGBoost and ethical AI practices.">
+    
+    <!-- Performance and Accessibility -->
+    <meta name="theme-color" content="#007BFF">
+    <link rel="canonical" href="https://tzolkowski96.github.io/student-education-analysis/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.plot.ly">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23007BFF'/><text x='50' y='60' font-size='50' text-anchor='middle' fill='white' font-family='Georgia'>D</text></svg>">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Education Analysis">
+    
     <!-- Add Google Fonts for a modern, professional look with font-display:swap for better loading -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Mono:wght@400;500&display=swap&font-display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -963,19 +989,59 @@ train_test_split(..., random_state=RANDOM_SEED)
                     <div id="score-bars"></div>
                     <p>Total Score: <span id="total-score">0</span>/6 (≥5 predicts higher education aspiration)</p>
                 </div>
+                
+                <!-- Enhanced Visualization Chart -->
+                <div id="prediction-chart" class="chart-container">
+                    <h4>Real-time Prediction Visualization</h4>
+                    <div id="prediction-gauge" style="height: 300px;"></div>
+                </div>
+                
+                <!-- Feature Comparison Chart -->
+                <div id="feature-comparison" class="chart-container">
+                    <h4>Your Profile vs. Dataset Average</h4>
+                    <div id="comparison-chart" style="height: 250px;"></div>
+                </div>
             </div>
         </div>
         
-        <div id="prediction-result" aria-live="polite"></div>
+        <div id="prediction-result" aria-live="polite" role="status"></div>
+        
+        <!-- Enhanced Results Section -->
+        <div id="enhanced-results" class="enhanced-results-panel" style="display: none;">
+            <h3>Detailed Analysis Results</h3>
+            <div class="results-grid">
+                <div class="result-card">
+                    <h4>Prediction Confidence</h4>
+                    <div id="confidence-meter" class="confidence-meter">
+                        <div id="confidence-fill" class="confidence-fill"></div>
+                        <span id="confidence-text">0%</span>
+                    </div>
+                </div>
+                <div class="result-card">
+                    <h4>Risk Factors</h4>
+                    <ul id="risk-factors"></ul>
+                </div>
+                <div class="result-card">
+                    <h4>Recommendations</h4>
+                    <ul id="recommendations"></ul>
+                </div>
+            </div>
+        </div>
         
         <p class="disclaimer"><strong>Note:</strong> This interactive demo employs a simplified rule-based logic for illustrative purposes, reflecting key factors identified by the full machine learning model. For the comprehensive implementation, detailed notebook, and source code, please refer to the <a href="https://github.com/tzolkowski96/tzolkowski96/tree/main/portuguese-students-higher-education-analysis" target="_blank" rel="noopener">project repository on GitHub</a>.</p>
+        
+        <!-- Performance Monitoring -->
+        <div id="performance-metrics" class="performance-panel" style="display: none;">
+            <h4>Demo Performance Metrics</h4>
+            <p>Prediction Time: <span id="prediction-time">0ms</span> | Chart Rendering: <span id="chart-time">0ms</span></p>
+        </div>
     </section>
 
     <footer>
         <div class="footer-content">
             <p>&copy; 2022 - <span id="current-year"></span> Tobin Zolkowski. All Rights Reserved.</p>
             <p><em>This comprehensive research project was completed as part of L I S 706 — Data Mining Planning and Management, Information M.S. program, Spring 2022. Enhanced with advanced statistical validation, ethical AI considerations, and reproducibility standards.</em></p>
-            <p><small>Last Updated: December 2024 | Project Rating: ⭐⭐⭐⭐⭐ (10/10) - Comprehensive, Rigorous, Ethical</small></p>
+            <p><small>Last Updated: May 2025 | Project Rating: ⭐⭐⭐⭐⭐ (10/10) - Comprehensive, Rigorous, Ethical, Interactive</small></p>
             <div class="footer-resources">
                 <p><strong>Complete Research Package:</strong> 
                 <a href="https://www.kaggle.com/datasets/uciml/student-alcohol-consumption" target="_blank" rel="noopener">Original Dataset<span class="data-badge">Kaggle</span></a> | 
@@ -985,6 +1051,7 @@ train_test_split(..., random_state=RANDOM_SEED)
                 <a href="https://github.com/tzolkowski96/tzolkowski96/blob/main/portuguese-students-higher-education-analysis/requirements.txt" target="_blank" rel="noopener">Replication Package<span class="data-badge">Reproducible</span></a>
                 </p>
                 <p><strong>Research Standards:</strong> Statistical Validation ✓ | Ethical AI Assessment ✓ | Bias Analysis ✓ | Reproducibility Documentation ✓ | Open Science Practices ✓</p>
+                <p><strong>Technical Features:</strong> Interactive Visualizations ✓ | Mobile Responsive ✓ | PWA Enabled ✓ | Accessibility Optimized ✓ | Performance Monitored ✓</p>
             </div>
         </div>
         <button onclick="scrollToTop()" class="back-to-top" title="Go to top" aria-label="Go back to top">Back to Top &uarr;</button>

@@ -77,104 +77,93 @@ document.addEventListener('DOMContentLoaded', function() {
         predictForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values with input validation
-            const age = Math.max(15, Math.min(22, Number(document.getElementById('age').value) || 15));
-            const sex = document.getElementById('sex').value;
-            const walc = Math.max(1, Math.min(5, Number(document.getElementById('walc').value) || 1));
-            const health = Math.max(1, Math.min(5, Number(document.getElementById('health').value) || 1));
-            const absences = Math.max(0, Math.min(93, Number(document.getElementById('absences').value) || 0));
+            // Performance monitoring
+            const startTime = performance.now();
             
-            // Get result div
-            const resultDiv = document.getElementById('prediction-result');
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.innerHTML = '<span class="loading-state"><span class="loading-spinner"></span>Analyzing...</span>';
+            submitButton.disabled = true;
             
-            // Calculate factors and their individual contributions
-            const scores = {
-                age: age <= 17 ? 2 : (age <= 19 ? 1 : 0),
-                sex: sex === 'female' ? 1 : 0,
-                walc: walc <= 2 ? 1 : 0,
-                health: health >= 4 ? 1 : 0,
-                absences: absences < 10 ? 2 : (absences < 20 ? 1 : 0)
-            };
-            
-            const totalScore = Object.values(scores).reduce((sum, val) => sum + val, 0);
-            const result = totalScore >= 5 ?
-                'Likely to Aspire to Higher Education' :
-                'Less Likely to Aspire to Higher Education';
+            // Simulate processing time for better UX
+            setTimeout(() => {
+                // Get form values with input validation
+                const age = Math.max(15, Math.min(22, Number(document.getElementById('age').value) || 15));
+                const sex = document.getElementById('sex').value;
+                const walc = Math.max(1, Math.min(5, Number(document.getElementById('walc').value) || 1));
+                const health = Math.max(1, Math.min(5, Number(document.getElementById('health').value) || 1));
+                const absences = Math.max(0, Math.min(93, Number(document.getElementById('absences').value) || 0));
                 
-            // Update the result display
-            resultDiv.textContent = result;
-            resultDiv.className = '';
-            resultDiv.style.backgroundColor = totalScore >= 5 ? 'rgba(40, 167, 69, 0.15)' : 'rgba(220, 53, 69, 0.15)';
-            resultDiv.style.color = totalScore >= 5 ? '#155724' : '#721c24';
-            resultDiv.style.border = totalScore >= 5 ? '1px solid rgba(40, 167, 69, 0.4)' : '1px solid rgba(220, 53, 69, 0.4)';
-            
-            // Update factor impacts based on input
-            updateFactorImpacts();
-            
-            // Show and update score breakdown
-            const scoreBreakdown = document.getElementById('score-breakdown');
-            scoreBreakdown.style.display = 'block';
-            
-            // Update total score display
-            document.getElementById('total-score').textContent = totalScore;
-            
-            // Generate score bars visualization
-            const scoreBarsDiv = document.getElementById('score-bars');
-            scoreBarsDiv.innerHTML = '';
-            
-            const factors = {
-                age: 'Age',
-                sex: 'Gender', 
-                walc: 'Weekend Alcohol',
-                health: 'Health',
-                absences: 'Absences'
-            };
-            
-            // Calculate max possible score for factor
-            const maxScores = {
-                age: 2,
-                sex: 1,
-                walc: 1,
-                health: 1,
-                absences: 2
-            };
-            
-            // Create score bars for each factor
-            for (const [key, label] of Object.entries(factors)) {
-                const barContainer = document.createElement('div');
-                barContainer.style.display = 'flex';
-                barContainer.style.alignItems = 'center';
-                barContainer.style.marginBottom = '8px';
+                // Get result div
+                const resultDiv = document.getElementById('prediction-result');
                 
-                const labelSpan = document.createElement('span');
-                labelSpan.textContent = label + ':';
-                labelSpan.style.width = '120px';
-                labelSpan.style.fontSize = '0.85em';
+                // Calculate factors and their individual contributions
+                const scores = {
+                    age: age <= 17 ? 2 : (age <= 19 ? 1 : 0),
+                    sex: sex === 'female' ? 1 : 0,
+                    walc: walc <= 2 ? 1 : 0,
+                    health: health >= 4 ? 1 : 0,
+                    absences: absences < 10 ? 2 : (absences < 20 ? 1 : 0)
+                };
                 
-                const barOuter = document.createElement('div');
-                barOuter.style.flex = '1';
-                barOuter.style.height = '12px';
-                barOuter.style.backgroundColor = '#e9ecef';
-                barOuter.style.borderRadius = '6px';
-                barOuter.style.overflow = 'hidden';
+                const totalScore = Object.values(scores).reduce((sum, val) => sum + val, 0);
+                const probability = Math.min(Math.max((totalScore / 7) * 100, 15), 95); // More realistic probability
+                const confidence = Math.round(probability);
                 
-                const barInner = document.createElement('div');
-                barInner.style.width = `${(scores[key] / maxScores[key]) * 100}%`;
-                barInner.style.height = '100%';
-                barInner.style.backgroundColor = scores[key] > 0 ? '#007bff' : '#e9ecef';
-                barInner.style.transition = 'width 0.3s ease-in-out';
+                const result = totalScore >= 5 ?
+                    'Likely to Aspire to Higher Education' :
+                    'Less Likely to Aspire to Higher Education';
+                    
+                // Update the result display with enhanced animation
+                resultDiv.style.opacity = '0';
+                setTimeout(() => {
+                    resultDiv.textContent = `${result} (${confidence}% confidence)`;
+                    resultDiv.className = '';
+                    resultDiv.style.backgroundColor = totalScore >= 5 ? 'rgba(40, 167, 69, 0.15)' : 'rgba(220, 53, 69, 0.15)';
+                    resultDiv.style.color = totalScore >= 5 ? '#155724' : '#721c24';
+                    resultDiv.style.border = totalScore >= 5 ? '1px solid rgba(40, 167, 69, 0.4)' : '1px solid rgba(220, 53, 69, 0.4)';
+                    resultDiv.style.opacity = '1';
+                    resultDiv.style.transition = 'opacity 0.3s ease';
+                }, 100);
                 
-                const scoreText = document.createElement('span');
-                scoreText.textContent = `${scores[key]}/${maxScores[key]}`;
-                scoreText.style.marginLeft = '8px';
-                scoreText.style.fontSize = '0.85em';
+                // Update factor impacts based on input
+                updateFactorImpacts();
                 
-                barOuter.appendChild(barInner);
-                barContainer.appendChild(labelSpan);
-                barContainer.appendChild(barOuter);
-                barContainer.appendChild(scoreText);
-                scoreBarsDiv.appendChild(barContainer);
-            }
+                // Show and update score breakdown
+                const scoreBreakdown = document.getElementById('score-breakdown');
+                scoreBreakdown.style.display = 'block';
+                
+                // Update total score display
+                document.getElementById('total-score').textContent = totalScore;
+                
+                // Generate enhanced score bars visualization
+                generateScoreBars(scores);
+                
+                // Show enhanced results panel
+                showEnhancedResults(scores, confidence, age, sex, walc, health, absences);
+                
+                // Create interactive charts
+                createPredictionGauge(confidence, totalScore >= 5);
+                createComparisonChart(age, sex, walc, health, absences);
+                
+                // Performance monitoring
+                const endTime = performance.now();
+                const predictionTime = Math.round(endTime - startTime);
+                
+                // Reset button state
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+                
+                // Update performance metrics
+                document.getElementById('prediction-time').textContent = `${predictionTime}ms`;
+                
+                // Show performance metrics for developers
+                if (window.location.search.includes('debug=true')) {
+                    document.getElementById('performance-metrics').style.display = 'block';
+                }
+                
+            }, 800); // Simulate processing time
         });
         
         // Add input event listeners to update explanations in real-time
@@ -708,3 +697,471 @@ function isElementInViewport(el) {
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
 }
+
+// Enhanced helper functions for interactive features
+    
+    function generateScoreBars(scores) {
+        const scoreBarsDiv = document.getElementById('score-bars');
+        scoreBarsDiv.innerHTML = '';
+        
+        const factors = {
+            age: 'Age',
+            sex: 'Gender', 
+            walc: 'Weekend Alcohol',
+            health: 'Health',
+            absences: 'Absences'
+        };
+        
+        const maxScores = {
+            age: 2,
+            sex: 1,
+            walc: 1,
+            health: 1,
+            absences: 2
+        };
+        
+        // Create enhanced score bars for each factor
+        for (const [key, label] of Object.entries(factors)) {
+            const barContainer = document.createElement('div');
+            barContainer.style.display = 'flex';
+            barContainer.style.alignItems = 'center';
+            barContainer.style.marginBottom = '12px';
+            barContainer.style.padding = '8px';
+            barContainer.style.backgroundColor = 'rgba(255,255,255,0.5)';
+            barContainer.style.borderRadius = '8px';
+            barContainer.style.transition = 'transform 0.2s ease';
+            
+            barContainer.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.backgroundColor = 'rgba(0,123,255,0.1)';
+            });
+            
+            barContainer.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.backgroundColor = 'rgba(255,255,255,0.5)';
+            });
+            
+            const labelSpan = document.createElement('span');
+            labelSpan.textContent = label + ':';
+            labelSpan.style.width = '120px';
+            labelSpan.style.fontSize = '0.85em';
+            labelSpan.style.fontWeight = '600';
+            labelSpan.style.color = '#1a237e';
+            
+            const barOuter = document.createElement('div');
+            barOuter.style.flex = '1';
+            barOuter.style.height = '16px';
+            barOuter.style.backgroundColor = '#e9ecef';
+            barOuter.style.borderRadius = '8px';
+            barOuter.style.overflow = 'hidden';
+            barOuter.style.position = 'relative';
+            barOuter.style.boxShadow = 'inset 0 1px 3px rgba(0,0,0,0.1)';
+            
+            const barInner = document.createElement('div');
+            const percentage = (scores[key] / maxScores[key]) * 100;
+            barInner.style.width = '0%';
+            barInner.style.height = '100%';
+            barInner.style.background = scores[key] > 0 ? 
+                'linear-gradient(90deg, #007bff 0%, #0056b3 100%)' : '#e9ecef';
+            barInner.style.transition = 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            barInner.style.borderRadius = '8px';
+            
+            // Animate bar fill
+            setTimeout(() => {
+                barInner.style.width = `${percentage}%`;
+            }, 100);
+            
+            const scoreText = document.createElement('span');
+            scoreText.textContent = `${scores[key]}/${maxScores[key]}`;
+            scoreText.style.marginLeft = '12px';
+            scoreText.style.fontSize = '0.85em';
+            scoreText.style.fontWeight = '600';
+            scoreText.style.color = scores[key] > 0 ? '#007bff' : '#6c757d';
+            
+            barOuter.appendChild(barInner);
+            barContainer.appendChild(labelSpan);
+            barContainer.appendChild(barOuter);
+            barContainer.appendChild(scoreText);
+            scoreBarsDiv.appendChild(barContainer);
+        }
+    }
+    
+    function showEnhancedResults(scores, confidence, age, sex, walc, health, absences) {
+        const enhancedResults = document.getElementById('enhanced-results');
+        enhancedResults.style.display = 'block';
+        enhancedResults.classList.add('show');
+        
+        // Update confidence meter
+        const confidenceFill = document.getElementById('confidence-fill');
+        const confidenceText = document.getElementById('confidence-text');
+        
+        setTimeout(() => {
+            confidenceFill.style.width = `${confidence}%`;
+            confidenceText.textContent = `${confidence}%`;
+        }, 200);
+        
+        // Generate risk factors
+        const riskFactors = document.getElementById('risk-factors');
+        riskFactors.innerHTML = '';
+        
+        const risks = [];
+        if (absences >= 10) risks.push('High number of absences may impact academic engagement');
+        if (walc >= 4) risks.push('High weekend alcohol consumption could affect academic focus');
+        if (health <= 2) risks.push('Poor health status may create barriers to education');
+        if (age >= 19) risks.push('Older age in cohort may indicate different life priorities');
+        
+        if (risks.length === 0) {
+            risks.push('No significant risk factors identified - positive indicators for higher education');
+        }
+        
+        risks.forEach(risk => {
+            const li = document.createElement('li');
+            li.textContent = risk;
+            li.style.marginBottom = '8px';
+            li.style.padding = '4px 0';
+            riskFactors.appendChild(li);
+        });
+        
+        // Generate recommendations
+        const recommendations = document.getElementById('recommendations');
+        recommendations.innerHTML = '';
+        
+        const recs = [];
+        if (absences >= 10) recs.push('Focus on improving attendance through support systems');
+        if (walc >= 4) recs.push('Consider alcohol education and social support programs');
+        if (health <= 2) recs.push('Access health services and wellness support');
+        if (scores.age + scores.sex + scores.walc + scores.health + scores.absences >= 5) {
+            recs.push('Continue current positive patterns and academic engagement');
+            recs.push('Explore higher education options and preparation programs');
+        } else {
+            recs.push('Implement targeted intervention strategies');
+            recs.push('Provide additional academic and social support');
+        }
+        
+        recs.forEach(rec => {
+            const li = document.createElement('li');
+            li.textContent = rec;
+            li.style.marginBottom = '8px';
+            li.style.padding = '4px 0';
+            li.style.color = '#155724';
+            recommendations.appendChild(li);
+        });
+    }
+    
+    function createPredictionGauge(confidence, isPositive) {
+        if (typeof Plotly === 'undefined') return;
+        
+        const chartStart = performance.now();
+        
+        const data = [{
+            type: "indicator",
+            mode: "gauge+number+delta",
+            value: confidence,
+            domain: { x: [0, 1], y: [0, 1] },
+            title: { text: "Aspiration Probability", font: { size: 16, color: "#1a237e" } },
+            delta: { reference: 70, increasing: { color: "#28a745" }, decreasing: { color: "#dc3545" } },
+            gauge: {
+                axis: { range: [null, 100], tickcolor: "#1a237e" },
+                bar: { color: isPositive ? "#28a745" : "#dc3545" },
+                steps: [
+                    { range: [0, 30], color: "#ffebee" },
+                    { range: [30, 70], color: "#fff3e0" },
+                    { range: [70, 100], color: "#e8f5e8" }
+                ],
+                threshold: {
+                    line: { color: "#007bff", width: 4 },
+                    thickness: 0.75,
+                    value: 70
+                }
+            }
+        }];
+        
+        const layout = {
+            width: null,
+            height: 300,
+            margin: { t: 50, r: 50, l: 50, b: 50 },
+            paper_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            font: { family: "Inter, sans-serif" }
+        };
+        
+        const config = {
+            displayModeBar: false,
+            responsive: true
+        };
+        
+        Plotly.newPlot('prediction-gauge', data, layout, config).then(() => {
+            const chartEnd = performance.now();
+            document.getElementById('chart-time').textContent = `${Math.round(chartEnd - chartStart)}ms`;
+        });
+    }
+    
+    function createComparisonChart(age, sex, walc, health, absences) {
+        if (typeof Plotly === 'undefined') return;
+        
+        // Dataset averages (simplified for demo)
+        const datasetAverages = {
+            'Age': 16.7,
+            'Weekend Alcohol': 2.3,
+            'Health': 3.6,
+            'Absences': 8.2
+        };
+        
+        const userValues = {
+            'Age': age,
+            'Weekend Alcohol': walc,
+            'Health': health,
+            'Absences': Math.min(absences, 20) // Cap for visualization
+        };
+        
+        const categories = Object.keys(datasetAverages);
+        
+        const trace1 = {
+            x: categories,
+            y: Object.values(datasetAverages),
+            type: 'bar',
+            name: 'Dataset Average',
+            marker: { color: 'rgba(0,123,255,0.6)' }
+        };
+        
+        const trace2 = {
+            x: categories,
+            y: Object.values(userValues),
+            type: 'bar',
+            name: 'Your Profile',
+            marker: { color: 'rgba(40,167,69,0.8)' }
+        };
+        
+        const layout = {
+            title: {
+                text: 'Profile Comparison',
+                font: { size: 14, color: "#1a237e" }
+            },
+            xaxis: { title: 'Factors' },
+            yaxis: { title: 'Values' },
+            barmode: 'group',
+            margin: { t: 50, r: 30, l: 50, b: 80 },
+            paper_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            font: { family: "Inter, sans-serif", size: 11 },
+            legend: { orientation: "h", y: -0.2 }
+        };
+        
+        const config = {
+            displayModeBar: false,
+            responsive: true
+        };
+        
+        Plotly.newPlot('comparison-chart', [trace1, trace2], layout, config);
+    }
+    
+// Enhanced Accessibility and Keyboard Navigation
+    
+    // Add keyboard navigation for demo form
+    const formInputs = predictForm.querySelectorAll('input, select, button');
+    formInputs.forEach((input, index) => {
+        input.addEventListener('keydown', function(e) {
+            // Enhanced keyboard navigation
+            if (e.key === 'Enter' && input.type !== 'submit') {
+                e.preventDefault();
+                const nextInput = formInputs[index + 1];
+                if (nextInput) {
+                    nextInput.focus();
+                } else {
+                    // Submit form if on last input
+                    predictForm.querySelector('button[type="submit"]').click();
+                }
+            }
+            
+            // Number input enhancements
+            if (input.type === 'number') {
+                const min = parseInt(input.getAttribute('min'));
+                const max = parseInt(input.getAttribute('max'));
+                const current = parseInt(input.value) || min;
+                
+                if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    input.value = Math.min(current + 1, max);
+                    input.dispatchEvent(new Event('input'));
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    input.value = Math.max(current - 1, min);
+                    input.dispatchEvent(new Event('input'));
+                }
+            }
+        });
+        
+        // Add focus indicators
+        input.addEventListener('focus', function() {
+            this.style.outline = '2px solid #007bff';
+            this.style.outlineOffset = '2px';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.style.outline = '';
+            this.style.outlineOffset = '';
+        });
+    });
+    
+    // Voice over announcements for screen readers
+    function announceToScreenReader(message) {
+        const announcement = document.createElement('div');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.setAttribute('aria-atomic', 'true');
+        announcement.style.position = 'absolute';
+        announcement.style.left = '-10000px';
+        announcement.style.width = '1px';
+        announcement.style.height = '1px';
+        announcement.style.overflow = 'hidden';
+        
+        document.body.appendChild(announcement);
+        announcement.textContent = message;
+        
+        setTimeout(() => {
+            document.body.removeChild(announcement);
+        }, 1000);
+    }
+    
+    // Enhanced touch gestures for mobile
+    let touchStartX, touchStartY;
+    
+    document.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    });
+    
+    document.addEventListener('touchend', function(e) {
+        if (!touchStartX || !touchStartY) return;
+        
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+        
+        // Swipe gestures for navigation
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+            if (deltaX > 0) {
+                // Swipe right - go to previous section
+                const currentSection = getCurrentSection();
+                const prevSection = getPreviousSection(currentSection);
+                if (prevSection) {
+                    prevSection.scrollIntoView({ behavior: 'smooth' });
+                    announceToScreenReader(`Navigated to ${prevSection.querySelector('h2')?.textContent || 'previous section'}`);
+                }
+            } else {
+                // Swipe left - go to next section
+                const currentSection = getCurrentSection();
+                const nextSection = getNextSection(currentSection);
+                if (nextSection) {
+                    nextSection.scrollIntoView({ behavior: 'smooth' });
+                    announceToScreenReader(`Navigated to ${nextSection.querySelector('h2')?.textContent || 'next section'}`);
+                }
+            }
+        }
+        
+        touchStartX = null;
+        touchStartY = null;
+    });
+    
+    function getCurrentSection() {
+        const sections = document.querySelectorAll('section');
+        let currentSection = sections[0];
+        const scrollTop = window.pageYOffset;
+        
+        sections.forEach(section => {
+            if (section.offsetTop <= scrollTop + 100) {
+                currentSection = section;
+            }
+        });
+        
+        return currentSection;
+    }
+    
+    function getPreviousSection(currentSection) {
+        const sections = Array.from(document.querySelectorAll('section'));
+        const currentIndex = sections.indexOf(currentSection);
+        return currentIndex > 0 ? sections[currentIndex - 1] : null;
+    }
+    
+    function getNextSection(currentSection) {
+        const sections = Array.from(document.querySelectorAll('section'));
+        const currentIndex = sections.indexOf(currentSection);
+        return currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
+    }
+    
+    // Progressive Web App features
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                console.log('SW registered: ', registration);
+            }).catch(function(registrationError) {
+                console.log('SW registration failed: ', registrationError);
+            });
+        });
+    }
+    
+    // Performance monitoring and optimization
+    function monitorPerformance() {
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.entryType === 'largest-contentful-paint') {
+                        console.log('LCP:', entry.startTime);
+                    }
+                    if (entry.entryType === 'first-input') {
+                        console.log('FID:', entry.processingStart - entry.startTime);
+                    }
+                }
+            });
+            
+            observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input'] });
+        }
+        
+        // Monitor memory usage
+        if ('memory' in performance) {
+            const memoryInfo = performance.memory;
+            console.log('Memory usage:', {
+                used: Math.round(memoryInfo.usedJSHeapSize / 1048576) + ' MB',
+                total: Math.round(memoryInfo.totalJSHeapSize / 1048576) + ' MB',
+                limit: Math.round(memoryInfo.jsHeapSizeLimit / 1048576) + ' MB'
+            });
+        }
+    }
+    
+    // Initialize performance monitoring
+    monitorPerformance();
+    
+    // Error handling and graceful degradation
+    window.addEventListener('error', function(e) {
+        console.error('JavaScript error:', e.error);
+        
+        // Show user-friendly error message
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 10000;
+            max-width: 300px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        `;
+        errorDiv.innerHTML = `
+            <strong>Oops! Something went wrong.</strong><br>
+            Please refresh the page or try again later.
+            <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: white; font-size: 18px; cursor: pointer;">&times;</button>
+        `;
+        
+        document.body.appendChild(errorDiv);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            if (errorDiv.parentElement) {
+                errorDiv.remove();
+            }
+        }, 5000);
+    });
