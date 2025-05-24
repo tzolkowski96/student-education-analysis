@@ -722,3 +722,534 @@ button[type="reset"]:hover {
         min-height: 44px;
     }
 }
+
+/* ==================== */
+/* CROSS-BROWSER COMPATIBILITY ENHANCEMENTS */
+/* ==================== */
+
+/* Base normalization */
+html {
+  box-sizing: border-box;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* Optimize animations and transitions for all browsers */
+.fade-in, 
+.lightbox,
+#prediction-result,
+button,
+nav ul li a,
+input,
+select {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  /* Improve rendering performance */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /* Optional GPU acceleration for smoother animations */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Vendor prefixes for key features */
+.demo-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 2em;
+  /* Fallback for browsers that don't support gap */
+  margin: -1em;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-bottom: 2em;
+}
+
+/* Gap fallback - add margins to children */
+@supports not (gap: 2em) {
+  .demo-container > * {
+    margin: 1em;
+  }
+}
+
+/* Better handling for Safari and older browsers */
+#live-demo input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Fix for Firefox input styles */
+#live-demo input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* Fix for IE/Edge buttons */
+button, 
+input[type="button"], 
+input[type="reset"], 
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+  appearance: button;
+}
+
+/* Improved focus styles for accessibility across browsers */
+:focus {
+  outline: 3px solid rgba(0, 123, 255, 0.5);
+}
+
+/* Improved focus states for accessibility */
+a:focus, button:focus, input:focus, select:focus {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+/* Fixed backdrop filter compatibility */
+nav {
+  background: rgba(255,255,255,0.92);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px))) {
+  nav {
+    background: rgba(255,255,255,0.98);
+  }
+}
+
+/* Fix flexbox issues in Safari and older browsers */
+#factor-list li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.factor-name, .factor-impact {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+/* Fixed background for Safari */
+body::before {
+  background-attachment: fixed;
+}
+
+/* Browser-specific fixes */
+.browser-safari .demo-container {
+  /* Fix Safari flexbox issues */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+/* IE-specific fixes */
+.browser-ie .demo-container {
+  /* Fix IE flexbox issues */
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+/* Fix for IE11 flexbox min-height bug */
+.browser-ie #predict-form,
+.browser-ie .explanation-panel {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+}
+
+.browser-safari input[type="number"] {
+  /* Fix Safari number input appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.mobile-safari .full-height {
+  /* Fix for mobile Safari 100vh issues */
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Hide number input spinners in different browsers */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Touch device optimizations */
+.touch-device button, 
+.touch-device input, 
+.touch-device select {
+  padding: 12px;
+}
+
+/* Improved responsive design for all devices */
+@media screen and (max-width: 768px) {
+  .demo-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 1em;
+    /* Fallback for browsers that don't support gap */
+    margin: -0.5em;
+  }
+  
+  /* Gap fallback */
+  @supports not (gap: 1em) {
+    .demo-container > * {
+      margin: 0.5em;
+    }
+  }
+  
+  #live-demo input, #live-demo select, #live-demo button {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    max-width: 100%;
+    /* Better tap targets on mobile */
+    min-height: 44px;
+  }
+  
+  nav ul {
+    padding: 0.3em 0;
+  }
+  
+  nav ul li a {
+    padding: 6px 12px;
+    font-size: 0.9em;
+    /* Ensure minimum tap target size */
+    min-height: 44px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+/* Fix for very small screens */
+@media screen and (max-width: 480px) {
+  header h1 {
+    font-size: 1.8em;
+    word-wrap: break-word; /* Prevent overflow on small screens */
+  }
+  
+  #factor-list li {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-bottom: 0.8em; /* Increase spacing for touch devices */
+  }
+  
+  .factor-name {
+    width: 100%;
+    margin-bottom: 4px;
+    font-weight: bold; /* Improve readability on small screens */
+  }
+  
+  .factor-impact {
+    width: 100%;
+    line-height: 1.4; /* Improve readability */
+  }
+  
+  .lightbox-close {
+    top: 15px;
+    right: 15px;
+    font-size: 2em;
+    /* Increase tap target for mobile */
+    width: 44px;
+    height: 44px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  
+  /* Reduce padding on form elements for small screens but maintain tap target size */
+  #live-demo .form-group {
+    margin-bottom: 12px;
+  }
+}
+
+/* Print styles for better rendering when printed */
+@media print {
+  body, section, header, footer {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  a {
+    text-decoration: underline !important;
+    color: #0056b3 !important;
+  }
+  
+  #live-demo, nav, .back-to-top, footer {
+    display: none !important;
+  }
+  
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+  
+  h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+}
+
+/* Touch device enhancements */
+@media (pointer: coarse) {
+  nav ul li a, button, .lightbox-close {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+    min-width: 44px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  
+  #live-demo input, #live-demo select {
+    padding: 10px;
+    -webkit-appearance: none; /* Remove default styling on iOS */
+    appearance: none;
+    border-radius: 4px; /* Consistent styling across platforms */
+  }
+  
+  /* Improve scrolling on touch devices */
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent text size adjustment on orientation change */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Fix for double-tap issues on some mobile browsers */
+  a, button, input, select, textarea {
+    touch-action: manipulation;
+  }
+}
+
+/* ==================== */
+/* FOOTER RESOURCES STYLES */
+/* ==================== */
+
+/* New styles for footer resources */
+.footer-resources {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+.footer-resources a {
+    color: #007BFF;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.footer-resources a:hover,
+.footer-resources a:focus {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Enhanced metadata display for dataset links */
+.data-source-meta {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 123, 255, 0.05);
+    border-left: 3px solid #007BFF;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.data-source-meta i {
+    font-size: 24px;
+    margin-right: 15px;
+    color: #007BFF;
+}
+
+.data-source-meta .source-details {
+    flex: 1;
+}
+
+.data-source-meta .source-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.data-source-meta .source-description {
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* Badge styling for data links */
+.data-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    background: rgba(0, 123, 255, 0.1);
+    color: #007BFF;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 500;
+    margin-left: 8px;
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+/* Print-friendly styling for data source and repo links */
+@media print {
+    .footer-resources a::after {
+        content: " (" attr(href) ")";
+        font-size: 0.9em;
+        font-style: italic;
+    }
+}
+
+/* Responsive adjustments for data source metadata */
+@media (max-width: 768px) {
+    .data-source-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .data-source-meta i {
+        margin-bottom: 10px;
+    }
+}
+
+/* Make badges more touchable on mobile */
+@media (pointer: coarse) {
+    .data-badge {
+        padding: 6px 10px;
+        margin: 4px 8px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+/* ==================== */
+/* ADDITIONAL CROSS-BROWSER FIXES */
+/* ==================== */
+
+/* Standard properties alongside vendor prefixes */
+input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    appearance: textfield;
+    margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+/* Form validation and hints */
+.form-hint {
+    display: block;
+    color: #6c757d;
+    font-size: 0.8em;
+    margin-top: 0.25rem;
+}
+
+/* Validation states */
+input:invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+input:valid {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* Reset button styling */
+button[type="reset"] {
+    background-color: #6c757d;
+    margin-left: 0.5rem;
+}
+
+button[type="reset"]:hover {
+    background-color: #5a6268;
+}
+
+/* Enhanced mobile detection */
+.mobile-safari .full-height {
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Improved focus indicators for keyboard navigation */
+a:focus-visible, 
+button:focus-visible, 
+input:focus-visible, 
+select:focus-visible {
+    outline: 3px solid #4a90e2;
+    outline-offset: 3px;
+}
+
+/* Fix for nested flexbox issues in Safari */
+.browser-safari .demo-container > * {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .browser-safari .demo-container > * {
+        width: auto;
+    }
+}
