@@ -437,161 +437,274 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Helper function to check if element is in viewport
-    function isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-});
-
-/* ==================== */
-/* CROSS-BROWSER COMPATIBILITY ENHANCEMENTS */
-/* ==================== */
-
-// Polyfill for forEach on NodeList for older browsers like IE11
-if (window.NodeList && !NodeList.prototype.forEach) {
-  NodeList.prototype.forEach = Array.prototype.forEach;
-}
-
-// Polyfill for matches() and closest() for older browsers
-if (!Element.prototype.matches) {
-  Element.prototype.matches = Element.prototype.msMatchesSelector || 
-                              Element.prototype.webkitMatchesSelector;
-}
-
-if (!Element.prototype.closest) {
-  Element.prototype.closest = function(s) {
-    var el = this;
-    do {
-      if (el.matches(s)) return el;
-      el = el.parentElement || el.parentNode;
-    } while (el !== null && el.nodeType === 1);
-    return null;
-  };
-}
-
-// Browser and device detection for targeted fixes
-document.addEventListener('DOMContentLoaded', function() {
-  // Add a class to the body based on browser for targeted CSS if needed
-  const isIE = /*@cc_on!@*/false || !!document.documentMode;
-  const isEdge = !isIE && !!window.StyleMedia;
-  const isFirefox = typeof InstallTrigger !== 'undefined';
-  // More reliable Safari detection
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || 
-                   (navigator.userAgent.includes('AppleWebKit') && !navigator.userAgent.includes('Chrome'));
-  const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-  
-  if (isIE) document.body.classList.add('browser-ie');
-  if (isEdge) document.body.classList.add('browser-edge');
-  if (isFirefox) document.body.classList.add('browser-firefox');
-  if (isSafari) document.body.classList.add('browser-safari');
-  if (isChrome) document.body.classList.add('browser-chrome');
-  
-  // Add additional checks for mobile Safari
-  const isMobileSafari = isSafari && /iPhone|iPad|iPod/.test(navigator.userAgent);
-  if (isMobileSafari) document.body.classList.add('mobile-safari');
-  
-  // Add a class for touch devices to enhance touch interactions
-  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-    document.body.classList.add('touch-device');
-  }
-  
-  // Fix for Safari's issue with vh units and mobile address bar
-  function fixVhForMobile() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-  
-  window.addEventListener('resize', fixVhForMobile);
-  fixVhForMobile();
-  
-  // Fix for Safari's issue with flexbox and nested flex items
-  if (isSafari) {
-    const demoContainer = document.querySelector('.demo-container');
-    if (demoContainer) {
-      const flexItems = demoContainer.querySelectorAll('.explanation-panel, #predict-form');
-      flexItems.forEach(item => {
-        item.style.webkitFlex = '1';
-        item.style.flex = '1';
-      });
-    }
-  }
-  
-  // Fix for mobile Safari viewport issues
-  if (isMobileSafari) {
-    // Add meta viewport tag if not present
-    if (!document.querySelector('meta[name="viewport"]')) {
-      const metaViewport = document.createElement('meta');
-      metaViewport.name = 'viewport';
-      metaViewport.content = 'width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no';
-      document.head.appendChild(metaViewport);
-    }
-    
-    // Fix for 100vh in mobile Safari
-    const applyFullHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-      
-      // Apply to any full-height elements
-      document.querySelectorAll('.full-height').forEach(el => {
-        el.style.height = `calc(var(--vh, 1vh) * 100)`;
-      });
-    };
-    
-    window.addEventListener('resize', applyFullHeight);
-    window.addEventListener('orientationchange', applyFullHeight);
-    applyFullHeight();
-  }
-  
-  // Handle slow network connections better
-  if ('connection' in navigator) {
-    const conn = navigator.connection;
-    if (conn.saveData || conn.effectiveType.includes('2g')) {
-      // Reduce image quality or defer loading
-      const images = document.querySelectorAll('img:not([loading="eager"])');
-      images.forEach(img => {
-        img.setAttribute('loading', 'lazy');
+    // Enhanced functionality for comprehensive portfolio sections
+    function initializeSectionTracking() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
         
-        // Add placeholder for images that haven't loaded yet
-        if (!img.complete) {
-          img.style.backgroundColor = '#e9f0fa';
-        }
-      });
+        // Create intersection observer for section highlighting
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Update active navigation
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${entry.target.id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    
+                    // Trigger section-specific animations
+                    entry.target.classList.add('section-visible');
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-20% 0px -20% 0px'
+        });
+        
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
     }
-  }
-  
-  // Input event compatibility for the live demo
-  const numericInputs = document.querySelectorAll('#live-demo input[type="number"]');
-  numericInputs.forEach(input => {
-    // Add simple validation for browsers that don't fully support number inputs
-    input.addEventListener('input', function() {
-      const min = parseInt(this.getAttribute('min'), 10);
-      const max = parseInt(this.getAttribute('max'), 10);
-      let value = parseInt(this.value, 10);
-      
-      if (isNaN(value)) {
-        this.value = min;
-      } else if (value < min) {
-        this.value = min;
-      } else if (value > max) {
-        this.value = max;
-      }
-    });
-  });
-  
-  // Cross-browser focus for better accessibility
-  const focusableElements = document.querySelectorAll('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
-  focusableElements.forEach(el => {
-    el.addEventListener('focus', function() {
-      this.classList.add('focused');
-    });
-    el.addEventListener('blur', function() {
-      this.classList.remove('focused');
-    });
-  });
+    
+    // Enhanced smooth scrolling with section awareness
+    function enhancedSmoothScroll() {
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 80; // Account for sticky nav
+                    
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without causing page jump
+                    history.pushState(null, null, targetId);
+                    
+                    // Focus management for accessibility
+                    setTimeout(() => {
+                        targetSection.setAttribute('tabindex', '-1');
+                        targetSection.focus();
+                    }, 500);
+                }
+            });
+        });
+    }
+    
+    // Statistical validation section interactivity
+    function initializeStatisticalValidation() {
+        const statSection = document.getElementById('statistical-validation');
+        if (!statSection) return;
+        
+        // Add hover effects for statistical metrics
+        const metrics = statSection.querySelectorAll('li strong');
+        metrics.forEach(metric => {
+            metric.addEventListener('mouseenter', function() {
+                this.style.background = 'rgba(25, 118, 210, 0.1)';
+                this.style.padding = '2px 4px';
+                this.style.borderRadius = '3px';
+            });
+            
+            metric.addEventListener('mouseleave', function() {
+                this.style.background = '';
+                this.style.padding = '';
+                this.style.borderRadius = '';
+            });
+        });
+        
+        // Animate confidence intervals on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const cis = entry.target.querySelectorAll('li:contains("±")');
+                    cis.forEach((ci, index) => {
+                        setTimeout(() => {
+                            ci.style.opacity = '0';
+                            ci.style.transform = 'translateY(20px)';
+                            ci.style.transition = 'all 0.5s ease-out';
+                            
+                            setTimeout(() => {
+                                ci.style.opacity = '1';
+                                ci.style.transform = 'translateY(0)';
+                            }, 100);
+                        }, index * 200);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(statSection);
+    }
+    
+    // Ethical considerations section interactivity
+    function initializeEthicalConsiderations() {
+        const ethicsSection = document.getElementById('ethical-considerations');
+        if (!ethicsSection) return;
+        
+        // Add progressive disclosure for detailed ethical points
+        const detailSections = ethicsSection.querySelectorAll('h4');
+        detailSections.forEach(heading => {
+            const content = heading.nextElementSibling;
+            if (content && content.tagName === 'UL') {
+                // Create expandable sections
+                heading.style.cursor = 'pointer';
+                heading.style.userSelect = 'none';
+                heading.setAttribute('aria-expanded', 'true');
+                heading.setAttribute('role', 'button');
+                
+                heading.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    
+                    if (isExpanded) {
+                        content.style.maxHeight = '0';
+                        content.style.opacity = '0';
+                        content.style.overflow = 'hidden';
+                        this.setAttribute('aria-expanded', 'false');
+                        this.style.color = '#999';
+                    } else {
+                        content.style.maxHeight = 'none';
+                        content.style.opacity = '1';
+                        content.style.overflow = 'visible';
+                        this.setAttribute('aria-expanded', 'true');
+                        this.style.color = '#6a1b99';
+                    }
+                    
+                    content.style.transition = 'all 0.3s ease-in-out';
+                });
+            }
+        });
+    }
+    
+    // Reproducibility section code highlighting
+    function initializeReproducibilitySection() {
+        const reproSection = document.getElementById('reproducibility');
+        if (!reproSection) return;
+        
+        // Enhanced code block styling
+        const codeBlocks = reproSection.querySelectorAll('pre code');
+        codeBlocks.forEach(block => {
+            // Add copy button to code blocks
+            const copyButton = document.createElement('button');
+            copyButton.textContent = 'Copy';
+            copyButton.className = 'copy-code-btn';
+            copyButton.style.cssText = `
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                padding: 4px 8px;
+                background: rgba(255, 143, 0, 0.1);
+                border: 1px solid #ff8f00;
+                border-radius: 4px;
+                font-size: 0.8em;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            `;
+            
+            const container = block.parentElement;
+            container.style.position = 'relative';
+            container.appendChild(copyButton);
+            
+            copyButton.addEventListener('click', async function() {
+                try {
+                    await navigator.clipboard.writeText(block.textContent);
+                    this.textContent = 'Copied!';
+                    this.style.background = 'rgba(76, 175, 80, 0.1)';
+                    this.style.borderColor = '#4caf50';
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Copy';
+                        this.style.background = 'rgba(255, 143, 0, 0.1)';
+                        this.style.borderColor = '#ff8f00';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy code:', err);
+                }
+            });
+        });
+    }
+    
+    // Enhanced data badge interactivity
+    function enhanceDataBadges() {
+        const badges = document.querySelectorAll('.data-badge');
+        badges.forEach(badge => {
+            badge.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.boxShadow = '0 2px 8px rgba(0, 123, 255, 0.2)';
+            });
+            
+            badge.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '';
+            });
+        });
+    }
+    
+    // Reading progress indicator
+    function initializeReadingProgress() {
+        const progressBar = document.createElement('div');
+        progressBar.id = 'reading-progress';
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #007BFF 0%, #00c6ff 100%);
+            z-index: 10000;
+            transition: width 0.1s ease-out;
+        `;
+        document.body.appendChild(progressBar);
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+        });
+    }
+    
+    // Initialize all enhanced features
+    initializeSectionTracking();
+    enhancedSmoothScroll();
+    initializeStatisticalValidation();
+    initializeEthicalConsiderations();
+    initializeReproducibilitySection();
+    enhanceDataBadges();
+    initializeReadingProgress();
+    
+    // Performance monitoring
+    if ('PerformanceObserver' in window) {
+        const perfObserver = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            entries.forEach(entry => {
+                if (entry.entryType === 'largest-contentful-paint') {
+                    console.log('LCP:', entry.startTime);
+                }
+            });
+        });
+        
+        try {
+            perfObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+        } catch (e) {
+            // Fallback for browsers that don't support LCP
+            console.log('Performance monitoring not supported');
+        }
+    }
 });
+
+// Utility functions
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
