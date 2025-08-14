@@ -648,31 +648,316 @@ body {
 }
 
 /* Mobile Responsive */
+@media (max-width: 1024px) {
+    .header-content {
+        padding: 12px 16px;
+    }
+    
+    .article-header {
+        margin: 40px auto 30px;
+        padding: 0 16px;
+    }
+    
+    .article-content {
+        padding: 0 16px;
+    }
+    
+    .interactive-content {
+        padding: 0 16px;
+    }
+}
+
 @media (max-width: 768px) {
     body {
         font-size: 18px;
     }
-
-    .article-headline {
-        font-size: 36px;
+    
+    /* Header adjustments */
+    .header-content {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px;
     }
-
+    
+    .header-nav {
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .header-nav a {
+        font-size: 12px;
+    }
+    
+    /* Article header */
+    .article-header {
+        margin: 30px auto 20px;
+        padding: 0 16px;
+    }
+    
+    .article-headline {
+        font-size: 32px;
+        margin-bottom: 16px;
+    }
+    
     .article-dek {
         font-size: 18px;
+        margin-bottom: 16px;
     }
-
-    .demo-grid {
-        grid-template-columns: 1fr;
+    
+    /* Share buttons responsive */
+    .share-buttons {
+        gap: 6px !important;
     }
-
+    
+    .share-btn {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+    }
+    
+    /* Content adjustments */
+    .article-content {
+        margin: 40px auto;
+        padding: 0 16px;
+    }
+    
+    .article-content h2 {
+        font-size: 28px;
+        margin: 32px 0 16px;
+    }
+    
+    .article-content h3 {
+        font-size: 16px;
+        margin: 24px 0 12px;
+    }
+    
+    /* Graphics and charts */
+    .graphic-container {
+        margin: 32px -16px;
+        padding: 24px 16px;
+    }
+    
+    .chart-wrapper {
+        padding: 12px;
+    }
+    
+    .chart-loading {
+        height: 300px;
+        font-size: 12px;
+    }
+    
+    /* Metrics grid */
     .metrics-grid {
         grid-template-columns: 1fr;
+        gap: 1px;
+        margin: 32px 0;
     }
-
+    
+    .metric-card {
+        padding: 20px 16px;
+    }
+    
+    .metric-number {
+        font-size: 36px;
+    }
+    
+    .metric-label {
+        font-size: 12px;
+    }
+    
+    .metric-description {
+        font-size: 13px;
+    }
+    
+    /* Interactive section */
+    .interactive-section {
+        padding: 40px 0;
+        margin: 40px 0;
+    }
+    
+    .interactive-title {
+        font-size: 28px;
+    }
+    
+    .interactive-subtitle {
+        font-size: 16px;
+    }
+    
+    /* Demo grid - stack on mobile */
+    .demo-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .form-section, .results-panel {
+        padding: 24px 16px;
+    }
+    
+    .form-title {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+    
+    .form-label {
+        font-size: 12px;
+    }
+    
+    .form-input {
+        padding: 12px 8px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .range-wrapper {
+        gap: 8px;
+    }
+    
+    .range-value {
+        font-size: 14px;
+        min-width: 25px;
+    }
+    
+    .btn {
+        padding: 14px 20px;
+        font-size: 13px;
+    }
+    
+    /* Results panel */
+    .result-headline {
+        font-size: 24px;
+    }
+    
+    .result-percentage {
+        font-size: 36px;
+    }
+    
+    .factors-list {
+        font-size: 13px;
+    }
+    
+    /* Author box */
+    .author-box {
+        padding: 24px 16px;
+        margin: 40px auto;
+    }
+    
     .author-info {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        gap: 16px;
+    }
+    
+    .author-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .author-links {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    /* Key points and pull quotes */
+    .key-points {
+        padding: 16px;
+        margin: 24px 0;
+    }
+    
+    .key-points-list {
+        font-size: 14px;
+    }
+    
+    .pull-quote {
+        margin: 32px 0;
+        padding: 16px 0;
+    }
+    
+    .pull-quote-text {
+        font-size: 22px;
+    }
+    
+    /* Footer */
+    .footer {
+        padding: 24px 0;
+        margin-top: 40px;
+    }
+    
+    .footer-content {
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 16px;
+    }
+    
+    /* Very small screens - phones in portrait */
+    .article-headline {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+    
+    .article-dek {
+        font-size: 16px;
+    }
+    
+    .article-content h2 {
+        font-size: 22px;
+        margin: 24px 0 12px;
+    }
+    
+    .drop-cap::first-letter {
+        font-size: 60px;
+        margin: 4px 6px 0 0;
+    }
+    
+    .interactive-title {
+        font-size: 22px;
+    }
+    
+    .interactive-subtitle {
+        font-size: 14px;
+    }
+    
+    .form-section, .results-panel {
+        padding: 16px 12px;
+    }
+    
+    .metric-number {
+        font-size: 28px;
+    }
+    
+    .result-headline {
+        font-size: 20px;
+    }
+    
+    .result-percentage {
+        font-size: 28px;
+    }
+    
+    .share-buttons {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+    
+    .share-btn {
+        width: 200px !important;
+        justify-content: center !important;
+    }
+    
+    /* Ensure charts are responsive */
+    .chart-wrapper {
+        padding: 8px;
+        overflow-x: auto;
+    }
+    
+    .chart-loading {
+        height: 250px;
+        font-size: 11px;
     }
 }
 
@@ -742,4 +1027,68 @@ body {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+/* Touch and mobile interaction improvements */
+@media (hover: none) and (pointer: coarse) {
+    /* Touch devices - improve tap targets */
+    .header-nav a,
+    .btn,
+    .share-btn,
+    .author-links a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .header-nav a:hover,
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .share-btn:hover,
+    .author-links a:hover {
+        background: inherit;
+        color: inherit;
+        border-color: inherit;
+    }
+}
+
+/* Ensure smooth scrolling on all devices */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Improve focus states for accessibility */
+.form-input:focus,
+.btn:focus,
+.share-btn:focus {
+    outline: 2px solid var(--nyt-blue);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --nyt-gray-2: #000000;
+        --nyt-gray-3: #333333;
+        --nyt-blue: #0066cc;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+    
+    .reading-progress {
+        transition: none;
+    }
 }

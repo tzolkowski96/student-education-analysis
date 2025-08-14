@@ -60,6 +60,10 @@ function initCharts() {
     // Clear loading indicator
     document.getElementById('feature-importance-chart').innerHTML = '';
     
+    // Check if mobile view
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    
     // NYT color palette
     const nytColors = {
         primary: '#326891',
@@ -80,7 +84,7 @@ function initCharts() {
         textposition: 'outside',
         textfont: {
             family: 'Helvetica Neue',
-            size: 12,
+            size: isSmallMobile ? 10 : (isMobile ? 11 : 12),
             color: '#666'
         }
     }];
@@ -89,17 +93,32 @@ function initCharts() {
         xaxis: {
             title: '',
             gridcolor: '#f0f0f0',
-            tickfont: { family: 'Helvetica Neue', size: 11, color: '#666' }
+            tickfont: { 
+                family: 'Helvetica Neue', 
+                size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
+                color: '#666' 
+            },
+            tickangle: isMobile ? -45 : 0
         },
         yaxis: {
             title: 'Importance (%)',
             gridcolor: '#f0f0f0',
-            tickfont: { family: 'Helvetica Neue', size: 11, color: '#666' }
+            tickfont: { 
+                family: 'Helvetica Neue', 
+                size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
+                color: '#666' 
+            }
         },
         plot_bgcolor: '#ffffff',
         paper_bgcolor: '#ffffff',
-        margin: { t: 20, r: 20, b: 40, l: 50 },
-        font: { family: 'Helvetica Neue' }
+        margin: { 
+            t: 20, 
+            r: 20, 
+            b: isMobile ? 60 : 40, 
+            l: isSmallMobile ? 40 : 50 
+        },
+        font: { family: 'Helvetica Neue' },
+        autosize: true
     };
 
     Plotly.newPlot('feature-importance-chart', featureData, featureLayout, {
@@ -112,6 +131,10 @@ function initCharts() {
 function initModelChart() {
     // Clear loading indicator
     document.getElementById('model-comparison-chart').innerHTML = '';
+    
+    // Check if mobile view
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
     
     // NYT color palette
     const nytColors = {
@@ -131,14 +154,14 @@ function initModelChart() {
             width: 2
         },
         marker: {
-            size: 8,
+            size: isMobile ? 6 : 8,
             color: nytColors.primary
         },
         text: ['82%', '79%', '78%', '75%', '72%', '50%'],
         textposition: 'top',
         textfont: {
             family: 'Helvetica Neue',
-            size: 11,
+            size: isSmallMobile ? 9 : (isMobile ? 10 : 11),
             color: '#666'
         }
     }];
@@ -147,19 +170,34 @@ function initModelChart() {
         xaxis: {
             title: '',
             gridcolor: '#f0f0f0',
-            tickfont: { family: 'Helvetica Neue', size: 11, color: '#666' }
+            tickfont: { 
+                family: 'Helvetica Neue', 
+                size: isSmallMobile ? 8 : (isMobile ? 9 : 11), 
+                color: '#666' 
+            },
+            tickangle: isMobile ? -45 : 0
         },
         yaxis: {
             title: 'AUC-ROC Score',
             range: [0.4, 0.9],
             gridcolor: '#f0f0f0',
-            tickfont: { family: 'Helvetica Neue', size: 11, color: '#666' }
+            tickfont: { 
+                family: 'Helvetica Neue', 
+                size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
+                color: '#666' 
+            }
         },
         plot_bgcolor: '#ffffff',
         paper_bgcolor: '#ffffff',
-        margin: { t: 20, r: 20, b: 60, l: 60 },
+        margin: { 
+            t: 20, 
+            r: 20, 
+            b: isMobile ? 80 : 60, 
+            l: isSmallMobile ? 50 : 60 
+        },
         font: { family: 'Helvetica Neue' },
-        annotations: [{
+        autosize: true,
+        annotations: isMobile ? [] : [{
             x: 'XGBoost',
             y: 0.82,
             text: 'Best Performance',
@@ -179,6 +217,10 @@ function initModelChart() {
 
 // Profile comparison chart
 function updateProfileChart(age, absences, walc, health) {
+    // Check if mobile view
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    
     const profileData = [
         {
             x: ['Age', 'Absences', 'Weekend Alcohol', 'Health'],
@@ -200,22 +242,39 @@ function updateProfileChart(age, absences, walc, health) {
         barmode: 'group',
         xaxis: {
             gridcolor: '#f0f0f0',
-            tickfont: { family: 'Helvetica Neue', size: 11, color: '#666' }
+            tickfont: { 
+                family: 'Helvetica Neue', 
+                size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
+                color: '#666' 
+            },
+            tickangle: isMobile ? -45 : 0
         },
         yaxis: {
             title: 'Value',
             gridcolor: '#f0f0f0',
-            tickfont: { family: 'Helvetica Neue', size: 11, color: '#666' }
+            tickfont: { 
+                family: 'Helvetica Neue', 
+                size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
+                color: '#666' 
+            }
         },
         plot_bgcolor: '#ffffff',
         paper_bgcolor: '#ffffff',
-        margin: { t: 20, r: 20, b: 40, l: 50 },
+        margin: { 
+            t: 20, 
+            r: 20, 
+            b: isMobile ? 60 : 40, 
+            l: isSmallMobile ? 40 : 50 
+        },
         font: { family: 'Helvetica Neue' },
         legend: {
-            orientation: 'h',
-            y: -0.2,
-            font: { size: 11 }
-        }
+            orientation: isMobile ? 'v' : 'h',
+            y: isMobile ? 1.1 : -0.2,
+            x: isMobile ? 0 : 0.5,
+            xanchor: isMobile ? 'left' : 'center',
+            font: { size: isSmallMobile ? 10 : 11 }
+        },
+        autosize: true
     };
 
     Plotly.newPlot('profile-comparison-chart', profileData, profileLayout, {
@@ -316,3 +375,23 @@ document.getElementById('prediction-form').addEventListener('submit', (e) => {
 
 // Trigger initial prediction
 document.getElementById('prediction-form').dispatchEvent(new Event('submit'));
+
+// Window resize handler for responsive charts
+window.addEventListener('resize', () => {
+    // Debounce resize events
+    clearTimeout(window.resizeTimeout);
+    window.resizeTimeout = setTimeout(() => {
+        // Re-initialize charts if they exist
+        if (chartsInitialized && document.getElementById('feature-importance-chart').children.length > 0) {
+            initCharts();
+        }
+        if (modelChartInitialized && document.getElementById('model-comparison-chart').children.length > 0) {
+            initModelChart();
+        }
+        // Update profile chart if prediction form has been submitted
+        const predictionForm = document.getElementById('prediction-form');
+        if (predictionForm && document.getElementById('profile-comparison-chart').children.length > 0) {
+            predictionForm.dispatchEvent(new Event('submit'));
+        }
+    }, 250);
+});
