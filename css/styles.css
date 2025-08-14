@@ -1,0 +1,745 @@
+/* NYT-Inspired Design System */
+:root {
+    --nyt-black: #121212;
+    --nyt-gray-1: #333333;
+    --nyt-gray-2: #666666;
+    --nyt-gray-3: #999999;
+    --nyt-gray-4: #cccccc;
+    --nyt-gray-5: #e2e2e2;
+    --nyt-gray-6: #f7f7f7;
+    --nyt-white: #ffffff;
+    --nyt-red: #d62828;
+    --nyt-blue: #326891;
+    --nyt-light-blue: #567b9a;
+    
+    --font-serif: 'Georgia', 'Times New Roman', serif;
+    --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+    --font-display: 'Cheltenham', 'Georgia', serif;
+    
+    --content-width: 720px;
+    --wide-width: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--nyt-black);
+    background: var(--nyt-white);
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0,0,0,0.01) 2px,
+            rgba(0,0,0,0.01) 4px
+        );
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header */
+.header {
+    border-bottom: 1px solid var(--nyt-gray-5);
+    background: var(--nyt-white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Reading Progress Bar */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--nyt-blue);
+    z-index: 101;
+    transition: width 0.2s ease;
+}
+
+.header-content {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--nyt-black);
+    letter-spacing: -0.5px;
+}
+
+.header-nav {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+}
+
+.header-nav a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--nyt-gray-2);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.header-nav a:hover {
+    color: var(--nyt-black);
+}
+
+/* Article Header */
+.article-header {
+    max-width: var(--wide-width);
+    margin: 60px auto 40px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.article-category {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--nyt-red);
+    margin-bottom: 16px;
+}
+
+.article-headline {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+}
+
+.article-dek {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--nyt-gray-2);
+    max-width: 800px;
+    margin: 0 auto 24px;
+}
+
+.article-byline {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--nyt-gray-2);
+    margin-bottom: 8px;
+}
+
+.article-byline a {
+    color: var(--nyt-black);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.article-byline a:hover {
+    text-decoration: underline;
+}
+
+.article-timestamp {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--nyt-gray-3);
+}
+
+/* Article Body */
+.article-content {
+    max-width: var(--content-width);
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.article-content p {
+    margin-bottom: 20px;
+}
+
+.article-content h2 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    margin: 48px 0 24px;
+    line-height: 1.2;
+}
+
+.article-content h3 {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 32px 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+/* Drop Cap */
+.drop-cap::first-letter {
+    float: left;
+    font-family: var(--font-display);
+    font-size: 88px;
+    font-weight: 700;
+    line-height: 0.8;
+    margin: 8px 8px 0 0;
+    color: var(--nyt-black);
+}
+
+/* Pull Quote */
+.pull-quote {
+    margin: 48px 0;
+    padding: 24px 0;
+    border-top: 1px solid var(--nyt-gray-5);
+    border-bottom: 1px solid var(--nyt-gray-5);
+    text-align: center;
+}
+
+.pull-quote-text {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    line-height: 1.3;
+    font-style: italic;
+    color: var(--nyt-gray-1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pull-quote-attribution {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--nyt-gray-3);
+    margin-top: 12px;
+}
+
+/* Key Points Box */
+.key-points {
+    background: var(--nyt-gray-6);
+    border-left: 3px solid var(--nyt-red);
+    padding: 24px;
+    margin: 40px 0;
+}
+
+.key-points-title {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.key-points-list {
+    list-style: none;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.key-points-list li {
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.key-points-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--nyt-red);
+    font-weight: bold;
+}
+
+/* Data Graphics */
+.graphic-container {
+    margin: 48px -20px;
+    padding: 32px 20px;
+    background: var(--nyt-gray-6);
+}
+
+.graphic-container.wide {
+    max-width: var(--wide-width);
+    margin: 48px auto;
+}
+
+.graphic-title {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.graphic-subtitle {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--nyt-gray-2);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.chart-wrapper {
+    background: var(--nyt-white);
+    padding: 20px;
+    border: 1px solid var(--nyt-gray-5);
+}
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--nyt-gray-5);
+    border: 1px solid var(--nyt-gray-5);
+    margin: 40px 0;
+}
+
+.metric-card {
+    background: var(--nyt-white);
+    padding: 24px;
+    text-align: center;
+}
+
+.metric-number {
+    font-family: var(--font-sans);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--nyt-red);
+    line-height: 1;
+}
+
+.metric-label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--nyt-gray-2);
+    margin-top: 8px;
+}
+
+.metric-description {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--nyt-gray-3);
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
+/* Interactive Section */
+.interactive-section {
+    background: linear-gradient(to bottom, var(--nyt-gray-6) 0%, var(--nyt-white) 100%);
+    padding: 60px 0;
+    margin: 60px 0;
+}
+
+.interactive-content {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.interactive-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.interactive-title {
+    font-family: var(--font-display);
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+
+.interactive-subtitle {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--nyt-gray-2);
+}
+
+/* Form Styles */
+.demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    max-width: var(--wide-width);
+    margin: 0 auto;
+}
+
+.form-section {
+    background: var(--nyt-white);
+    padding: 32px;
+    border: 1px solid var(--nyt-gray-5);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.form-title {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--nyt-gray-5);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+    color: var(--nyt-gray-1);
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    border: 1px solid var(--nyt-gray-4);
+    background: var(--nyt-white);
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--nyt-blue);
+}
+
+.range-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.range-value {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--nyt-blue);
+    min-width: 30px;
+}
+
+.btn {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--nyt-black);
+    color: var(--nyt-white);
+}
+
+.btn-primary:hover {
+    background: var(--nyt-gray-1);
+}
+
+.btn-secondary {
+    background: var(--nyt-white);
+    color: var(--nyt-black);
+    border: 2px solid var(--nyt-black);
+}
+
+.btn-secondary:hover {
+    background: var(--nyt-gray-6);
+}
+
+/* Results Panel */
+.results-panel {
+    background: var(--nyt-white);
+    padding: 32px;
+    border: 1px solid var(--nyt-gray-5);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.result-headline {
+    font-family: var(--font-display);
+    font-size: 32px;
+    margin-bottom: 16px;
+    color: var(--nyt-black);
+}
+
+.confidence-bar {
+    height: 8px;
+    background: var(--nyt-gray-5);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 16px 0;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: var(--nyt-blue);
+    transition: width 0.6s ease;
+}
+
+.result-percentage {
+    font-family: var(--font-sans);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--nyt-blue);
+    margin: 16px 0;
+}
+
+.result-factors {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--nyt-gray-5);
+}
+
+.result-factors-title {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.factors-list {
+    list-style: none;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.factors-list li {
+    padding: 4px 0;
+    border-bottom: 1px solid var(--nyt-gray-6);
+}
+
+.factor-positive {
+    color: var(--nyt-blue);
+}
+
+.factor-negative {
+    color: var(--nyt-red);
+}
+
+.factor-neutral {
+    color: var(--nyt-gray-2);
+}
+
+/* Author Box */
+.author-box {
+    max-width: var(--content-width);
+    margin: 60px auto;
+    padding: 32px 20px;
+    border-top: 1px solid var(--nyt-gray-5);
+    border-bottom: 1px solid var(--nyt-gray-5);
+}
+
+.author-box-title {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+}
+
+.author-info {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.author-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--nyt-gray-5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--nyt-gray-3);
+}
+
+.author-details {
+    flex: 1;
+}
+
+.author-name {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.author-bio {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--nyt-gray-2);
+    margin-bottom: 12px;
+}
+
+.author-links {
+    display: flex;
+    gap: 16px;
+}
+
+.author-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--nyt-blue);
+    text-decoration: none;
+}
+
+.author-links a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    border-top: 2px solid var(--nyt-black);
+    padding: 40px 0;
+    margin-top: 80px;
+}
+
+.footer-content {
+    max-width: var(--wide-width);
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.footer-text {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--nyt-gray-3);
+}
+
+/* Share Button Styles */
+.share-btn:hover {
+    background: var(--nyt-gray-6) !important;
+    border-color: var(--nyt-gray-3) !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+
+    .article-headline {
+        font-size: 36px;
+    }
+
+    .article-dek {
+        font-size: 18px;
+    }
+
+    .demo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .author-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+        background: white;
+    }
+    
+    .header,
+    .interactive-section,
+    .author-box,
+    .share-buttons {
+        display: none;
+    }
+    
+    .article-content {
+        max-width: 100%;
+    }
+    
+    .graphic-container {
+        page-break-inside: avoid;
+        background: white;
+        border: 1px solid #ccc;
+    }
+    
+    .key-points {
+        page-break-inside: avoid;
+        background: white;
+        border: 1px solid #000;
+    }
+    
+    h2 {
+        page-break-after: avoid;
+    }
+    
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+}
+
+/* Chart loading indicator */
+.chart-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    color: var(--nyt-gray-3);
+    font-family: var(--font-sans);
+    font-size: 14px;
+}
+
+.chart-loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    border: 2px solid var(--nyt-gray-4);
+    border-top-color: var(--nyt-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
