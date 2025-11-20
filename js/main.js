@@ -137,6 +137,24 @@ if (featureChart) chartObserver.observe(featureChart);
 if (modelChart) modelChartObserver.observe(modelChart);
 if (absencesChart) extraChartsObserver.observe(absencesChart);
 
+// Scroll Reveal Logic
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            revealObserver.unobserve(entry.target); // Only animate once
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+});
+
+revealElements.forEach(element => {
+    revealObserver.observe(element);
+});
+
 // Initialize Feature Importance chart with animation
 function initCharts() {
     // Clear loading indicator

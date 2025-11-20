@@ -84,7 +84,7 @@
     </header>
 
     <!-- Article Header -->
-    <div class="article-header">
+    <div class="article-header reveal">
         <div class="article-category">Education & Data Science</div>
         <h1 class="article-headline">What Makes Students Aspire to Higher Education?</h1>
         <p class="article-dek">A machine learning analysis of 649 Portuguese students reveals surprising patterns: attendance matters more than grades, and weekend habits tell a story about academic ambition.</p>
@@ -124,7 +124,7 @@
         </p>
 
         <!-- Key Points Box -->
-        <div class="key-points">
+        <div class="key-points reveal">
             <div class="key-points-title">Key Findings at a Glance</div>
             <ul class="key-points-list">
                 <li>Age emerged as the top predictor (followed closely by absences)</li>
@@ -135,14 +135,14 @@
             </ul>
         </div>
 
-        <h2 id="findings">The Surprising Hierarchy of Influence</h2>
+        <h2 id="findings" class="reveal">The Surprising Hierarchy of Influence</h2>
 
-        <p>
+        <p class="reveal">
             Traditional thinking might suggest that academic performance — measured through grades — would be the primary indicator of higher education aspirations. Our analysis painted a different picture. While grades certainly mattered, they were overshadowed by behavioral and demographic factors that told a more nuanced story about student engagement and life circumstances.
         </p>
 
         <!-- Metrics Grid -->
-        <div class="metrics-grid">
+        <div class="metrics-grid reveal">
             <div class="metric-card">
                 <div class="metric-number">77%</div>
                 <div class="metric-label">Model Accuracy</div>
@@ -165,12 +165,12 @@
             </div>
         </div>
 
-        <p>
+        <p class="reveal">
             The data revealed that students with fewer than 10 absences were twice as likely to express interest in higher education compared to those with chronic attendance issues. This finding suggests that engagement — simply being present — may be more fundamental to educational aspirations than we previously understood.
         </p>
 
         <!-- Feature Importance Chart -->
-        <div class="graphic-container">
+        <div class="graphic-container reveal">
             <div class="graphic-title">What Predicts Higher Education Aspirations?</div>
             <div class="graphic-subtitle">Feature importance from Random Forest model (% of predictive power)</div>
             <div class="chart-wrapper">
@@ -180,18 +180,18 @@
             </div>
         </div>
 
-        <h3>The "Six-Day" Tipping Point</h3>
+        <h3 class="reveal">The "Six-Day" Tipping Point</h3>
         
-        <p>
+        <p class="reveal">
             Digging deeper into the Random Forest analysis, we discovered a specific threshold that acts as a warning sign: <strong>six days</strong>.
         </p>
         
-        <p>
+        <p class="reveal">
             Students with fewer than six absences were overwhelmingly likely to aspire to higher education. Once absences crossed this line, the probability dropped significantly. This suggests that attendance isn't just a compliance requirement—it's a barometer for a student's future outlook. It's not about "skipping school"; it's about disconnecting from the academic community.
         </p>
 
         <!-- Absences Threshold Chart -->
-        <div class="graphic-container">
+        <div class="graphic-container reveal">
             <div class="graphic-title">The Attendance Cliff</div>
             <div class="graphic-subtitle">Likelihood of aspiring to higher education based on absence threshold</div>
             <div class="chart-wrapper">
@@ -201,18 +201,18 @@
             </div>
         </div>
 
-        <h3>The Weekend Paradox</h3>
+        <h3 class="reveal">The Weekend Paradox</h3>
 
-        <p>
+        <p class="reveal">
             Common wisdom suggests that "partying" hurts academic ambition. Our data tells a more complex, even counter-intuitive story.
         </p>
 
-        <p>
+        <p class="reveal">
             Surprisingly, the model found that high weekend alcohol consumption didn't automatically disqualify students from having high aspirations. In fact, some students with higher consumption levels remained highly likely to aspire to university. This contradicts the simple assumption that social drinking equals academic disengagement. It suggests that for some students, social life and academic ambition coexist in a way that defies stereotypes.
         </p>
 
         <!-- Alcohol Paradox Chart -->
-        <div class="graphic-container">
+        <div class="graphic-container reveal">
             <div class="graphic-title">The Weekend Paradox</div>
             <div class="graphic-subtitle">Educational aspirations vs. Weekend Alcohol Consumption (1-5 scale)</div>
             <div class="chart-wrapper">
@@ -222,9 +222,9 @@
             </div>
         </div>
 
-        <h2 id="methodology">Building a Predictive Model</h2>
+        <h2 id="methodology" class="reveal">Building a Predictive Model</h2>
 
-        <p>
+        <p class="reveal">
             The journey from raw data to actionable insights required careful methodological choices. The dataset, originally collected from two Portuguese schools — Gabriel Pereira and Mousinho da Silveira — included rich information about student demographics, family background, study habits, and social behaviors.
         </p>
 
