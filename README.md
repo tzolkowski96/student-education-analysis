@@ -1,8 +1,8 @@
 # What Makes Students Aspire to Higher Education?
 
-A machine learning analysis of 649 Portuguese students revealing the hidden factors that predict educational aspirations with 82% accuracy.
+A machine learning analysis of 649 Portuguese students revealing the hidden factors that predict educational aspirations with 77% accuracy.
 
-![Project Banner](https://img.shields.io/badge/Accuracy-82%25-brightgreen) ![Dataset Size](https://img.shields.io/badge/Students-649-blue) ![Algorithm](https://img.shields.io/badge/Algorithm-XGBoost-orange) ![Features](https://img.shields.io/badge/Features-33-purple)
+![Project Banner](https://img.shields.io/badge/Accuracy-77%25-brightgreen) ![Dataset Size](https://img.shields.io/badge/Students-649-blue) ![Algorithm](https://img.shields.io/badge/Algorithm-Random_Forest-orange) ![Features](https://img.shields.io/badge/Features-33-purple)
 
 ## 🔍 Overview
 
@@ -10,11 +10,11 @@ This project investigates the factors that influence Portuguese students' aspira
 
 ### Key Findings
 
-- **School absences** emerged as the top predictor (28% importance)
-- **Age** played a significant role (22% importance)  
-- **Weekend alcohol consumption** correlated with aspirations (18% importance)
-- The XGBoost model achieved **82% accuracy** with cross-validation
-- **No significant gender bias** detected (p=0.27)
+- **Age** emerged as the top predictor (followed closely by absences)
+- **School absences** played a critical role (tipping point at 6 days)
+- **Weekend alcohol consumption** correlated with aspirations
+- The Random Forest model achieved **77% accuracy**
+- **Male students** showed lower likelihood of aspirations
 
 ## 🎯 Live Demo
 
@@ -29,19 +29,17 @@ Experience the interactive analysis: [**View Live Site**](https://tzolkowski96.g
 - **Schools**: Gabriel Pereira and Mousinho da Silveira
 
 ### Methodology
-- **Primary Algorithm**: XGBoost with hyperparameter tuning
-- **Validation**: Stratified k-fold cross-validation (k=5, 10 repetitions)
+- **Primary Algorithm**: Random Forest with hyperparameter tuning
+- **Validation**: Train/Test/Holdout split (80/10/10)
 - **Class Balancing**: SMOTE (Synthetic Minority Over-sampling Technique)
-- **Bias Testing**: Statistical fairness analysis across demographic groups
 
 ### Model Performance
-| Algorithm | AUC-ROC Score |
+| Algorithm | Accuracy Score |
 |-----------|---------------|
-| XGBoost | 0.82 |
-| Random Forest | 0.79 |
-| Logistic Regression | 0.78 |
-| Decision Tree | 0.75 |
-| Naive Bayes | 0.72 |
+| Random Forest | 0.77 |
+| Decision Tree | 0.77 |
+| Logistic Regression | 0.70 |
+| Naive Bayes | 0.69 |
 | Baseline | 0.50 |
 
 ## 🛠️ Project Structure

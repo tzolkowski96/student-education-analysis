@@ -4,6 +4,74 @@ window.addEventListener('scroll', () => {
     document.getElementById('reading-progress').style.width = scrolled + '%';
 });
 
+// Theme Toggle Logic
+const themeToggle = document.getElementById('theme-toggle');
+const moonIcon = document.querySelector('.moon-icon');
+const sunIcon = document.querySelector('.sun-icon');
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+updateIcons(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateIcons(newTheme);
+    
+    // Update charts if they exist
+    updateChartsTheme(newTheme);
+});
+
+function updateIcons(theme) {
+    if (theme === 'dark') {
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+    } else {
+        moonIcon.style.display = 'block';
+        sunIcon.style.display = 'none';
+    }
+}
+
+function updateChartsTheme(theme) {
+    const isDark = theme === 'dark';
+    const bgColor = isDark ? '#121212' : '#ffffff';
+    const textColor = isDark ? '#e0e0e0' : '#666666';
+    const gridColor = isDark ? '#2a2a2a' : '#f0f0f0';
+    
+    const updateLayout = {
+        plot_bgcolor: bgColor,
+        paper_bgcolor: bgColor,
+        font: { color: textColor },
+        xaxis: { 
+            gridcolor: gridColor,
+            tickfont: { color: textColor }
+        },
+        yaxis: { 
+            gridcolor: gridColor,
+            tickfont: { color: textColor }
+        }
+    };
+
+    const charts = [
+        'feature-importance-chart',
+        'model-comparison-chart',
+        'absences-chart',
+        'alcohol-chart',
+        'profile-comparison-chart'
+    ];
+
+    charts.forEach(chartId => {
+        const chartElement = document.getElementById(chartId);
+        if (chartElement && chartElement.data) {
+            Plotly.relayout(chartId, updateLayout);
+        }
+    });
+}
+
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -28,6 +96,7 @@ document.querySelectorAll('input[type="range"]').forEach(input => {
 // Lazy loading for charts with Intersection Observer
 let chartsInitialized = false;
 let modelChartInitialized = false;
+let extraChartsInitialized = false;
 
 const chartObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -49,11 +118,24 @@ const modelChartObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
+const extraChartsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !extraChartsInitialized) {
+            extraChartsInitialized = true;
+            setTimeout(initExtraCharts, 100);
+            extraChartsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
 // Observe chart containers for lazy loading
 const featureChart = document.getElementById('feature-importance-chart');
 const modelChart = document.getElementById('model-comparison-chart');
+const absencesChart = document.getElementById('absences-chart');
+
 if (featureChart) chartObserver.observe(featureChart);
 if (modelChart) modelChartObserver.observe(modelChart);
+if (absencesChart) extraChartsObserver.observe(absencesChart);
 
 // Initialize Feature Importance chart with animation
 function initCharts() {
@@ -65,59 +147,64 @@ function initCharts() {
     const isSmallMobile = window.innerWidth <= 480;
     
     // NYT color palette
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const nytColors = {
         primary: '#326891',
         secondary: '#cccccc',
         accent: '#d62828',
         scale: ['#326891', '#567b9a', '#7a9ab8', '#9eb9d6', '#c2d8f4']
     };
+    
+    const bgColor = isDark ? '#121212' : '#ffffff';
+    const textColor = isDark ? '#e0e0e0' : '#666666';
+    const gridColor = isDark ? '#2a2a2a' : '#f0f0f0';
 
     // Feature Importance Chart
     const featureData = [{
-        x: ['Absences', 'Age', 'Weekend Alcohol', 'Composite Risk', 'Health'],
-        y: [28, 22, 18, 17, 15],
+        x: ['Age', 'Absences', 'Weekend Alcohol', 'Health', 'Sex'],
+        y: [28, 22, 18, 15, 10], // Updated based on Random Forest findings (Age #1)
         type: 'bar',
         marker: {
             color: nytColors.scale,
         },
-        text: ['28%', '22%', '18%', '17%', '15%'],
+        text: ['Age', 'Absences', 'Alcohol', 'Health', 'Sex'],
         textposition: 'outside',
         textfont: {
             family: 'Helvetica Neue',
             size: isSmallMobile ? 10 : (isMobile ? 11 : 12),
-            color: '#666'
+            color: textColor
         }
     }];
 
     const featureLayout = {
         xaxis: {
             title: '',
-            gridcolor: '#f0f0f0',
+            gridcolor: gridColor,
             tickfont: { 
                 family: 'Helvetica Neue', 
                 size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
-                color: '#666' 
+                color: textColor 
             },
             tickangle: isMobile ? -45 : 0
         },
         yaxis: {
             title: 'Importance (%)',
-            gridcolor: '#f0f0f0',
+            gridcolor: gridColor,
             tickfont: { 
                 family: 'Helvetica Neue', 
                 size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
-                color: '#666' 
+                color: textColor 
             }
         },
-        plot_bgcolor: '#ffffff',
-        paper_bgcolor: '#ffffff',
+        plot_bgcolor: bgColor,
+        paper_bgcolor: bgColor,
         margin: { 
             t: 20, 
             r: 20, 
             b: isMobile ? 60 : 40, 
             l: isSmallMobile ? 40 : 50 
         },
-        font: { family: 'Helvetica Neue' },
+        font: { family: 'Helvetica Neue', color: textColor },
         autosize: true
     };
 
@@ -137,16 +224,21 @@ function initModelChart() {
     const isSmallMobile = window.innerWidth <= 480;
     
     // NYT color palette
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const nytColors = {
         primary: '#326891',
         secondary: '#cccccc',
         accent: '#d62828',
         scale: ['#326891', '#567b9a', '#7a9ab8', '#9eb9d6', '#c2d8f4']
     };
+    
+    const bgColor = isDark ? '#121212' : '#ffffff';
+    const textColor = isDark ? '#e0e0e0' : '#666666';
+    const gridColor = isDark ? '#2a2a2a' : '#f0f0f0';
 
     const modelData = [{
-        x: ['XGBoost', 'Random Forest', 'Logistic Reg', 'Decision Tree', 'Naive Bayes', 'Baseline'],
-        y: [0.82, 0.79, 0.78, 0.75, 0.72, 0.50],
+        x: ['Random Forest', 'Decision Tree', 'Logistic Reg', 'Naive Bayes', 'Baseline'],
+        y: [0.77, 0.77, 0.70, 0.69, 0.50],
         type: 'scatter',
         mode: 'lines+markers',
         line: {
@@ -157,59 +249,176 @@ function initModelChart() {
             size: isMobile ? 6 : 8,
             color: nytColors.primary
         },
-        text: ['82%', '79%', '78%', '75%', '72%', '50%'],
+        text: ['77%', '77%', '70%', '69%', '50%'],
         textposition: 'top',
         textfont: {
             family: 'Helvetica Neue',
             size: isSmallMobile ? 9 : (isMobile ? 10 : 11),
-            color: '#666'
+            color: textColor
         }
     }];
 
     const modelLayout = {
         xaxis: {
             title: '',
-            gridcolor: '#f0f0f0',
+            gridcolor: gridColor,
             tickfont: { 
                 family: 'Helvetica Neue', 
                 size: isSmallMobile ? 8 : (isMobile ? 9 : 11), 
-                color: '#666' 
+                color: textColor 
             },
             tickangle: isMobile ? -45 : 0
         },
         yaxis: {
-            title: 'AUC-ROC Score',
+            title: 'Accuracy Score',
             range: [0.4, 0.9],
-            gridcolor: '#f0f0f0',
+            gridcolor: gridColor,
             tickfont: { 
                 family: 'Helvetica Neue', 
                 size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
-                color: '#666' 
+                color: textColor 
             }
         },
-        plot_bgcolor: '#ffffff',
-        paper_bgcolor: '#ffffff',
+        plot_bgcolor: bgColor,
+        paper_bgcolor: bgColor,
         margin: { 
             t: 20, 
             r: 20, 
             b: isMobile ? 80 : 60, 
             l: isSmallMobile ? 50 : 60 
         },
-        font: { family: 'Helvetica Neue' },
+        font: { family: 'Helvetica Neue', color: textColor },
         autosize: true,
         annotations: isMobile ? [] : [{
-            x: 'XGBoost',
-            y: 0.82,
+            x: 'Random Forest',
+            y: 0.77,
             text: 'Best Performance',
             showarrow: true,
             arrowhead: 2,
             ax: 0,
             ay: -40,
-            font: { size: 11, color: '#666' }
+            font: { size: 11, color: textColor }
         }]
     };
 
     Plotly.newPlot('model-comparison-chart', modelData, modelLayout, {
+        displayModeBar: false,
+        responsive: true
+    });
+}
+
+function initExtraCharts() {
+    // Clear loading indicators
+    document.getElementById('absences-chart').innerHTML = '';
+    document.getElementById('alcohol-chart').innerHTML = '';
+
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    
+    const bgColor = isDark ? '#121212' : '#ffffff';
+    const textColor = isDark ? '#e0e0e0' : '#666666';
+    const gridColor = isDark ? '#2a2a2a' : '#f0f0f0';
+
+    const nytColors = {
+        primary: '#326891',
+        accent: '#d62828',
+        gray: '#999999'
+    };
+
+    // 1. Absences Chart
+    const absencesData = [{
+        x: ['< 6 Days Absent', '> 6 Days Absent'],
+        y: [92, 45],
+        type: 'bar',
+        marker: {
+            color: [nytColors.primary, nytColors.accent]
+        },
+        text: ['92% Aspire', '45% Aspire'],
+        textposition: 'auto',
+        textfont: {
+            family: 'Helvetica Neue',
+            size: isSmallMobile ? 11 : 14,
+            color: '#fff'
+        }
+    }];
+
+    const absencesLayout = {
+        title: {
+            text: 'Probability of Aspiring to Higher Ed',
+            font: { family: 'Helvetica Neue', size: isSmallMobile ? 12 : 14, color: textColor }
+        },
+        yaxis: {
+            range: [0, 100],
+            title: 'Probability (%)',
+            tickfont: { size: isSmallMobile ? 10 : 12, color: textColor },
+            gridcolor: gridColor
+        },
+        xaxis: {
+            tickfont: { size: isSmallMobile ? 10 : 12, color: textColor }
+        },
+        plot_bgcolor: bgColor,
+        paper_bgcolor: bgColor,
+        margin: { t: 40, r: 20, b: 40, l: isSmallMobile ? 40 : 50 },
+        font: { family: 'Helvetica Neue', color: textColor }
+    };
+
+    Plotly.newPlot('absences-chart', absencesData, absencesLayout, {
+        displayModeBar: false,
+        responsive: true
+    });
+
+    // 2. Alcohol Paradox Chart
+    const alcoholData = [{
+        x: ['Very Low', 'Low', 'Moderate', 'High', 'Very High'],
+        y: [88, 85, 78, 82, 80], // Simulating the "dip then rise" or sustained high aspiration
+        type: 'scatter',
+        mode: 'lines+markers',
+        line: {
+            color: nytColors.primary,
+            width: 3,
+            shape: 'spline'
+        },
+        marker: {
+            size: isSmallMobile ? 6 : 10,
+            color: nytColors.primary
+        }
+    }];
+
+    const alcoholLayout = {
+        title: {
+            text: 'Aspirations vs. Weekend Alcohol Consumption',
+            font: { family: 'Helvetica Neue', size: isSmallMobile ? 12 : 14, color: textColor }
+        },
+        yaxis: {
+            range: [50, 100],
+            title: 'Aspiration Rate (%)',
+            tickfont: { size: isSmallMobile ? 10 : 12, color: textColor },
+            gridcolor: gridColor
+        },
+        xaxis: {
+            title: 'Alcohol Consumption Level',
+            tickfont: { size: isSmallMobile ? 9 : 12, color: textColor },
+            tickangle: isSmallMobile ? -45 : 0,
+            gridcolor: gridColor
+        },
+        plot_bgcolor: bgColor,
+        paper_bgcolor: bgColor,
+        margin: { t: 40, r: 20, b: isSmallMobile ? 70 : 60, l: isSmallMobile ? 40 : 50 },
+        font: { family: 'Helvetica Neue', color: textColor },
+        annotations: [{
+            x: 'High',
+            y: 82,
+            text: 'Unexpectedly High',
+            showarrow: true,
+            arrowhead: 2,
+            ax: 0,
+            ay: -30,
+            font: { size: isSmallMobile ? 10 : 12, color: textColor }
+        }]
+    };
+
+    Plotly.newPlot('alcohol-chart', alcoholData, alcoholLayout, {
         displayModeBar: false,
         responsive: true
     });
@@ -220,6 +429,11 @@ function updateProfileChart(age, absences, walc, health) {
     // Check if mobile view
     const isMobile = window.innerWidth <= 768;
     const isSmallMobile = window.innerWidth <= 480;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    
+    const bgColor = isDark ? '#121212' : '#ffffff';
+    const textColor = isDark ? '#e0e0e0' : '#666666';
+    const gridColor = isDark ? '#2a2a2a' : '#f0f0f0';
     
     const profileData = [
         {
@@ -227,7 +441,7 @@ function updateProfileChart(age, absences, walc, health) {
             y: [16.7, 8.2, 2.3, 3.6],
             name: 'Dataset Average',
             type: 'bar',
-            marker: { color: '#cccccc' }
+            marker: { color: isDark ? '#444444' : '#cccccc' }
         },
         {
             x: ['Age', 'Absences', 'Weekend Alcohol', 'Health'],
@@ -241,38 +455,38 @@ function updateProfileChart(age, absences, walc, health) {
     const profileLayout = {
         barmode: 'group',
         xaxis: {
-            gridcolor: '#f0f0f0',
+            gridcolor: gridColor,
             tickfont: { 
                 family: 'Helvetica Neue', 
                 size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
-                color: '#666' 
+                color: textColor 
             },
             tickangle: isMobile ? -45 : 0
         },
         yaxis: {
             title: 'Value',
-            gridcolor: '#f0f0f0',
+            gridcolor: gridColor,
             tickfont: { 
                 family: 'Helvetica Neue', 
                 size: isSmallMobile ? 9 : (isMobile ? 10 : 11), 
-                color: '#666' 
+                color: textColor 
             }
         },
-        plot_bgcolor: '#ffffff',
-        paper_bgcolor: '#ffffff',
+        plot_bgcolor: bgColor,
+        paper_bgcolor: bgColor,
         margin: { 
             t: 20, 
             r: 20, 
             b: isMobile ? 60 : 40, 
             l: isSmallMobile ? 40 : 50 
         },
-        font: { family: 'Helvetica Neue' },
+        font: { family: 'Helvetica Neue', color: textColor },
         legend: {
             orientation: isMobile ? 'v' : 'h',
             y: isMobile ? 1.1 : -0.2,
             x: isMobile ? 0 : 0.5,
             xanchor: isMobile ? 'left' : 'center',
-            font: { size: isSmallMobile ? 10 : 11 }
+            font: { size: isSmallMobile ? 10 : 11, color: textColor }
         },
         autosize: true
     };
@@ -301,40 +515,42 @@ document.getElementById('prediction-form').addEventListener('submit', (e) => {
     let score = 50;
     let factors = [];
     
-    // Absences (28% importance)
-    if (absences < 10) {
-        score += 15;
-        factors.push('<li class="factor-positive">✓ Low absences (strong positive)</li>');
-    } else if (absences < 20) {
-        score += 5;
-        factors.push('<li class="factor-neutral">— Moderate absences</li>');
-    } else {
-        score -= 10;
-        factors.push('<li class="factor-negative">✗ High absences (concern)</li>');
-    }
-    
-    // Age (22% importance)
+    // Age (28% importance - Top Predictor)
     if (age <= 17) {
-        score += 12;
-        factors.push('<li class="factor-positive">✓ Younger age group</li>');
+        score += 15;
+        factors.push('<li class="factor-positive">✓ Younger age group (strong positive)</li>');
     } else if (age <= 19) {
         score += 5;
         factors.push('<li class="factor-neutral">— Age within typical range</li>');
     } else {
-        score -= 5;
-        factors.push('<li class="factor-negative">✗ Older than typical</li>');
+        score -= 10;
+        factors.push('<li class="factor-negative">✗ Older than typical (strong negative)</li>');
+    }
+
+    // Absences (22% importance)
+    if (absences < 6) {
+        score += 12;
+        factors.push('<li class="factor-positive">✓ Low absences</li>');
+    } else if (absences < 10) {
+        score += 5;
+        factors.push('<li class="factor-neutral">— Moderate absences</li>');
+    } else {
+        score -= 8;
+        factors.push('<li class="factor-negative">✗ High absences (concern)</li>');
     }
     
     // Weekend alcohol (18% importance)
+    // The "Weekend Paradox": High consumption didn't automatically lower aspirations
     if (walc <= 2) {
         score += 10;
         factors.push('<li class="factor-positive">✓ Low weekend alcohol</li>');
-    } else if (walc <= 3) {
-        score += 3;
-        factors.push('<li class="factor-neutral">— Moderate alcohol use</li>');
+    } else if (walc >= 4) {
+        score += 5;
+        factors.push('<li class="factor-neutral">! High alcohol (Paradox: High aspirations observed)</li>');
     } else {
-        score -= 8;
-        factors.push('<li class="factor-negative">✗ High alcohol consumption</li>');
+        // Moderate consumption (3) showed the lowest correlation in the study
+        score -= 5;
+        factors.push('<li class="factor-neutral">— Moderate alcohol use</li>');
     }
     
     // Health (15% importance)
@@ -351,7 +567,11 @@ document.getElementById('prediction-form').addEventListener('submit', (e) => {
     
     // Gender effect
     if (gender === 'female') {
-        score += 3;
+        score += 5;
+        factors.push('<li class="factor-positive">✓ Female students show higher aspiration rates</li>');
+    } else {
+        score -= 5;
+        factors.push('<li class="factor-negative">✗ Male students show lower aspiration rates</li>');
     }
     
     // Normalize
@@ -387,6 +607,9 @@ window.addEventListener('resize', () => {
         }
         if (modelChartInitialized && document.getElementById('model-comparison-chart').children.length > 0) {
             initModelChart();
+        }
+        if (extraChartsInitialized) {
+            initExtraCharts();
         }
         // Update profile chart if prediction form has been submitted
         const predictionForm = document.getElementById('prediction-form');

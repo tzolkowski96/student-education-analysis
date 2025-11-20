@@ -20,6 +20,20 @@
     --wide-width: 1200px;
 }
 
+[data-theme="dark"] {
+    --nyt-black: #f0f0f0;
+    --nyt-gray-1: #e0e0e0;
+    --nyt-gray-2: #b0b0b0;
+    --nyt-gray-3: #888888;
+    --nyt-gray-4: #444444;
+    --nyt-gray-5: #2a2a2a;
+    --nyt-gray-6: #1a1a1a;
+    --nyt-white: #121212;
+    --nyt-blue: #6ba4d1;
+    --nyt-red: #ff6b6b;
+    color-scheme: dark;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -42,6 +56,8 @@ body {
         );
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    width: 100%;
 }
 
 /* Header */
@@ -101,6 +117,24 @@ body {
 }
 
 .header-nav a:hover {
+    color: var(--nyt-black);
+}
+
+.theme-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--nyt-gray-2);
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.theme-btn:hover {
+    background-color: var(--nyt-gray-5);
     color: var(--nyt-black);
 }
 
@@ -419,6 +453,7 @@ body {
     font-size: 14px;
     border: 1px solid var(--nyt-gray-4);
     background: var(--nyt-white);
+    color: var(--nyt-black);
     transition: border-color 0.2s ease;
 }
 
@@ -708,6 +743,7 @@ body {
     /* Share buttons responsive */
     .share-buttons {
         gap: 6px !important;
+        flex-wrap: wrap !important;
     }
     
     .share-btn {
@@ -735,10 +771,14 @@ body {
     .graphic-container {
         margin: 32px -16px;
         padding: 24px 16px;
+        width: calc(100% + 32px); /* Full width on mobile */
+        border-radius: 0;
     }
     
     .chart-wrapper {
         padding: 12px;
+        border-left: none;
+        border-right: none;
     }
     
     .chart-loading {
@@ -748,7 +788,7 @@ body {
     
     /* Metrics grid */
     .metrics-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Stack vertically */
         gap: 1px;
         margin: 32px 0;
     }
