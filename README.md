@@ -42,25 +42,14 @@ Experience the interactive analysis: [**View Live Site**](https://tzolkowski96.g
 | Naive Bayes | 0.69 |
 | Baseline | 0.50 |
 
-## 🛠️ Project Structure
-
-```
-student-education-analysis/
-├── index.html          # Main interactive article
-├── css/
-│   └── styles.css      # NYT-inspired design system
-├── js/
-│   └── main.js         # Interactive functionality
-└── README.md           # Project documentation
-```
-
 ## ✨ Features
 
 ### Interactive Elements
-- **Reading Progress Indicator**: Visual scroll progress
+- **Dark Mode Support**: Fully responsive dark theme with persistent preferences
+- **Reading Progress Indicator**: Visual scroll progress bar
 - **Dynamic Charts**: Plotly.js visualizations with lazy loading
-- **Prediction Tool**: Test the model with custom student profiles
-- **Responsive Design**: Mobile-optimized NYT-inspired layout
+- **Prediction Tool**: Interactive calculator to test the model with custom student profiles
+- **Scroll Animations**: Smooth reveal effects for content sections
 
 ### Visualizations
 - Feature importance ranking
@@ -68,14 +57,32 @@ student-education-analysis/
 - Interactive student profile comparison
 - Real-time prediction results
 
-## 🎨 Design
+### Accessibility & Design
+- **NYT-Inspired Aesthetic**: Clean typography using Cheltenham and Georgia fonts
+- **Responsive Layout**: Mobile-optimized design with touch-friendly controls
+- **Accessibility**: ARIA labels, keyboard navigation, and high-contrast support
+- **Print Optimization**: Clean formatting for printed reports
 
-The project features a New York Times-inspired design system with:
-- Clean, readable typography using Cheltenham and Georgia fonts
-- Responsive grid layouts
-- Professional color palette
-- Print-optimized styles
-- Accessibility considerations
+## 💻 Tech Stack
+
+- **Frontend**: HTML5, CSS3 (Custom Properties, Flexbox/Grid), JavaScript (ES6+)
+- **Visualization**: Plotly.js
+- **Analysis**: Python (Pandas, Scikit-learn) - *Analysis performed in Jupyter Notebooks*
+- **Hosting**: GitHub Pages
+
+## 🛠️ Project Structure
+
+```
+student-education-analysis/
+├── index.html          # Main interactive article
+├── css/
+│   └── styles.css      # NYT-inspired design system with dark mode
+├── js/
+│   └── main.js         # Interactive functionality & chart logic
+├── .gitignore          # Git exclusion rules
+├── .nojekyll           # GitHub Pages configuration
+└── README.md           # Project documentation
+```
 
 ## 📱 Responsive Design
 
@@ -130,7 +137,7 @@ This project is available under the MIT License. See the analysis methodology an
 
 3. Open `index.html` in your web browser or serve via a local web server:
    ```bash
-   # Using Python 3
+   # Using Python 3 (Recommended)
    python -m http.server 8000
    
    # Using Node.js
@@ -138,6 +145,14 @@ This project is available under the MIT License. See the analysis methodology an
    ```
 
 4. Visit `http://localhost:8000` to view the project
+
+## 📸 Screenshots
+
+| Light Mode | Dark Mode |
+|:---:|:---:|
+| *Add screenshot here* | *Add screenshot here* |
+| **Interactive Prediction** | **Mobile View** |
+| *Add screenshot here* | *Add screenshot here* |
 
 ## 🔍 Data Sources
 
